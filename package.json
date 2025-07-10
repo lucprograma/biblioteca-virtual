@@ -1,0 +1,21 @@
+{
+  "name": "biblioteca-virtual",
+  "version": "1.0.0",
+  "description": "Este es el proyecto de biblioteca virtual",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucprograma/biblioteca-virtual.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucprograma/biblioteca-virtual/issues"
+  },
+  "homepage": "https://github.com/lucprograma/biblioteca-virtual#readme"
+}
