@@ -9,7 +9,7 @@ COPY package-lock.json /code/package-lock.json
 RUN npm ci
 COPY . /code
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "dev" ]
 
 FROM development AS builder
 
