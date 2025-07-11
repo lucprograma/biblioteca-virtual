@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/login', validateSchema(loginSchema), login);
 router.post('/register', validateSchema(registerSchema), register);
-
+router.post('/tokenchk', chkToken, ()=>{console.log("pass")});
 
 
 export default router;
