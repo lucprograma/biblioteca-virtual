@@ -18,7 +18,15 @@ export const login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.json({ token, user: { name: user.name, role: user.role } });
+    res.cookie('token', token, {
+    httpOnly: true,
+    secure: false, 
+    sameSite: 'Strict',
+    maxAge: 60 * 60 * 1000 // 1 hora antes de expirar
+  });
+
+    res.json({ msg: 'Login exitoso' });
+
   } catch (error) {
     res.status(500).json({ message: 'Error en login', error: error.message });
   }

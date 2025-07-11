@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-
+import cookieParser from 'cookie-parser';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 
@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware para que pueda leer JSON
 app.use(express.json());
-
+app.use(cookieParser());
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
 
