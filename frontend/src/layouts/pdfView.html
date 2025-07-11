@@ -1,0 +1,25 @@
+<!-- VISOR FLOTANTE DE PDF -->
+<div id="pdfOverlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-90 d-none" style="z-index: 1055;">
+  <div class="d-flex flex-column h-100">
+    
+    <!-- Botón de cierre -->
+    <div class="text-end p-2">
+      <button class="btn btn-danger btn-sm" onclick="closePdfOverlay()">✖ Cerrar</button>
+    </div>
+
+    <!-- PDF -->
+    <iframe id="pdfFrame" src="" class="flex-grow-1 w-100 border-0" style="min-height: 60%;"></iframe>
+
+    <!-- Foro comentarios -->
+    <div class="bg-secondary text-white p-3" style="max-height: 40%; overflow-y: auto;">
+      <h5>Comentarios</h5>
+      <div id="comments-list" class="mb-3">
+        <p>Usuario1: Me gustó mucho.</p>
+        <p>Usuario2: Interesante punto en la página 3.</p>
+      </div>
+      <textarea class="form-control mb-2" placeholder="Escribe tu comentario..."></textarea>
+      <button class="btn btn-light btn-sm">Enviar</button>
+    </div>
+
+  </div>
+</div>
