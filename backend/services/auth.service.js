@@ -1,0 +1,89 @@
+import sequelize from '../config/db.js';
+import User from '../models/Users.js';
+import bcrypt from 'bcryptjs';
+
+class AuthService {
+//funcion registro
+async registerUser({ name, email, password, role, dni }) {
+    try {
+      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, dni });
+      const exists = await User.findOne({ where: { email } });
+      if (exists) throw new Error('El email ya está registrado');
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        role,
+        dni
+       
+      });       
+      console.log('Usuario creado:', user.toJSON());
+      return user;
+    } catch (error) {
+      throw new Error('Error en registerUser: ' + error.message);
+    }
+  }
+
+  //funcion patch
+  async patchUser(userId, data,hashedPassword) {
+    try {
+      const fields = [];
+      const values = [];
+      if (data.name) {
+        fields.push('name = ?');
+        values.push(data.name);
+      }
+      if (data.email) {
+        fields.push('email = ?');
+        values.push(data.email);
+      }
+      if (hashedPassword) {
+        fields.push('password = ?');
+        values.push(hashedPassword);
+      }
+      if (data.role) {
+        fields.push('role = ?');
+        values.push(data.role);
+      }
+      if (data.dni) {
+        fields.push('dni = ?');
+        values.push(data.dni);
+      }
+      if (fields.length === 0) {
+        throw new Error('No se enviaron campos válidos para actualizar');
+      }      
+      const sql = ` UPDATE users SET ${fields.join(', ')}, created_at = CURRENT_TIMESTAMP WHERE user_id = ? `; 
+      values.push(userId);
+      const [result] = await sequelize.query(sql, { replacements: values });
+      return result;
+    } catch (err) {
+      throw new Error('Error al actualizar el perfil: ' + err.message);
+    }
+  }
+
+async deleteUser(userId) {
+    try {
+      const user = await User.findByPk(userId);
+      if (!user) throw new Error('Usuario no encontrado');
+      await user.destroy();
+      return { message: 'Usuario eliminado correctamente' };
+    } catch (error) {
+      throw new Error('Error al eliminar el usuario: ' + error.message);
+    }
+  }
+
+// logout 
+logout(res) {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false, // cambiar a true si usás HTTPS en producción
+    sameSite: 'Strict'
+  });
+  return { message: 'Sesión cerrada correctamente' };
+}
+
+
+}
+
+export default new AuthService();
