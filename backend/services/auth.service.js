@@ -3,6 +3,25 @@ import User from '../models/Users.js';
 import bcrypt from 'bcryptjs';
 
 class AuthService {
+
+//busca por id
+async getUserById(id) {
+  const user = await User.findByPk(id, {
+    attributes: { exclude: ['password'] }
+  });
+  return user;
+}
+
+//trae todos usuarios
+async getAllUsers() {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] }
+  });
+  return users;
+}
+
+
+
 //funcion registro
 async registerUser({ name, email, password, role, dni }) {
     try {
@@ -50,9 +69,20 @@ async registerUser({ name, email, password, role, dni }) {
         fields.push('dni = ?');
         values.push(data.dni);
       }
+      if (typeof data.has_certificate !== 'undefined') {
+  fields.push('has_certificate = ?');
+  values.push(data.has_certificate === true || data.has_certificate === 'true' ? 1 : 0);
+}//tenia error en mysql  al enviar true o false asi que setea por 1 o 0
+
+if (typeof data.is_active !== 'undefined') {
+  fields.push('is_active = ?');
+  values.push(data.is_active === true || data.is_active === 'true' ? 1 : 0);
+}//tenia error en mysql  al enviar true o false asi que setea por 1 o 0
+
       if (fields.length === 0) {
         throw new Error('No se enviaron campos válidos para actualizar');
       }      
+      
       const sql = ` UPDATE users SET ${fields.join(', ')}, created_at = CURRENT_TIMESTAMP WHERE user_id = ? `; 
       values.push(userId);
       const [result] = await sequelize.query(sql, { replacements: values });

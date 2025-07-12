@@ -13,9 +13,12 @@ export const registerSchema = Joi.object({
   dni: Joi.number().integer().min(1000000).max(99999999).required()
 });
 export const patchUserSchema = Joi.object({
+  user_id: Joi.number().optional(),
   name: Joi.string().optional(),
   email: Joi.string().email().optional(),
   password: Joi.string().min(6).optional(),
   role: Joi.string().valid('admin', 'regular').optional(),
-  dni: Joi.number().optional()
+  dni: Joi.number().optional(),
+  has_certificate: Joi.boolean().optional(),
+  is_active: Joi.boolean().optional(),
 });

@@ -3,6 +3,32 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/Users.js';
 
+
+//controlador get por id o todo
+export const getUsersAdmin = async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    console.log('ID recibido en getUsersAdmin:', user_id);
+    if (user_id) {
+      const user = await User.findByPk(user_id, {
+        attributes: { exclude: ['password'] }
+      });
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+      return res.json(user);
+    }
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] }
+    });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });
+  }
+};
+
+
+
 //controlador login
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -41,8 +67,13 @@ export const register = async (req, res) => {
 
 //controlador patch
 export const updateProfile = async (req, res) => {
-  try {
-    const userId = req.user.user_id; // viene del token
+  try {  
+   
+    let userId =  req.body?.user_id ||req.user?.user_id ;// viene del token o req body
+    console.log('userId:', userId);
+    console.log(' body:', req.body);
+   
+    //console.log ('ID del usuario a actualizar controlador:', userId);
     const data = req.body; 
     let hashedPassword = null;//declaro variable    
     if (data.password) {
@@ -57,6 +88,7 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar el perfil: ' + error.message });
   }
 };
+
 //controlador eliminar usuario por body , para uso rol administrador
 export const deleteProfile = async (req, res) => {
   try {
@@ -81,9 +113,9 @@ export const deleteThis = async (req, res) => {
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
     await user.destroy();
-    res.json({ message: 'Perfil eliminado correctamente' });
+    res.json({ message: 'Usuario eliminado correctamente' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al eliminar el perfil: ' + error.message });
+    res.status(500).json({ message: 'Error al eliminar el Usuario: ' + error.message });
   }
 }
 
