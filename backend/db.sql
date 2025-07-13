@@ -8,11 +8,13 @@ CREATE TABLE `users` (
   `email` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum("admin","regular") NOT NULL,
+  `course` varchar(255) NOT NULL,
   `dni` mediumint,
   `has_certificate` bool DEFAULT true,
   `is_active` bool DEFAULT true,
   `last_login` date DEFAULT(now()),
-  `created_at` datetime DEFAULT (now())
+  `created_at` datetime DEFAULT (now()),
+  `updated_at` datetime DEFAULT (now()) 
 );
 
 CREATE TABLE `strikes` (
