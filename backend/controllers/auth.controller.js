@@ -8,7 +8,7 @@ import User from '../models/Users.js';
 export const getUsersAdmin = async (req, res) => {
   try {
     const { user_id } = req.body;
-    console.log('ID recibido en getUsersAdmin:', user_id);
+    //console.log('ID recibido en getUsersAdmin:', user_id);
     if (user_id) {
       const user = await User.findByPk(user_id, {
         attributes: { exclude: ['password'] }
@@ -17,11 +17,15 @@ export const getUsersAdmin = async (req, res) => {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
       return res.json(user);
-    }
+    }else{
     const users = await User.findAll({
       attributes: { exclude: ['password'] }
     });
-    res.json(users);
+    if (!users) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+    res.json(users);}
+
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });
   }
@@ -56,9 +60,9 @@ export const login = async (req, res) => {
 
 //controlador crear usuarios
 export const register = async (req, res) => {
-  const { name, email, password, role, dni } = req.body;
+  const { name, email, password, role, course, dni } = req.body;
   try {
-    const user = await authService.registerUser({ name, email, password, role, dni });
+    const user = await authService.registerUser({ name, email, password, role,course, dni });
     res.status(201).json({ message: 'Usuario registrado correctamente', user_id: user.user_id });
   } catch (error) {
     res.status(500).json({ message: 'Error al registrar', error: error.message });

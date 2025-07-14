@@ -23,9 +23,9 @@ async getAllUsers() {
 
 
 //funcion registro
-async registerUser({ name, email, password, role, dni }) {
+async registerUser({ name, email, password, role,course, dni }) {
     try {
-      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, dni });
+      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role,course, dni });
       const exists = await User.findOne({ where: { email } });
       if (exists) throw new Error('El email ya está registrado');
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,6 +34,7 @@ async registerUser({ name, email, password, role, dni }) {
         email,
         password: hashedPassword,
         role,
+        course,
         dni
        
       });       
@@ -65,6 +66,10 @@ async registerUser({ name, email, password, role, dni }) {
         fields.push('role = ?');
         values.push(data.role);
       }
+      if (data.course) {
+        fields.push('course = ?');
+        values.push(data.course);
+      }
       if (data.dni) {
         fields.push('dni = ?');
         values.push(data.dni);
@@ -83,7 +88,7 @@ if (typeof data.is_active !== 'undefined') {
         throw new Error('No se enviaron campos válidos para actualizar');
       }      
       
-      const sql = ` UPDATE users SET ${fields.join(', ')}, created_at = CURRENT_TIMESTAMP WHERE user_id = ? `; 
+      const sql = ` UPDATE users SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE user_id = ? `; 
       values.push(userId);
       const [result] = await sequelize.query(sql, { replacements: values });
       return result;
