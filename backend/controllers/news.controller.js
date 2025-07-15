@@ -39,7 +39,7 @@ export const getNews = async (req, res) => {
     if (news_id) {
       news = await newsService.getNewsById(news_id);
     } else {
-      news = await newsService.getAllNews();
+      news = await newsService.getNews();
     }
     if (!news || (Array.isArray(news) && news.length === 0)) {
       return res.status(404).json({ message: 'No se encontraron noticias' });

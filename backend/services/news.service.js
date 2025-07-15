@@ -1,5 +1,6 @@
 import sequelize from '../config/db.js';
 import News from '../models/News.js';
+import { Op } from 'sequelize';// importamos operador de Sequelize para comparaciones
 
 
 class NewsService {
@@ -69,17 +70,22 @@ async getNewsById(news_id) {
       throw new Error('Error al obtener la noticia por ID service: ' + error.message);
     }
   }
-//service get news todo
- async getAllNews() {
-    try {
-      const news = await News.findAll();
-      if (!news || news.length === 0) throw new Error('No se encontraron noticias service');
-      return news;
-    } catch (error) {
-      throw new Error('Error al obtener todas las noticias service: ' + error.message);
-    }
+
+//service get news  ultimos 3 meses 
+  async getNews() {
+    const threeMonthsAgo = new Date();// Creamos una variable con la fecha actual
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);// restamos 3 meses a la variable
+     return await News.findAll({
+      where: {       
+        published_at: { // Filtra por campo created_at
+          [Op.gte]: threeMonthsAgo //  gte mayor o igual que
+        }
+      },      
+      order: [['published_at', 'DESC']]// Ordenamos los resultados desc
+    });
   }
-
-
 }
+
+
+
 export default new NewsService();
