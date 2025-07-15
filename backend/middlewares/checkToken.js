@@ -1,20 +1,20 @@
 import jwt from 'jsonwebtoken';
-import cookieParser from 'cookie-parser';
 
-const chktoken = async (req,res,next) =>{
-    if(req.cookies.token){
-        const token = req.cookies.token ;
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);//Verifica el token y lo decodifica directamente
-         req.user = decoded;// Guarda el usuario decodificado en req.user
-        //console.log(req.user);
-        jwt.verify(token,process.env.JWT_SECRET,(err,result)=>{
-            if(err){res.status(403).send(err.message)}
-            if(result){next()}
-        })
-    }else{
-        return res.status(403).send('ERROR EN LA AUTENTICACION DESCONOCIDO')
-    }
-}
+const chktoken = (req, res, next) => {
+     //console.log('Cookies recibidas:', req.cookies);
+  const token = req.cookies.token;
+  //console.log('Token recibido:', token);
 
+  if (!token) return res.status(403).send('Token no proporcionado');
 
-export default chktoken
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verifica y decodifica
+    req.user = decoded; // Agregamos el usuario al request
+    //console.log('Usuario autenticado:', req.user);  
+    next(); // Sigue al siguiente middleware/controlador
+  } catch (error) {
+    return res.status(403).send('Token inválido: ' + error.message);
+  }
+};
+
+export default chktoken;

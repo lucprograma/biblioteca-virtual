@@ -74,8 +74,8 @@ export const updateProfile = async (req, res) => {
   try {  
    
     let userId =  req.body?.user_id ||req.user?.user_id ;// viene del token o req body
-    console.log('userId:', userId);
-    console.log(' body:', req.body);
+    //console.log('userId:', userId);
+    //console.log(' body:', req.body);
    
     //console.log ('ID del usuario a actualizar controlador:', userId);
     const data = req.body; 

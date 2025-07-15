@@ -5,6 +5,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
+import newsRoutes from './routes/news.route.js';
+
 
 
 
@@ -16,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
+app.use('/api/news', newsRoutes);
 
 // Ruta de prueba base
 app.get('/', (req, res) => {
