@@ -2,9 +2,6 @@ import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 
 dotenv.config();
-#db = example
-#usuario = root
-#clave = db-btf5q
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
   process.env.DB_USER,
