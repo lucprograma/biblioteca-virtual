@@ -2,7 +2,25 @@ import authService from '../services/auth.service.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/Users.js';
+import  cron from 'node-cron';
 
+//controlador get por id o todo
+
+export const crontest = async (req, res) => 
+{
+
+  let logins = await authService.getLastLogins();
+  //console.log('Usuarios obtenidos:', logins);
+
+ // let count = 0;
+  logins.forEach(element => {
+    //console.log(element.user_id,element.last_login);
+    if(element.last_login )
+  });
+
+  //res.status(200).json({ message: 'Cron job started' });
+
+};
 
 //controlador get por id o todo
 export const getUsersAdmin = async (req, res) => {

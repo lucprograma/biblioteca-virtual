@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/lucprograma/biblioteca-virtual#readme",
   "dependencies": {
-    "cookie-parser": "^1.4.7"
+    "cookie-parser": "^1.4.7",
+    "node-cron": "^4.2.1"
   }
 }

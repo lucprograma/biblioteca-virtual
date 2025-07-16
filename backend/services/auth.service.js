@@ -20,6 +20,14 @@ async getAllUsers() {
   return users;
 }
 
+async getLastLogins() {
+  const logins = await User.findAll({
+    attributes : ['user_id','last_login' ]
+  })
+
+  return logins;
+}
+
 
 
 //funcion registro
