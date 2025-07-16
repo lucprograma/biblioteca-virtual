@@ -15,12 +15,8 @@ export const crontest = async (req, res) =>
  // let count = 0;
   logins.forEach(element => {
     //console.log(element.user_id,element.last_login);
-    if(element.last_login )
-  });
-
-  //res.status(200).json({ message: 'Cron job started' });
-
-};
+    if(element.last_login )  
+    });}
 
 //controlador get por id o todo
 export const getUsersAdmin = async (req, res) => {
