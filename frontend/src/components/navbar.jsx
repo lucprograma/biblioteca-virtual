@@ -1,26 +1,6 @@
 import React from "react";
 
 const Navbar = () => {
-  // Simulación de funciones de navegación (puedes conectar con el estado global o router)
-  const addHome = () => {
-    // Aquí iría la lógica para mostrar el Home
-    console.log("Mostrar Home");
-  };
-
-  const addDocuments = () => {
-    // Aquí iría la lógica para mostrar Documentos
-    console.log("Mostrar Documentos");
-  };
-
-  const addNews = () => {
-    // Aquí iría la lógica para mostrar Noticias
-    console.log("Mostrar Noticias");
-  };
-
-  const addLogin = () => {
-    // Aquí iría la lógica para mostrar Login
-    console.log("Mostrar Login");
-  };
 
   return (
 <div id="navbar-container" className="w-100 p-0 m-0">
@@ -28,11 +8,7 @@ const Navbar = () => {
         <div className="container-fluid">
           <a
             className="navbar-brand"
-            href="#"
-            onClick={e => {
-              e.preventDefault();
-              addHome();
-            }}
+            href="/"
           >
             Biblioteca
           </a>
@@ -53,11 +29,7 @@ const Navbar = () => {
                 <a
                   className="nav-link active"
                   aria-current="page"
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    addDocuments();
-                  }}
+                  href="/documentos"
                 >
                   Documentos
                 </a>
@@ -66,11 +38,7 @@ const Navbar = () => {
                 <a
                   className="nav-link active"
                   aria-current="page"
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    addNews();
-                  }}
+                  href="/noticias"
                 >
                   Noticias
                 </a>
@@ -79,11 +47,7 @@ const Navbar = () => {
                 <a
                   className="nav-link active"
                   aria-current="page"
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    addLogin();
-                  }}
+                  href="/login"
                 >
                   LogIn
                 </a>
