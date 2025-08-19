@@ -1,10 +1,11 @@
 import React from "react";
 
-const Navbar = () => {
-
+const Navbar = ({ children }) => {
+ 
+  
   return (
 <div id="navbar-container" className="w-100 p-0 m-0">
-      <nav className="navbar navbar-expand-lg w-100 custom-navbar">
+      <nav id="navBar" className="navbar navbar-expand-lg w-100 custom-navbar">
         <div className="container-fluid">
           <a
             className="navbar-brand"
@@ -53,23 +54,7 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                id="searchInput"
-                type="hidden"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-success"
-                id="searchButton"
-                type="submit"
-                hidden
-              >
-                Search
-              </button>
-            </form>
+    
           </div>
         </div>
       </nav>

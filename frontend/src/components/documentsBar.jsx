@@ -1,6 +1,74 @@
 import React from "react";
+import { useRef, useEffect, useState } from "react";
+const DocumentsBar = ({ folderState }) => {
+  const baseUlref = useRef(null);
+  const [folders, setFolders] = useState([]);
+  const getFolderStructure = async () => {
+    try{
+      const folders = await fetch("http://localhost:3000/api/folders");
+      const data = await folders.json();
+      return data;
+      }  
+    catch(error){
+        console.error("Error fetching folder structure:", error);
+      };
+  };
+   useEffect(() => {
+    getFolderStructure().then(setFolders);
+  }, []);
+  const renderBar = (folderList) => {
+      if(!folderList){
+        return (
+          <p>Folders not found</p>
+        )
+      }
+      console.log(folderList)
+      return(
+        folderList.map(folder => (
+          <li key={folder.folder_id}>
+            <span
+              data-bs-toggle="collapse"
+              href={`#folder${folder.folder_id}`}
+              role="button"
+              aria-expanded="false"
+              aria-controls={`folder${folder.folder_id}`}
+              style={{ cursor: "pointer" }}
 
-const DocumentsBar = ({ addCard }) => (
+              onClick={() => {
+                if(folder.type === "Year"){
+                folderState(folder.folder_id)}
+              }}
+            >
+              📁{folder.type === "Course"? folder.name : folder.year_level}
+            </span>
+            <ul className="collapse list-unstyled ps-3" id={`folder${folder.folder_id}`}>
+        <>
+          {folder.children?.length > 0 && renderBar(folder.children)}
+          {folder.documents?.length > 0 && addDocs(folder.documents)}
+        </>
+</ul>
+          </li>
+        ))
+      )
+  }
+  const addDocs = (docList) => {
+
+  return docList.map(document => (
+    <li key={document.id || document.title}>
+      <a
+        href="#"
+        onClick={e => {
+          e.preventDefault();
+          if (addCard) addCard("./hola.txt");
+        }}
+      >
+        📄 {document.title}
+      </a>
+    </li>
+  ));
+};
+
+  return (
   <div
     className="offcanvas offcanvas-start bg-dark text-white"
     tabIndex={-1}
@@ -18,64 +86,15 @@ const DocumentsBar = ({ addCard }) => (
         aria-label="Close"
       ></button>
     </div>
-    <div className="offcanvas-body">
-      <ul className="list-unstyled">
-        <li>
-          <span
-            data-bs-toggle="collapse"
-            href="#folder1"
-            role="button"
-            aria-expanded="false"
-            aria-controls="folder1"
-            style={{ cursor: "pointer" }}
-          >
-            📁 Analisis de sistemas
-          </span>
-          <ul>
-            <span
-              data-bs-toggle="collapse"
-              href="#folder3"
-              role="button"
-              aria-expanded="false"
-              aria-controls="folder3"
-              style={{ cursor: "pointer" }}
-            >
-              📁 Primer año
-            </span>
-            <ul className="collapse list-unstyled ps-3" id="folder3">
-              <li>
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    if (addCard) addCard("./hola.txt");
-                  }}
-                >
-                  📄 Archivo 1.1
-                </a>
-              </li>
-              <li>📄 Archivo 1.2</li>
-            </ul>
-          </ul>
-        </li>
-        <li>
-          <span
-            data-bs-toggle="collapse"
-            href="#folder2"
-            role="button"
-            aria-expanded="false"
-            aria-controls="folder2"
-            style={{ cursor: "pointer" }}
-          >
-            📁 Carpeta 2
-          </span>
-          <ul className="collapse list-unstyled ps-3" id="folder2">
-            <li>📄 Archivo 2.1</li>
-          </ul>
-        </li>
+    <div className="offcanvas-body" >
+      <ul className="list-unstyled" ref={baseUlref}>
+      
+           {renderBar(folders)}
+        
       </ul>
     </div>
   </div>
 );
+}
 
 export default DocumentsBar;
