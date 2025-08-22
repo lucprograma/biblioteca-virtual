@@ -54,6 +54,18 @@ async registerUser({ name, email, password, role,course, dni }) {
   }
 
   //funcion patch
+
+  async DisableUser(userId){
+    try{
+      const disablequery = "UPDATE users SET is_active = FALSE WHERE user_id = " +userId;
+      const result = await sequelize.query(disablequery);
+      return result;
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+
   async patchUser(userId, data,hashedPassword) {
     try {
       const fields = [];

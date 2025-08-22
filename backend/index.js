@@ -5,11 +5,10 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
+import documentsRoutes from './routes/documents.routes.js';
+import folderRoutes from './routes/folder.routes.js';
 import newsRoutes from './routes/news.route.js';
-
-
-
-
+import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
 
 const app = express();
 
@@ -31,6 +30,7 @@ sequelize.authenticate()
     console.log('Conexión exitosa a MySQL');
     app.listen(3000, () => {
       console.log('Servidor escuchando en http://localhost:3000');
+      startCronCheckUp();
     });
   })
   .catch((err) => {
