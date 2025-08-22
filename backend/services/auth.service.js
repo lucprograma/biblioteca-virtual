@@ -65,6 +65,7 @@ async registerUser({ name, email, password, role,course, dni }) {
     }
   }
 
+
   async patchUser(userId, data,hashedPassword) {
     try {
       const fields = [];
