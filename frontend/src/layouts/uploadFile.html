@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div class="modal fade" id="uploadDocumentModal" tabindex="-1" aria-labelledby="uploadDocumentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 12px; overflow: hidden;">
+      
+      <!-- Header morado -->
+      <div class="modal-header" style="background-color: #6f42c1;">
+        <h5 class="modal-title text-white" id="uploadDocumentModalLabel">Nuevo documento</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Cuerpo del formulario -->
+      <div class="modal-body bg-dark text-white">
+        <form id="uploadDocumentForm">
+          <!-- Select de Carrera -->
+          <div class="mb-3">
+            <label for="careerSelect" class="form-label">Carrera</label>
+            <select class="form-select" id="careerSelect" required>
+              <option selected disabled>Selecciona una carrera</option>
+              <!-- Opciones dinámicas desde la base de datos -->
+              <option value="1">Analisis de Sistemas</option>
+              <option value="2">Administración de Pymes</option>
+              <option value="3">Administración publica</option>
+            </select>
+          </div>
+
+          <!-- Select de Año -->
+          <div class="mb-3">
+            <label for="yearSelect" class="form-label">Año</label>
+            <select class="form-select" id="yearSelect" required>
+              <option selected disabled>Selecciona un año</option>
+              <option value="1">1° Año</option>
+              <option value="2">2° Año</option>
+              <option value="3">3° Año</option>
+              <option value="4">4° Año</option>
+              <option value="5">5° Año</option>
+            </select>
+          </div>
+
+          <!-- Input de Archivo -->
+          <div class="mb-3">
+            <label for="fileInput" class="form-label">Selecciona un archivo</label>
+            <input class="form-control" type="file" id="fileInput" required>
+          </div>
+
+          <!-- Select de Tags -->
+          <div class="mb-3">
+            <label for="tagSelect" class="form-label">Tags</label>
+            <select multiple class="form-select" id="tagSelect" required>
+              <!-- Opciones dinámicas desde la base de datos -->
+              <option value="apuntes">Apuntes</option>
+              <option value="parcial">Parcial</option>
+              <option value="resumen">Resumen</option>
+              <option value="guia">Guía</option>
+            </select>
+            <div class="form-text text-light">Mantén presionado Ctrl (o Cmd en Mac) para seleccionar múltiples tags.</div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer con botón de subir -->
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="uploadDocumentForm" class="btn" style="background-color: #c0392b; color: white;">Subir documento</button>
+      </div>
+    </div>
+  </div>
+</div>
