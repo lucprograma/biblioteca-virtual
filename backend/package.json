@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/facudiblasio17/centro-estudiantes#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

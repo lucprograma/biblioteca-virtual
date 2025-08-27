@@ -1,7 +1,7 @@
 FROM node:lts AS development
 
 ENV CI=true
-ENV PORT=3000
+ENV PORT=5173
 
 WORKDIR /code
 COPY package.json /code/package.json
@@ -9,7 +9,7 @@ COPY package-lock.json /code/package-lock.json
 RUN npm install
 COPY . /code
 
-CMD [ "npm", "dev" ]
+CMD [ "npm", "run", "dev"]
 
 FROM development AS builder
 
