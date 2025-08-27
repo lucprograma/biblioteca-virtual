@@ -1,12 +1,8 @@
 import express from 'express';
-import { login, register } from '../controllers/auth.controller.js';
-import { loginSchema, registerSchema } from '../schemas/auth.schema.js';
 import validateSchema from '../middlewares/validateSchema.js';
 import chkToken from '../middlewares/checkToken.js';
 import { login, register,updateProfile,deleteProfile ,deleteThis, logout,getUsersAdmin} from '../controllers/auth.controller.js';
 import { loginSchema, registerSchema,patchUserSchema } from '../schemas/auth.schema.js';
-import validateSchema from '../middlewares/validateSchema.js';//middleware para validar el esquema
-import chkToken from '../middlewares/checkToken.js';//middleware para verificar el token
 import checkAdmin from '../middlewares/checkAdmin.js';//midleware para verificar si es admin
 
 
