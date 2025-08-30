@@ -78,11 +78,10 @@ export const getUsersAdmin = async (req, res) => {
 //controlador login
 export const login = async (req, res) => {
   const { email, password } = req.body;
-
+  const mail = email
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email }, attributes: ["email", "password"]});
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
@@ -107,10 +106,10 @@ export const login = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { name, email, password, role, dni } = req.body;
-
+  const { name, email, password, dni } = req.body;
+  console.log("dsasa");
   try {
-    const exists = await User.findOne({ where: { email } });
+    const exists = await User.findOne({ where: { email }, attributes: ["email"] });
     if (exists) return res.status(400).json({ message: 'El email ya está registrado' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -119,7 +118,6 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
       dni
     });
 

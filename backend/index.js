@@ -9,16 +9,18 @@ import documentsRoutes from './routes/documents.routes.js';
 import folderRoutes from './routes/folder.routes.js';
 import newsRoutes from './routes/news.route.js';
 import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
-
+import cors from 'cors';
 const app = express();
-
+app.use(cors());
 // Middleware para que pueda leer JSON
 app.use(express.json());
+app.use(express.urlencoded())
 app.use(cookieParser());
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
 app.use('/api/news', newsRoutes);
-
+app.use('/api/folders', folderRoutes)
+app.use('/api/documents', documentsRoutes)
 // Ruta de prueba base
 app.get('/', (req, res) => {
   res.send('API Centro Estudiantes funcionando');

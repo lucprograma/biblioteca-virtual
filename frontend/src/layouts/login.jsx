@@ -9,8 +9,11 @@ const LoginContent = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     try{
-      const res = await fetch("http://localhost:3000/api/auth", {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
+        headers: {
+          "Content-Type": 'application/json'
+        },
         body: JSON.stringify({
           email: email,
           password: email,
@@ -18,7 +21,7 @@ const LoginContent = () => {
       });
       if (!res.ok) {
         alert("Credenciales inválidas. Por favor, inténtalo de nuevo.");
-
+        return
       }
       const data = res.json();
       console.log("Login successful:", data);
@@ -36,13 +39,6 @@ const LoginContent = () => {
     className="container min-vh-100 d-flex align-items-center justify-content-center"
     style={{ backgroundColor: "rgb(31, 31, 31)" }}
   >
-    {/* 
-    <div className="position-absolute top-0 end-0 m-3">
-      <a href="/register" className="text-white text-decoration-none small">
-        ¿No tienes cuenta? Crea una
-      </a>
-    </div> 
-    */}
     <form
       className="bg-dark p-5 rounded shadow"
       style={{ minWidth: 400, maxWidth: 600, width: "100%" }}
@@ -81,6 +77,16 @@ const LoginContent = () => {
       >
         Entrar
       </button>
+      <p style={{ color: "white"}} className="mt-3">
+        No tenes una cuenta?,&nbsp;
+      <a href="" onClick={
+        (event) => {
+          event.preventDefault();
+          navigate("/signIn");
+        }
+      }>
+         crea una
+      </a></p>
     </form>
   </div>
 );}

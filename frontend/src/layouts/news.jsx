@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from "react";
+import StateMessage from "../components/stateMesagge";
 
 const News = () => {
   const fetchNews = async () => {
     // const response = await fetch("http://localhost:3000/api/news");
-    const news = [
-      {
-        news_id: 1,
-        title: "dsaafs",
-        content: "ldksafja"
-      },
-      {
-        news_id: 2,
-        title: "dsaafs",
-        content: "ldksafja"
-
-      }
-    ];
+    const response = await fetch("http://localhost:3000/api/news/");
+    const news = response.json();
+    console.log(news) 
     return news
   }
   const [news, setNews] = useState([]);
   useEffect(() => {
     fetchNews().then(setNews);
   }, []);
-    const renderNews = (news) => {
-    console.table(news)
+    const renderNews = (newsArray) => {
+    if(newsArray.message){
+      return (<StateMessage message= "No hay noticias que mostrar"/>)}
     return(
-      news.map(
+      
+      newsArray.map(
         item => (
         <div key={item.news_id} className="row justify-content-center pt-3 pb-3">
         <div className="col-md-8">
@@ -56,20 +49,8 @@ const News = () => {
       className="container-lg justify-content-center"
       style={{ maxHeight: "80vh", overflowY: "auto" }}
     >
-        {news.length === 0 ? (
-  <div className="col-12 d-flex justify-content-center pb-5 pt-5">
-    <div
-      style={{
-        width: '100%',
-        backgroundColor: '#f0f0f0ff', // gris claro
-        borderRadius: '12px',       // bordes redondeados
-        padding: '2rem',
-        textAlign: 'center'
-      }}
-    >
-      no se han encontrado documentos
-    </div>
-  </div>
+        {news.length < 1 ? (
+  <StateMessage message= "No se encontraron noticias"/>
 ) : (
   
   renderNews(news)

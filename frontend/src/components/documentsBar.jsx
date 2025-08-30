@@ -5,8 +5,9 @@ const DocumentsBar = ({ folderState }) => {
   const [folders, setFolders] = useState([]);
   const getFolderStructure = async () => {
     try{
-      const folders = await fetch("http://localhost:3000/api/folders");
+      const folders = await fetch("http://localhost:3000/api/folders/");
       const data = await folders.json();
+      console.table("data collected", data)
       return data;
       }  
     catch(error){
@@ -89,7 +90,7 @@ const DocumentsBar = ({ folderState }) => {
     <div className="offcanvas-body" >
       <ul className="list-unstyled" ref={baseUlref}>
       
-           {renderBar(folders)}
+           {folders.length > 0 ? renderBar(folders) : ""}
         
       </ul>
     </div>
