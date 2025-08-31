@@ -11,7 +11,8 @@ import News from './layouts/news'
 import LoginContent from './layouts/login'
 import DocumentBarLayout from './layouts/DocumentBarLayout'
 import CreateDocument from './components/uploadDocument';
-import SignInForm from './layouts/sign'
+import SignInForm from './layouts/sign';
+import UserActivationTable from './layouts/userActivationList';
 function App() {
   const [count, setCount] = useState(0)
   const [folderID, setFolderID] = useState(null);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/noticias" element={<ContentRenderer> <News/></ContentRenderer>} />
           <Route path="/login" element={<ContentRenderer> <LoginContent/></ContentRenderer>} />
           <Route path="/signIn" element={<ContentRenderer> <SignInForm/></ContentRenderer>} />
+          <Route path="/activation" element={<ContentRenderer> <UserActivationTable/></ContentRenderer>} />
     </Routes>
     </Router>
   )

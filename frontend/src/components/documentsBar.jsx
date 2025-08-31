@@ -18,9 +18,9 @@ const DocumentsBar = ({ folderState }) => {
     getFolderStructure().then(setFolders);
   }, []);
   const renderBar = (folderList) => {
-      if(!folderList){
+      if(!folderList || typeof folderList[0].folder_id === 'undefined'){
         return (
-          <p>Folders not found</p>
+          <p className="text-white">Folders not found</p>
         )
       }
       console.log(folderList)
@@ -90,7 +90,7 @@ const DocumentsBar = ({ folderState }) => {
     <div className="offcanvas-body" >
       <ul className="list-unstyled" ref={baseUlref}>
       
-           {folders.length > 0 ? renderBar(folders) : ""}
+           {folders && folders.length > 0 ? renderBar(folders) : <p className="text-white">Folders not found</p>}
         
       </ul>
     </div>

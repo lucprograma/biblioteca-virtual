@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/Users.js';
 import { CronJob } from 'cron';
 import authService from '../services/auth.service.js';
+import { where } from 'sequelize';
 //controlador get por id o todo
 
 
@@ -45,6 +46,31 @@ export const disableInactiveUsers = async (req, res) =>
 
 
   }
+// Obtener usuarios inactivos
+export const getUnactive = async (req, res) => {
+  try {
+    // Cuando el atributo is_active es falso se obtienen los usuarios
+    const unactiveUsers = await User.findAll({
+      where: { is_active: false },
+      attributes: ['email', 'name', 'user_id', 'is_active'],
+    });
+
+    if (unactiveUsers.length === 0) {
+      return res.status(404).json({
+        message: 'No se encontraron usuarios inactivos',
+      });
+    }
+
+    console.table(unactiveUsers.map(u => u.toJSON())); // Para ver bien los datos
+    return res.status(200).json(unactiveUsers);
+  } catch (error) {
+    console.error("Error en getUnactive:", error);
+    res.status(500).json({ 
+      message: 'Error al obtener usuarios', 
+      error: error.message 
+    });
+  }
+};
 
 //controlador get por id o todo
 export const getUsersAdmin = async (req, res) => {
@@ -78,9 +104,8 @@ export const getUsersAdmin = async (req, res) => {
 //controlador login
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  const mail = email
   try {
-    const user = await User.findOne({ where: { email }, attributes: ["email", "password"]});
+    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id"]});
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
@@ -94,7 +119,7 @@ export const login = async (req, res) => {
     res.cookie('token', token, {
     httpOnly: true,
     secure: false, 
-    sameSite: 'Strict',
+    sameSite: 'lax',
     maxAge: 60 * 60 * 1000 // 1 hora antes de expirar
   });
 

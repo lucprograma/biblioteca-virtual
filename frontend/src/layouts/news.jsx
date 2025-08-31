@@ -14,7 +14,7 @@ const News = () => {
     fetchNews().then(setNews);
   }, []);
     const renderNews = (newsArray) => {
-    if(newsArray.message){
+    if(typeof newsArray[0].news_id === 'undefined'){
       return (<StateMessage message= "No hay noticias que mostrar"/>)}
     return(
       

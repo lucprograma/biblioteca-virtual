@@ -14,16 +14,17 @@ const LoginContent = () => {
         headers: {
           "Content-Type": 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
           email: email,
-          password: email,
+          password: password,
         })
       });
       if (!res.ok) {
-        alert("Credenciales inválidas. Por favor, inténtalo de nuevo.");
+        alert(`Credenciales inválidas. Por favor, inténtalo de nuevo.${res}` );
         return
       }
-      const data = res.json();
+      const data = await res.json();
       console.log("Login successful:", data);
       return navigate("/");
     }
