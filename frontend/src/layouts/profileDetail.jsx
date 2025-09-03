@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-
+import { Alert } from "../components/Alert";
+import { AlertButton } from "../components/AlertButton";
+import { useNavigate } from "react-router-dom";
+import { useGetUser } from "../hooks/getUser";
 function ProfilePanel() {
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
@@ -7,17 +10,14 @@ function ProfilePanel() {
     email: "",
   });
   const [editing, setEditing] = useState(false);
-
+  const [showAlert, setShowAlert] = useState(false)
+  const navigate = useNavigate();
   useEffect(() => {
     // Obtener info del usuario
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/tokenchk", {
-          method: "post",
-          credentials: "include", // envía la cookie automáticamente
-        });
-        if (!res.ok) throw new Error("No autorizado");
-        const data = await res.json();
+        const {data} = await useGetUser();
+        if(!data) throw new Error("Cannot get user");
         setUser(data);
         setFormData({
           name: data.name || "",
@@ -27,6 +27,7 @@ function ProfilePanel() {
         console.log(err);
       }
     };
+    
 
     fetchUser();
   }, []);
@@ -34,15 +35,45 @@ function ProfilePanel() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSave = async () => {
+  const handleSaveUser = async (data) => {
     try {
       const res = await fetch("http://localhost:3000/api/auth/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
+
+      if (!res.ok) throw new Error("Error al actualizar perfil");
+      return res;
+    }
+    catch (err) {
+      console.log(err);
+      throw new Error("Error al actualizar perfil");
+    }
+  }
+
+  const deactivateUser = async () => {
+    try{
+      const res = await handleSaveUser({
+        is_active: false
+      });
+      if (!res.ok) throw new Error("Error al actualizar perfil");
+     const logoutRes = await fetch("http://localhost:3000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      
+      if (!res.ok) throw new Error("Error al cerrar sesión");
+      navigate("/login")
+    }
+    catch{
+      console.log(err);
+    }
+  }
+  const handleSave = async () => {
+    try {
+      const res = await handleSaveUser(formData);
 
       if (!res.ok) throw new Error("Error al actualizar perfil");
 
@@ -58,6 +89,15 @@ function ProfilePanel() {
   if (!user) return <div>Cargando...</div>;
 
   return (
+    <>
+    {/*Alerta*/}
+    <Alert show={showAlert} msg={"¿Estas seguro de querer dar de baja tu cuenta?"}>
+              <AlertButton onClick={()=>{
+                deactivateUser()
+                setShowAlert(false)
+              }} label={"Si"}></AlertButton>
+              <AlertButton onClick={()=>{setShowAlert(false)}} label={"No"}></AlertButton>
+    </Alert>
     <div className="container mt-4 mb-3">
       <div
         className="card p-4"
@@ -75,7 +115,7 @@ function ProfilePanel() {
             value={formData.name}
             onChange={handleChange}
             disabled={!editing}
-          />
+            />
         </div>
 
         {/* Email */}
@@ -91,27 +131,21 @@ function ProfilePanel() {
           />
         </div>
 
-        {/* Teléfono */}
-        {/* <div className="mb-3">
-          <label className="form-label">Teléfono</label>
-          <input
-            type="text"
-            className="form-control"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div> */}
-
         {/* Botones */}
         {!editing ? (
+          <>
           <button
-            className="btn btn-primary"
-            onClick={() => setEditing(true)}
+          className="btn btn-primary"
+          onClick={() => setEditing(true)}
           >
             Editar
           </button>
+          <button
+          className="btn btn-danger mt-3"
+          onClick={() => { setShowAlert(true)}}
+          >
+            Dar de baja usuario
+          </button></>
         ) : (
           <>
             <button className="btn btn-success me-2" onClick={handleSave}>
@@ -126,7 +160,7 @@ function ProfilePanel() {
           </>
         )}
       </div>
-    </div>
+    </div></>
   );
 }
 

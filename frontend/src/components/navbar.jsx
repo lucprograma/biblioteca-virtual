@@ -95,17 +95,7 @@ const Navbar = ({ children }) => {
         </ul>
          {/* Logout a la derecha */}
         {user && (
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            {/* <li className="nav-item">
-              <button
-                onClick={handleLogout}
-                className="nav-link btn btn-link"
-                style={{ cursor: "pointer" }}
-              >
-                Logout
-              </button>
-            </li> */}
-            
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">          
             <ProfileCard user={user} handleLogout={handleLogout}/>
           </ul>
         )}

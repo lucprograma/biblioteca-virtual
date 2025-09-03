@@ -26,7 +26,8 @@ const LoginContent = () => {
       }
       const data = await res.json();
       console.log("Login successful:", data);
-      return navigate("/");
+      navigate("/")
+      navigate(0)
     }
     catch (error) {
       console.error("Error during login:", error);

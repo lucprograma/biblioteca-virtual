@@ -14,6 +14,8 @@ import CreateDocument from './components/uploadDocument';
 import SignInForm from './layouts/sign';
 import UserActivationTable from './layouts/userActivationList';
 import ProfilePanel from './layouts/profileDetail'
+import { Alert } from './components/Alert'
+import { AlertButton } from './components/AlertButton'
 function App() {
   const [count, setCount] = useState(0)
   const [folderID, setFolderID] = useState(null);
@@ -26,7 +28,9 @@ function App() {
           <Route path="/login" element={<ContentRenderer> <LoginContent/></ContentRenderer>} />
           <Route path="/signIn" element={<ContentRenderer> <SignInForm/></ContentRenderer>} />
           <Route path="/activation" element={<ContentRenderer> <UserActivationTable/></ContentRenderer>} />
-          <Route path="/profile" element={<ContentRenderer> <ProfilePanel/></ContentRenderer>} />
+          <Route path="/profile" element={<ContentRenderer> 
+            <ProfilePanel/>
+          </ContentRenderer>} />
     </Routes>
     </Router>
   )
