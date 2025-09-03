@@ -105,13 +105,13 @@ export const getUsersAdmin = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id"]});
+    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id", "name"]});
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
     const token = jwt.sign(
-      { user_id: user.user_id, email: user.email, role: user.role },
+      { user_id: user.user_id, email: user.email, role: user.role, name: user.name },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -157,8 +157,8 @@ export const patchProfile = async (req, res) => {
   try {  
    
     let userId =  req.body?.user_id ||req.user?.user_id ;// viene del token o req body
-    //console.log('userId:', userId);
-    //console.log(' body:', req.body);
+    console.log('userId:', userId);
+    console.log(' body:', req.body);
    
     //console.log ('ID del usuario a actualizar controlador:', userId);
     const data = req.body; 

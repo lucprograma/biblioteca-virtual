@@ -10,11 +10,13 @@ import folderRoutes from './routes/folder.routes.js';
 import newsRoutes from './routes/news.route.js';
 import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
 import cors from 'cors';
+import path from "path";
 const app = express();
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
+app.use(express.static("uploads"))
 // Middleware para que pueda leer JSON
 app.use(express.json());
 app.use(express.urlencoded())
