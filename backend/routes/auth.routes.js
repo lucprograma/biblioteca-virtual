@@ -4,7 +4,7 @@ import chkToken from '../middlewares/checkToken.js';
 import { login, register,patchProfile,deleteProfile ,deleteThis, logout,getUsersAdmin, getUnactive} from '../controllers/auth.controller.js';
 import { loginSchema, registerSchema,patchUserSchema } from '../schemas/auth.schema.js';
 import checkAdmin from '../middlewares/checkAdmin.js';//midleware para verificar si es admin
-
+import { authorize } from '../middlewares/Authorize.js';
 
 const router = express.Router();
 
