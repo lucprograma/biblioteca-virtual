@@ -11,10 +11,10 @@ import PublicLayout from './layouts/PublicLayout' // ✅ Import agregado
 // Vistas públicas
 import Home from './layouts/homeContent'
 import Documents from './layouts/documents'
-import News from './pages/News'
+import News from './layouts/news'
 import LoginContent from './layouts/login'
 
-// Componentes relacionados a documentos
+// Componentes relacionimport News from './layouts/news'ados a documentos
 import DocumentBarLayout from './layouts/DocumentBarLayout'
 
 import CreateDocument from './components/uploadDocument';
@@ -51,6 +51,7 @@ function App() {
             </ContentRenderer>
           }
         />
+      </Routes>
     </Router>
   )
 }
