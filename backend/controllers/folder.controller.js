@@ -3,6 +3,7 @@ import Folder from '../models/folder.js'
 import Document from '../models/Documents.js'
 export const getFolderStructure = async (req, res) => {
     try{
+        console.log("Fetching folders...")
         const folders = await Folder.findAll(
             {
                 where: {parent_id: null},

@@ -16,8 +16,13 @@ import LoginContent from './layouts/login'
 
 // Componentes relacionados a documentos
 import DocumentBarLayout from './layouts/DocumentBarLayout'
-import CreateDocument from './components/uploadDocument'
 
+import CreateDocument from './components/uploadDocument';
+import SignInForm from './layouts/sign';
+import UserActivationTable from './layouts/userActivationList';
+import ProfilePanel from './layouts/profileDetail'
+import { Alert } from './components/Alert'
+import { AlertButton } from './components/AlertButton'
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
 
@@ -27,33 +32,17 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ContentRenderer>
-              <Home />
-            </ContentRenderer>
-          }
-        />
-        <Route
-          path="/documentos"
-          element={
-            <ContentRenderer>
-              <DocumentBarLayout folderState={setFolderID} />
-              <Documents folder_id={folderID} />
-              <CreateDocument />
-            </ContentRenderer>
-          }
-        />
-        <Route
-          path="/noticias"
-          element={
-            <PublicLayout>
-              <News />
-            </PublicLayout>
-          }
-        />
+
+    <Routes>
+          <Route path="/" element={<ContentRenderer> <Home/></ContentRenderer>} />
+          <Route path="/documentos" element={<ContentRenderer><DocumentBarLayout folderState={setFolderID}></DocumentBarLayout> <Documents folder_id={folderID}/> <CreateDocument/></ContentRenderer>} />
+          <Route path="/noticias" element={<ContentRenderer> <News/></ContentRenderer>} />
+          <Route path="/login" element={<ContentRenderer> <LoginContent/></ContentRenderer>} />
+          <Route path="/signIn" element={<ContentRenderer> <SignInForm/></ContentRenderer>} />
+          <Route path="/activation" element={<ContentRenderer> <UserActivationTable/></ContentRenderer>} />
+          <Route path="/profile" element={<ContentRenderer> 
+            <ProfilePanel/>
+          </ContentRenderer>} />
         <Route
           path="/gestor-noticias"
           element={
@@ -62,15 +51,6 @@ function App() {
             </ContentRenderer>
           }
         />
-        <Route
-          path="/login"
-          element={
-            <ContentRenderer>
-              <LoginContent />
-            </ContentRenderer>
-          }
-        />
-      </Routes>
     </Router>
   )
 }
