@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes.js';
 import documentsRoutes from './routes/documents.routes.js';
 import folderRoutes from './routes/folder.routes.js';
 import newsRoutes from './routes/news.route.js';
+import careerRoutes from './routes/careers.routes.js';
 import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
 
 const app = express();
@@ -18,7 +19,7 @@ app.use(cookieParser());
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
 app.use('/api/news', newsRoutes);
-
+app.use('/api/careers', careerRoutes);
 // Ruta de prueba base
 app.get('/', (req, res) => {
   res.send('API Centro Estudiantes funcionando');
