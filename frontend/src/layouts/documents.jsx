@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PdfViewer from "../components/PdfViewer";
 
 const openPdfOverlay = (pdfPath) => {
   // Aquí puedes implementar la lógica para abrir el PDF en un overlay/modal
@@ -6,7 +7,13 @@ const openPdfOverlay = (pdfPath) => {
 };
 
 const Documents = ({folder_id}) => {
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [show, setShow] = useState(false);
 
+  const openPdf = (url) => {
+    setPdfUrl(url);
+    setShow(true);
+  };
   const [documents, setDocuments] = useState([]);
   const fetchDocuments = async () => {
     try{
@@ -47,7 +54,7 @@ const Documents = ({folder_id}) => {
             <div className="card-footer d-flex justify-content-center">
               <button
                 className="btn btn-danger btn-sm px-4 py-2"
-                onClick={() => openPdfOverlay("./dummy.pdf")}
+                onClick={() => openPdf(`http://localhost:3000/uploads/${document.content}`)}
               >
                 Open
               </button>
@@ -64,7 +71,8 @@ const Documents = ({folder_id}) => {
   return(
   <>
   <main>
-    <div id="cards-container" className="container-md mt-4">
+      <PdfViewer show={show} pdfUrl={pdfUrl} onClose={() => setShow(false)} />
+      <div id="cards-container" className="container-md mt-4">
       <div className="row" id="cards-row">
     {documents.length === 0 ? (
   <div className="col-12 d-flex justify-content-center pb-5 pt-5">
