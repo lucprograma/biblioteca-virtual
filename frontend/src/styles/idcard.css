@@ -1,0 +1,122 @@
+/* 🔧 Evitar cortes raros dentro del carnet */
+.idcard,
+.idcard * {
+  word-break: normal; /* no cortar palabras a la mitad */
+  overflow-wrap: anywhere; /* permite salto entre palabras largas */
+  hyphens: auto; /* guiones suaves si el idioma lo permite */
+}
+
+/* Si algún CSS global aplica truncado, desactivalo aquí dentro */
+.idcard .text-truncate {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* Asegurar centrado cuando el layout tenga paneles laterales */
+.carnet-wrapper {
+  width: 100%;
+}
+
+/* Tamaño cómodo en pantalla; proporción crédito */
+
+.idcard {
+  width: 360px;
+  height: 220px;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.idcard-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.idcard-header.back {
+   height: 48px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.idcard-footer {
+  height: 36px;
+  background: #f8f9fa;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* Versión aumentada para modal de presentación */
+.idcard-present .idcard {
+  width: 460px;
+  height: 281px;
+}
+
+/* Impresión exacta CR80: 85.6mm x 54mm */
+@media print {
+  @page {
+    size: 86mm 54mm;
+    margin: 0;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .idcard,
+  .idcard * {
+    visibility: visible;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .idcard {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 85.6mm !important;
+    height: 54mm !important;
+    box-shadow: none !important;
+  }
+  .idcard-header,
+  .idcard-footer {
+    color: #fff;
+  }
+}
+
+/* Forzá centrado del contenedor interno en páginas con paneles */
+.carnet-holder {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Texto: sin cortes raros en la tarjeta */
+.idcard,
+.idcard * {
+  word-break: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.idcard3 {
+  font-size: x-large;
+  font-weight: bolder;
+  padding-left: 60px;
+}
+.idcard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #003366;
+  color: white;
+  margin: 0;
+  border-radius: 20px 20px 0 0;
+}
