@@ -4,6 +4,7 @@ import Folder from '../models/folder.js';
 
 export const getAllDocuments = async (req, res) => {
     try {
+        console.log("fetching all documents...")
         const documents = await Document.findAll({
             include: [{
                 model: Folder,

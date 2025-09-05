@@ -89,6 +89,7 @@ export default function SignInForm() {
             placeholder="tucorreo@ejemplo.com"
           />
         </div>
+
         <div className="mb-6">
           <label className="block text-white mb-1">Carrera</label><br/>
           <input
@@ -102,7 +103,6 @@ export default function SignInForm() {
           />
         </div>
 
-        
         <div className="mb-6">
           <label className="block text-white mb-1">DNI</label><br/>
           <input
@@ -117,7 +117,6 @@ export default function SignInForm() {
         </div>
 
         <PasswordInput value={formData.password} onChange={handleChange} />
-
 
       <button
         type="submit"

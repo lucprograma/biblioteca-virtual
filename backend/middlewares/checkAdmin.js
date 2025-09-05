@@ -1,4 +1,4 @@
-const checkAdmin = (req, res, next) => {
+export default function checkAdmin(req, res, next) {
   try {
     if (req.user && req.user.role === 'admin') {
       return next(); // El usuario es admin, continúa
@@ -9,4 +9,4 @@ const checkAdmin = (req, res, next) => {
   }
 };
 
-export default checkAdmin;
+

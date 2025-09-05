@@ -1,8 +1,14 @@
 import {React, useState, useEffect }from "react";
 
+import ProfileCard from "./profileCard";
+import { useNavigate } from "react-router";
+
+
 const Navbar = ({ children }) => {
  
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -35,7 +41,8 @@ const Navbar = ({ children }) => {
       if (!res.ok) throw new Error("Error al cerrar sesión");
 
       setUser(null); // limpiar estado
-      window.location.href = "/login"; // redirigir al login
+      navigate("/login")
+
     } catch (err) {
       console.log(err);
     }
@@ -75,6 +82,7 @@ const Navbar = ({ children }) => {
             </a>
           </li>
 
+
           <li className="nav-item">
             <a className="nav-link active" aria-current="page" href="/carnet">
               Carnet
@@ -99,16 +107,9 @@ const Navbar = ({ children }) => {
         </ul>
          {/* Logout a la derecha */}
         {user && (
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <button
-                onClick={handleLogout}
-                className="nav-link btn btn-link"
-                style={{ cursor: "pointer" }}
-              >
-                Logout
-              </button>
-            </li>
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">          
+            <ProfileCard user={user} handleLogout={handleLogout}/>
+
           </ul>
         )}
     

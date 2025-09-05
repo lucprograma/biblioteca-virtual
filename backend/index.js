@@ -10,15 +10,23 @@ import folderRoutes from './routes/folder.routes.js';
 import newsRoutes from './routes/news.route.js';
 import careerRoutes from './routes/careers.routes.js';
 import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
-
+import cors from 'cors';
+import path from "path";
 const app = express();
-
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+app.use("/uploads", express.static("uploads"))
 // Middleware para que pueda leer JSON
 app.use(express.json());
+app.use(express.urlencoded())
 app.use(cookieParser());
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
 app.use('/api/news', newsRoutes);
+app.use('/api/folders', folderRoutes)
+app.use('/api/documents', documentsRoutes)
 app.use('/api/careers', careerRoutes);
 // Ruta de prueba base
 app.get('/', (req, res) => {

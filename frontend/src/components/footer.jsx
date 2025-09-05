@@ -12,7 +12,7 @@ const Footer = () => (
     >
       {/* Left */}
       <div className="me-5">
-        <span>Get connected with us on social networks:</span>
+        <span>Mantenete conectado en las redes sociales</span>
       </div>
       {/* Right */}
       <div>
@@ -41,22 +41,21 @@ const Footer = () => (
       <div className="container text-center text-md-start mt-5">
         <div className="row mt-3">
           <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <h6 className="text-uppercase fw-bold">Company name</h6>
+            <h6 className="text-uppercase fw-bold">Biblioteca ISFDyT N°2</h6>
             <hr
               className="mb-4 mt-0 d-inline-block mx-auto"
               style={{
                 width: "60px",
                 backgroundColor: "#7c4dff",
                 height: "2px",
+                textAllign: "justify"
               }}
             />
             <p>
-              Here you can use rows and columns to organize your footer
-              content. Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
+        Sistema desarrollado por y para estudiantes de todas las carreras del <b>Instituto Superior de Formacion Docente y Técnica N°2 de Azul</b>. Destinado compartir información y textos correspondiente a cada una de las carreras.
             </p>
           </div>
-          <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          {/* <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
             <h6 className="text-uppercase fw-bold">Products</h6>
             <hr
               className="mb-4 mt-0 d-inline-block mx-auto"
@@ -86,9 +85,9 @@ const Footer = () => (
                 Bootstrap Angular
               </a>
             </p>
-          </div>
+          </div> */}
           <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <h6 className="text-uppercase fw-bold">Useful links</h6>
+            <h6 className="text-uppercase fw-bold">links utiles</h6>
             <hr
               className="mb-4 mt-0 d-inline-block mx-auto"
               style={{
@@ -119,7 +118,7 @@ const Footer = () => (
             </p>
           </div>
           <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <h6 className="text-uppercase fw-bold">Contact</h6>
+            <h6 className="text-uppercase fw-bold">Contacto</h6>
             <hr
               className="mb-4 mt-0 d-inline-block mx-auto"
               style={{
