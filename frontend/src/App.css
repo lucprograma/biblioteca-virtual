@@ -57,3 +57,61 @@
 .custom-navbar .nav-link.disabled {
   color: #ccc !important;
 }
+
+*{
+    box-sizing: border-box;
+}
+.main-id{
+    height: 330px;
+    width: 500px;
+    border: 1px solid black;
+    margin: 50px auto;
+    border-radius: 22px;
+    background-color: #F5F5F5;
+}
+
+hr{
+    margin: 0;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #003366;
+    padding: 3px 0 8px 0;
+    
+}
+.logo img{
+    width: 200px;
+    height: 50px;
+}
+.details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+}
+.details img{
+    width: 120px;
+    height: 145px;
+    margin-left: 20px;
+    border-radius: 50%;
+    margin: 10px;
+}
+.details2{
+    margin: auto;
+    font-size: larger;
+}
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #003366;
+    color: white;
+    
+}
+.sing{
+  margin-bottom: 2px;
+  margin-left: -52px;
+
+}

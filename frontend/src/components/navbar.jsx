@@ -1,11 +1,15 @@
 import {React, useState, useEffect }from "react";
+
 import ProfileCard from "./profileCard";
 import { useNavigate } from "react-router";
+
 
 const Navbar = ({ children }) => {
  
   const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -38,6 +42,7 @@ const Navbar = ({ children }) => {
 
       setUser(null); // limpiar estado
       navigate("/login")
+
     } catch (err) {
       console.log(err);
     }
@@ -77,6 +82,13 @@ const Navbar = ({ children }) => {
             </a>
           </li>
 
+
+          <li className="nav-item">
+            <a className="nav-link active" aria-current="page" href="/carnet">
+              Carnet
+            </a>
+          </li>
+
           {!user && (
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/login">
@@ -97,6 +109,7 @@ const Navbar = ({ children }) => {
         {user && (
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">          
             <ProfileCard user={user} handleLogout={handleLogout}/>
+
           </ul>
         )}
     

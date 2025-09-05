@@ -6,6 +6,7 @@ import { useEffect } from "react";
 export default function UserActivationTable() {
   const [users, setUsers] = useState([]);
   const [checkUsersFlag, setCheckUsersFlag] = useState(true)
+
   const fetchUnactive = async () => {
     try{
         const respose = await fetch("http://localhost:3000/api/auth/unactive");
@@ -43,6 +44,7 @@ export default function UserActivationTable() {
   const handleDeactivate = (id) => {
     console.log("Desactivando usuario con ID:", id);
     fetchActivate(id, false)
+
   };
   const renderUsers = () => {
     if(!users || typeof users[0] === 'undefined'){
@@ -82,6 +84,7 @@ export default function UserActivationTable() {
       console.log(result)
     })
   }, [checkUsersFlag])
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
       <div style={{ width: "80%" }}>

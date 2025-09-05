@@ -2,15 +2,18 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './styles/idcard.css'
 // Layout general
 import ContentRenderer from './layouts/contentRenderer'
 import PublicLayout from './layouts/PublicLayout' 
 
-// Vistas públicas
+
 import Home from './layouts/homeContent'
+import Navbar from './components/navbar'
 import Documents from './layouts/documents'
+
 import News from './layouts/news'
 import LoginContent from './layouts/login'
 
@@ -22,15 +25,18 @@ import SignInForm from './layouts/sign';
 import UserActivationTable from './layouts/userActivationList';
 import ProfilePanel from './layouts/profileDetail'
 
+
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
 import CarnetPage from './pages/CarnetPage'
+import './styles/idcard.css'
 function App() {
   const [count, setCount] = useState(0)
-  const [folderID, setFolderID] = useState(null)
+  const [folderID, setFolderID] = useState(null);
 
   return (
     <Router>
+
 
     <Routes>
           <Route path="/" element={<ContentRenderer> <Home/></ContentRenderer>} />
