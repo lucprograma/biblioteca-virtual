@@ -4,33 +4,26 @@ import { AlertButton } from "../components/AlertButton";
 import { useNavigate } from "react-router-dom";
 import { useGetUser } from "../hooks/getUser";
 function ProfilePanel() {
-  const [user, setUser] = useState(null);
+  const {user} =  useGetUser();
   const [formData, setFormData] = useState({
-    name: "",
+     name: "",
     email: "",
   });
   const [editing, setEditing] = useState(false);
   const [showAlert, setShowAlert] = useState(false)
   const navigate = useNavigate();
+  
   useEffect(() => {
-    // Obtener info del usuario
-    const fetchUser = async () => {
-      try {
-        const {data} = await useGetUser();
-        if(!data) throw new Error("Cannot get user");
-        setUser(data);
-        setFormData({
-          name: data.name || "",
-          email: data.email || "",
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    
+  if (user) {
+    setFormData({
+      name: user.name || "",
+      email: user.email || "",
+    });
+  }
+}, [user]);
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, [user]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -78,7 +71,6 @@ function ProfilePanel() {
       if (!res.ok) throw new Error("Error al actualizar perfil");
 
       const data = await res.json();
-      setUser(data);
       setEditing(false);
       alert("Perfil actualizado correctamente");
     } catch (err) {

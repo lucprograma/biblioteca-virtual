@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-
+import './styles/idcard.css'
 // Layout general
 import ContentRenderer from './layouts/contentRenderer'
 import PublicLayout from './layouts/PublicLayout' 
@@ -24,7 +24,7 @@ import ProfilePanel from './layouts/profileDetail'
 
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
-
+import CarnetPage from './pages/CarnetPage'
 function App() {
   const [count, setCount] = useState(0)
   const [folderID, setFolderID] = useState(null)
@@ -50,6 +50,7 @@ function App() {
             </ContentRenderer>
           }
         />
+         <Route path="/carnet" element={<ContentRenderer><CarnetPage/></ContentRenderer>} />
       </Routes>
     </Router>
   )

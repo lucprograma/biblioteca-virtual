@@ -1,16 +1,25 @@
+import { useEffect, useState } from "react";
 
+export function useGetUser() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-export async function useGetUser() {
-          try {
-        const res = await fetch("http://localhost:3000/api/auth/tokenchk", {
-          method: "post",
-          credentials: "include", // envía la cookie automáticamente
-        });
+  useEffect(() => {
+    let alive = true;
+    setLoading(true);
+
+    fetch("http://localhost:3000/api/auth/tokenchk", { method: "POST", credentials: "include" })
+      .then((res) => {
         if (!res.ok) throw new Error("No autorizado");
-        const data = await res.json();
-        return { data };
-      } catch (err) {
-        console.log(err);
-      }
+        return res.json();
+      })
+      .then((data) => { if (alive) setUser(data) })
+      .catch((err) => { if (alive) setError(err.message) })
+      .finally(() => { if (alive) setLoading(false) });
 
+    return () => { alive = false };
+  }, []);
+
+  return { user, loading, error };
 }

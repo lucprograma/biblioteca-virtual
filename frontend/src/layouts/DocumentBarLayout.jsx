@@ -8,12 +8,12 @@ const DocumentBarLayout = ({ folderState }) => {
   const [user, setUser] = useState(null);
   const fetchUser = async () => {
         try {
-          const {data} = await useGetUser();
-          if(!data) throw new Error("Cannot get user");
-          setUser(data);
+          const {user, loading, error} = await useGetUser();
+          if(!user) throw new Error("Cannot get user");
+          setUser(user);
           setFormData({
-            name: data.name || "",
-            email: data.email || "",
+            name: user.name || "",
+            email: user.email || "",
           });
         } catch (err) {
           console.log(err);

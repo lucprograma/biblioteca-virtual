@@ -67,6 +67,11 @@ function ProfileCard({ user, handleLogout }) {
               Profile
             </a>
           </li>
+          <li>
+            <a className="dropdown-item" href="/carnet">
+              Carnet
+            </a>
+          </li>
           {/* <li>
             <a className="dropdown-item" href="/settings">
               Settings
