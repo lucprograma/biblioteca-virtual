@@ -82,9 +82,11 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+    console.log('EMAIL')
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
+    console.log('PASS')
 
     const token = jwt.sign(
       { user_id: user.user_id, email: user.email, role: user.role },
@@ -107,7 +109,7 @@ export const login = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { name, email, password, role, dni } = req.body;
+  const { name, email, password, role, course, dni } = req.body;
 
   try {
     const exists = await User.findOne({ where: { email } });
@@ -120,6 +122,7 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       role,
+      course,
       dni
     });
 
@@ -150,6 +153,22 @@ export const patchProfile = async (req, res) => {
     res.json({ message: 'Perfil actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar el perfil: ' + error.message });
+  }
+};
+
+export const activateUser = async (req, res) => {
+  try {  
+   
+    let userId = req.body.user_id;
+    const affectedRows = await authService.activateUser(userId);
+
+    if (affectedRows === 0) {
+      return res.status(404).json({ message: 'No se encontró el usuario o no hubo cambios' });
+    }
+
+    res.json({ message: `Usuario ${affectedRows[1][0]['is_active'] ? 'activado' : 'desactivado'} correctamente` });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el estado la cuenta: ' + error.message });
   }
 };
 

@@ -4,6 +4,10 @@ dotenv.config();
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import sequelize from './config/db.js';
+import cors from 'cors';
+import transporter from './extra_services/nodemailer.js';
+
+//Routes
 import authRoutes from './routes/auth.routes.js';
 import documentsRoutes from './routes/documents.routes.js';
 import folderRoutes from './routes/folder.routes.js';
@@ -16,6 +20,13 @@ const app = express();
 // Middleware para que pueda leer JSON
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+    credentials: true
+  })
+);
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
 app.use('/api/news', newsRoutes);
@@ -37,3 +48,8 @@ sequelize.authenticate()
   .catch((err) => {
     console.error('Error de conexión a la BD:', err.message);
   });
+
+await transporter.verify()
+.then(
+  console.log("📨 Mail service connected succesfully!")
+);

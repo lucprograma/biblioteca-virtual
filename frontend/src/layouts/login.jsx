@@ -4,30 +4,36 @@ import { useNavigate } from "react-router";
 const LoginContent = () => {
   const navigate = useNavigate();
   const [error, setError] = React.useState(false);
+
   const tryLogin = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    try{
-      const res = await fetch("http://localhost:3000/api/auth", {
+    
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           email: email,
-          password: email,
+          password: password,
         })
       });
+
       if (!res.ok) {
         alert("Credenciales inválidas. Por favor, inténtalo de nuevo.");
-
+        return
       }
-      const data = res.json();
+
+      const data = await res.json();
       console.log("Login successful:", data);
       return navigate("/");
     }
     catch (error) {
       console.error("Error during login:", error);
       alert("Credenciales inválidas. Por favor, inténtalo de nuevo.");
-      
     }
   }
 
