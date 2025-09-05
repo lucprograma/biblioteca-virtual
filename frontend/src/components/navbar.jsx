@@ -83,12 +83,6 @@ const Navbar = ({ children }) => {
           </li>
 
 
-          <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/carnet">
-              Carnet
-            </a>
-          </li>
-
           {!user && (
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/login">
