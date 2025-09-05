@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 // Layout general
 import ContentRenderer from './layouts/contentRenderer'
-import PublicLayout from './layouts/PublicLayout' // ✅ Import agregado
+import PublicLayout from './layouts/PublicLayout' 
 
 // Vistas públicas
 import Home from './layouts/homeContent'
@@ -21,8 +21,7 @@ import CreateDocument from './components/uploadDocument';
 import SignInForm from './layouts/sign';
 import UserActivationTable from './layouts/userActivationList';
 import ProfilePanel from './layouts/profileDetail'
-import { Alert } from './components/Alert'
-import { AlertButton } from './components/AlertButton'
+
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
 
