@@ -5,6 +5,7 @@ export default function SignInForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    course:"",
     password: "",
     dni: "",
   });
@@ -89,7 +90,18 @@ export default function SignInForm() {
           />
         </div>
 
-        <PasswordInput value={formData.password} onChange={handleChange} />
+        <div className="mb-6">
+          <label className="block text-white mb-1">Carrera</label><br/>
+          <input
+            type="text"
+            name="course"
+            value={formData.course}
+            onChange={handleChange}
+            required
+            className="w-full p-2 rounded bg-neutral-700 text-black outline-none focus:ring-2 focus:ring-red-500"
+            placeholder="Ingrese su carrera"
+          />
+        </div>
 
         <div className="mb-6">
           <label className="block text-white mb-1">DNI</label><br/>
@@ -103,6 +115,8 @@ export default function SignInForm() {
             placeholder="12345678X"
           />
         </div>
+
+        <PasswordInput value={formData.password} onChange={handleChange} />
 
       <button
         type="submit"
