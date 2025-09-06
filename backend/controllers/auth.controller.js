@@ -18,12 +18,14 @@ function hasTimeLimitPassed(originalDate) {
 //LLAMA A CRON, SETEA LA VERIFICACION Y BAJA DE INACTIVIDAD DE USUARIOS CADA NOCHE A LAS 3 AM
 
 export const startCronCheckUp = async () => {
-      console.log("Ejecutando revision periodica de usuarios inactivos");
+
+    console.log("Ejecutando revision periodica de usuarios inactivos");
     const task = new CronJob("* * * * *",
-    ()=>{
-    console.log("Revisando usuarios inactivos")
+    () => {
+    console.log("Revisando usuarios inactivos");
     disableInactiveUsers();
-    },null,
+    },
+    null,
     true,
     "America/Argentina/Buenos_Aires"
 )
@@ -37,7 +39,7 @@ export const disableInactiveUsers = async (req, res) =>
   console.log(logins)
   logins.forEach(login => {
     if(hasTimeLimitPassed(login.last_login)){
-      console.log("INTENTANDO DAR DE BAJA "+login.user_id)
+      console.log("INTENTANDO DAR DE BAJA " + login.user_id)
       authService.DisableUser(String(login.user_id))
     }; // Si usuario no loggeo hace 6 meses o mas
   });
@@ -82,11 +84,9 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-    console.log('EMAIL')
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
-    console.log('PASS')
 
     const token = jwt.sign(
       { user_id: user.user_id, email: user.email, role: user.role },
