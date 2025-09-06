@@ -3,6 +3,8 @@ dotenv.config();
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
+
+import careerRoutes from './routes/careers.routes.js';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 import documentsRoutes from './routes/documents.routes.js';
