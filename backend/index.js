@@ -3,6 +3,8 @@ dotenv.config();
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
+
+import careerRoutes from './routes/careers.routes.js';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 import documentsRoutes from './routes/documents.routes.js';
@@ -13,6 +15,10 @@ import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
 import cors from 'cors';
 import path from "path";
 const app = express();
+
+
+
+
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
