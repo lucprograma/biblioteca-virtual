@@ -58,6 +58,7 @@ function App() {
         />
          <Route path="/carnet" element={<ContentRenderer><CarnetPage/></ContentRenderer>} />
       </Routes>
+ </Routes>
     </Router>
   )
 }
