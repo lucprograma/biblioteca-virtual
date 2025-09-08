@@ -72,35 +72,26 @@ async registerUser({ name, email, password, role,course, dni }) {
     try {
       const fields = [];
       const values = [];
-      
-      if(
-        data.name &&
-        data.email &&
-        hashedPassword &&
-        data.role &&
-        data.course &&
-        data.dni &&
-        typeof data.has_certificate !== 'undefined'
-      ){
-        fields.push(
-          'name = ?',
-          'email = ?',
-          'password = ?',
-          'role = ?',
-          'course = ?',
-          'dni = ?', 
-          'has_certificate = ?'
-        );
-        values.push(
-          data.name,
-          data.email,
-          hashedPassword,
-          data.role,
-          data.course,
-          data.dni,
-          data.has_certificate === true ? 1 : 0
-        );
+      const patchUser = {
+
+        name: data.name,
+        email: data.email,
+        password: hashedPassword,
+        role: data.role,
+        course: data.course,
+        dni: data.dni,
+        has_certificate: data.has_certificate
+
       }
+
+      for (const [key, value] of Object.entries(patchUser)){
+
+            value !== undefined ? (
+              key === 'password' ?
+                fields.push(`password = ?`) & values.push(value) :
+                fields.push(`${key} = ?`) & values.push(value)
+            ) : '';
+        }
 
       if (fields.length === 0) {
         throw new Error('No se enviaron campos válidos para actualizar');
