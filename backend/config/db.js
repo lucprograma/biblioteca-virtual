@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
     dialectOptions: {
       multipleStatements: true
     },
+    timezone: '-3:00',
     logging: true, // para que no muestre mucho log en consola, opcional
   }
 );

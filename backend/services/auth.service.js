@@ -111,7 +111,7 @@ async registerUser({ name, email, password, role,course, dni }) {
 
     try {
       const sql = `
-      UPDATE users SET is_active = NOT is_active WHERE user_id = ?;
+      UPDATE users SET is_active = NOT is_active, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?;
       SELECT email, is_active FROM users WHERE user_id = ?;
       `;
       const [result] = await sequelize.query(sql, {
