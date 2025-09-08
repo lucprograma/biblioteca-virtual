@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/login', validateSchema(loginSchema), login);
 router.post('/register', validateSchema(registerSchema), register);//hay que poner midleware de admin cuando llegue el momento
-router.get('/profile', chkToken,checkAdmin,getUsersAdmin)//trae todos usuario 
+router.get('/profile', chkToken,checkAdmin,getUsersAdmin)//trae todos usuarios
 //router.get('/crontest', crontest)//trae todos usuario 
 router.get('/unactive', getUnactive);//Obtiene los usuarios inactivos
 

@@ -2,36 +2,41 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import './styles/idcard.css'
 // Layout general
 import ContentRenderer from './layouts/contentRenderer'
-import PublicLayout from './layouts/PublicLayout' // ✅ Import agregado
+import PublicLayout from './layouts/PublicLayout' 
 
-// Vistas públicas
+
 import Home from './layouts/homeContent'
+import Navbar from './components/navbar'
 import Documents from './layouts/documents'
-import News from './pages/News'
+
+import News from './layouts/news'
 import LoginContent from './layouts/login'
 
-// Componentes relacionados a documentos
+// Componentes relacionimport News from './layouts/news'ados a documentos
 import DocumentBarLayout from './layouts/DocumentBarLayout'
 
 import CreateDocument from './components/uploadDocument';
 import SignInForm from './layouts/sign';
 import UserActivationTable from './layouts/userActivationList';
 import ProfilePanel from './layouts/profileDetail'
-import { Alert } from './components/Alert'
-import { AlertButton } from './components/AlertButton'
+
+
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
-
+import CarnetPage from './pages/CarnetPage'
+import './styles/idcard.css'
 function App() {
   const [count, setCount] = useState(0)
-  const [folderID, setFolderID] = useState(null)
+  const [folderID, setFolderID] = useState(null);
 
   return (
     <Router>
+
 
     <Routes>
           <Route path="/" element={<ContentRenderer> <Home/></ContentRenderer>} />
@@ -51,6 +56,8 @@ function App() {
             </ContentRenderer>
           }
         />
+         <Route path="/carnet" element={<ContentRenderer><CarnetPage/></ContentRenderer>} />
+      </Routes>
  </Routes>
     </Router>
   )

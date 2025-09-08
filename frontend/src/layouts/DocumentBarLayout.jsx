@@ -5,23 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useGetUser } from "../hooks/getUser";
 const DocumentBarLayout = ({ folderState }) => {
-  const [user, setUser] = useState(null);
-  const fetchUser = async () => {
-        try {
-          const {data} = await useGetUser();
-          if(!data) throw new Error("Cannot get user");
-          setUser(data);
-          setFormData({
-            name: data.name || "",
-            email: data.email || "",
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      };
-  useEffect(()=>{
-    fetchUser();
-  }, [])
+  const {user} = useGetUser();
   return(
   <div>
      
