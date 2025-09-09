@@ -30,10 +30,21 @@ const News = () => {
     return newsArray.map((item) => (
       <div key={item.news_id} className="row justify-content-center pt-3 pb-3">
         <div className="col-md-8">
-          <div className="bg-white rounded-4 shadow-lg p-4">
-            <h1 className="text-center mb-3">{item.title}</h1>
+          <div className="bg-white rounded-4 shadow-lg p-4 text-center">
+            <h1 className="mb-3">{item.title}</h1>
             <hr className="my-3" />
-            <p className="text-center mb-0">{item.content}</p>
+
+            {/* imagen */}
+            {item.image && (
+              <img
+                src={`http://localhost:3000/${item.image}`}
+                alt={item.title}
+                className="img-fluid rounded mb-3"
+                style={{ maxHeight: "300px", objectFit: "cover" }}
+              />
+            )}
+
+            <p className="mb-0">{item.content}</p>
           </div>
         </div>
       </div>
@@ -68,7 +79,7 @@ const News = () => {
           </div>
         )}
 
-        {/* rendes */}
+        {/* renderizamos noticias */}
         {news.length < 1 ? (
           <StateMessage message="No se encontraron noticias" />
         ) : (
@@ -78,6 +89,5 @@ const News = () => {
     </div>
   );
 };
-
 
 export default News;
