@@ -49,7 +49,7 @@ sequelize.authenticate()
     console.error('Error de conexión a la BD:', err.message);
   });
 
-await transporter.verify()
+transporter.verify()
 .then(
   console.log("📨 Mail service connected succesfully!")
 );

@@ -122,24 +122,69 @@ async registerUser({ name, email, password, role,course, dni }) {
       let [email, state] = [ result[1][0]['email'], result[1][0]['is_active'] ];
 
       await transporter.sendMail({
-        from: 'profesoresinstituto2@hotmail.com',
-        to: `${email}`,
+        from: `${process.env.GMAIL_FROM}`,
+        to: `misaelalvarezfutbol@gmail.com`,
         subject: `Cuenta ${state ? '' : 'des'}activada`,
         text: `Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul.
               Tu cuenta de usuario ha sido ${state ? '' : 'des'}activada.
-              Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.
+              ${state ? '✔️' : '❌'} Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.
               ${state ?
                 'Ir a la Biblioteca Digital: localhost:5173.com (ejemplo)' :
                 'Solicita la activación de tu cuenta al centrodeestudiantes@ejemplo.com enviando tu número de DNI.'}
+                
+                No respondas a este correo.
               `,
         html: `
           <div>
-            <h1>Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul</h1>
-              <strong>Tu cuenta de usuario ha sido ${state ? '' : 'des'}activada.</strong>
-              <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
-              <p>${state ?
-                'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
-                'Solicita la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> enviando tu número de DNI.'}</p>
+            <div style="
+              padding: 1px;
+              background-color:#6c3483;
+              text-align: center;
+              border-top-left-radius: 15px;
+              border-top-right-radius: 15px;">
+
+                <head>
+                    <h1>Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul</h1>
+                </head>
+            </div>
+
+            <div>
+
+                <body>
+                  <div style="
+                    border-style: inset;
+                    border-color: rgb(${state ? '0, 197, 26' : '197, 0, 26'});
+                    border-width: 10px;
+                    text-align: center;">
+
+                    <br>
+                    <strong>Tu cuenta de usuario ha sido </strong><strong style="color: rgb(${state ? '0, 197, 26' : '197, 0, 26'});">${state ? '' : 'DES'}ACTIVADA ${state ? '✔️' : '❌'}</strong>
+                    <hr style="
+                    background-color:#7c4dff;
+                    padding: 1px;
+                    border: none">
+                    <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
+                    <p>${state ?
+                    'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
+                    'Solicita la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> enviando tu número de DNI.'}</p>
+                
+                  </div>
+                  
+                  <div style="
+                    padding: 10px;
+                    background-color: #6351ce;
+                    text-align: center;
+                    border-bottom-left-radius: 15px;
+                    border-bottom-right-radius: 15px;">
+
+                        <strong>No respondas a este correo.</strong>
+
+                  </div>
+                
+                </body>
+            </div>
+
+            
           </div>
         `
       });
