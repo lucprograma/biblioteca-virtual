@@ -61,9 +61,9 @@ export default function AdminPage() {
               <a href="/documentos" className="btn btn-soft btn-sm">
                 Agregar o Editar documentos
               </a>
-              <a href="/admin/herramientas" className="btn btn-soft btn-sm">
+              {/*<a href="/admin/herramientas" className="btn btn-soft btn-sm">
                 Crear o Editar Carrera
-              </a>
+              </a>*/}
             </div>
 
             {/* Escudo (derecha) */}
