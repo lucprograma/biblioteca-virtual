@@ -60,4 +60,6 @@ sequelize.authenticate()
 transporter.verify()
 .then(
   console.log("📨 Mail service connected succesfully!")
+).catch(
+  console.error("🔌 Error to connect with the mail service!")
 );
