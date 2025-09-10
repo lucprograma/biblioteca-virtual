@@ -65,7 +65,7 @@ export default function SignInForm() {
         </h2>
 
         <div className="mb-4">
-          <label className="block text-white mb-1">Nombre</label><br/>
+          <label className="block text-white mb-1">Nombre y Apellido</label><br/>
           <input
             type="text"
             name="name"

@@ -75,7 +75,7 @@ export const getUnactive = async (req, res) => {
 //controlador get por id o todo
 export const getUsersAdmin = async (req, res) => {
   try {
-    const  user_id  = req.body?.user_id || null;
+    const { user_id } = req.body;
     //console.log('ID recibido en getUsersAdmin:', user_id);
     if (user_id) {
       const user = await User.findByPk(user_id, {

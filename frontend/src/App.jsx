@@ -8,18 +8,14 @@ import './styles/idcard.css'
 // Layout general
 import ContentRenderer from './layouts/contentRenderer'
 import PublicLayout from './layouts/PublicLayout' 
-
-
 import Home from './layouts/homeContent'
 import Navbar from './components/navbar'
 import Documents from './layouts/documents'
-
 import News from './layouts/news'
 import LoginContent from './layouts/login'
-
+import AdminPage from './pages/AdminPages'
 // Componentes relacionimport News from './layouts/news'ados a documentos
 import DocumentBarLayout from './layouts/DocumentBarLayout'
-
 import CreateDocument from './components/uploadDocument';
 import SignInForm from './layouts/sign';
 import UserActivationTable from './layouts/userActivationList';
@@ -45,17 +41,9 @@ function App() {
           <Route path="/login" element={<ContentRenderer> <LoginContent/></ContentRenderer>} />
           <Route path="/signIn" element={<ContentRenderer> <SignInForm/></ContentRenderer>} />
           <Route path="/activation" element={<ContentRenderer> <UserActivationTable/></ContentRenderer>} />
-          <Route path="/profile" element={<ContentRenderer> 
-            <ProfilePanel/>
-          </ContentRenderer>} />
-        <Route
-          path="/gestor-noticias"
-          element={
-            <ContentRenderer>
-              <NewsManager />
-            </ContentRenderer>
-          }
-        />
+          <Route path="/profile" element={<ContentRenderer><ProfilePanel/></ContentRenderer>} />
+          <Route path="/gestor-noticias"element={<ContentRenderer><NewsManager /></ContentRenderer>}/>        
+          <Route path="/admin" element={<ContentRenderer><AdminPage/></ContentRenderer>} />
          <Route path="/carnet" element={<ContentRenderer><CarnetPage/></ContentRenderer>} />
       </Routes>
     </Router>

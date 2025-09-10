@@ -4,71 +4,64 @@ import { Op } from 'sequelize';// importamos operador de Sequelize para comparac
 
 
 class NewsService {
-  //le agregue imagen
-  async addNews({ title, content, author_id, image }) {
+async addNews({ title, content, author_id }) {
     try {
-      const news = await News.create({
-        title,
-        content,
-        author_id,
-        image
-      });    
-      return news;
+      //console.log('Datos recibidos en servicio addnews:', { title, content, author_id });
+        const news = await News.create({
+            title,
+            content,
+            author_id
+            });
+        //console.log('Noticia creada:', news.toJSON());       
+        return news;
     } catch (error) {
-      throw new Error('Error al crear noticia: ' + error.message);
+        throw new Error('Error al crear noticia: ' + error.message);
     }
   }
 
-  //le agregue para imagen
-  async patchNews(news_id, data) {
-    try {
-      const fields = [];
-      const values = [];
-
-      if (data.title) {
-        fields.push('title = ?');
-        values.push(data.title);
-      }
-      if (data.content) {
-        fields.push('content = ?');
-        values.push(data.content);
-      }
-      if (data.author_id) {
-        fields.push('author_id = ?');
-        values.push(data.author_id);
-      }
-      if (data.image) {
-        fields.push('image = ?');
-        values.push(data.image);
-      }
-
-      if (fields.length === 0) {
-        throw new Error('No se enviaron campos válidos para actualizar la noticia');
-      }
-
-      const sql = ` UPDATE news SET ${fields.join(', ')}, published_at = CURRENT_TIMESTAMP WHERE news_id = ? `; 
-      values.push(news_id);
-      const [result] = await sequelize.query(sql, { replacements: values });
-      return result;
-    } catch (err) {
-      throw new Error('Error al actualizar la noticia service: ' + err.message);
-    }
-  }
+   async patchNews(news_id, data) {
+      try {
+        const fields = [];
+        const values = [];
+        if (data.title) {
+          fields.push('title = ?');
+          values.push(data.title);
+        }
+        if (data.content) {
+          fields.push('content = ?');
+          values.push(data.content);
+        }
+        if (data.author_id) {
+          fields.push('author_id = ?');
+          values.push(data.author_id);
+        }
+       
   
-  //service eliminar noticia
-  async deleteNews(news_id) {
+        if (fields.length === 0) {
+          throw new Error('No se enviaron campos válidos para actualizar la noticia');
+        }      
+        
+        const sql = ` UPDATE news SET ${fields.join(', ')}, published_at = CURRENT_TIMESTAMP WHERE news_id = ? `; 
+        values.push(news_id);
+        const [result] = await sequelize.query(sql, { replacements: values });
+        return result;
+      } catch (err) {
+        throw new Error('Error al actualizarla noticia service: ' + err.message);
+      }
+    }
+   
+async deleteNews(news_id) {
     try {
-      const news = await News.findByPk(news_id);
+      const news = await User.findByPk(news_id);
       if (!news) throw new Error('Noticia no encontrada service');
-      await news.destroy();
+      await News.destroy();
       return { message: 'Noticia eliminada correctamente service' };
     } catch (error) {
-      throw new Error('Error al eliminar la noticia service: ' + error.message);
+      throw new Error('Error al eliminar el usuario service: ' + error.message);
     }
   }
-
-  //service get news por id
-  async getNewsById(news_id) {
+ //service get news por id
+async getNewsById(news_id) {
     try {
       const news = await News.findByPk(news_id);
       if (!news) throw new Error('Noticia no encontrada service');
@@ -78,11 +71,11 @@ class NewsService {
     }
   }
 
-  //service get news últimos 3 meses 
+//service get news  ultimos 3 meses 
   async getNews() {
     const threeMonthsAgo = new Date();// Creamos una variable con la fecha actual
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);// restamos 3 meses a la variable
-    return await News.findAll({
+     return await News.findAll({
       where: {       
         published_at: { // Filtra por campo created_at
           [Op.gte]: threeMonthsAgo //  gte mayor o igual que
@@ -92,5 +85,7 @@ class NewsService {
     });
   }
 }
+
+
 
 export default new NewsService();
