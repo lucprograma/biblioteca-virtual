@@ -3,10 +3,11 @@ import sequelize from '../config/db.js';
 
 const User = sequelize.define('User', {
   user_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: DataTypes.STRING,
+  name: { type:DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, unique: true, allowNull: false },
-  password: DataTypes.STRING,
-  role: { type: DataTypes.ENUM('admin', 'regular'), defaultValue: 'regular'},
+  password: { type: DataTypes.STRING, allowNull: false },
+  role: { type: DataTypes.ENUM('admin', 'regular'), allowNull: false, defaultValue: 'regular' },
+  course: { type: DataTypes.STRING, allowNull: false },
   dni: DataTypes.INTEGER,
   has_certificate: { type: DataTypes.BOOLEAN, defaultValue: true },
   is_active: { type: DataTypes.BOOLEAN, defaultValue: true },

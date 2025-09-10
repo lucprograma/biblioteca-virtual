@@ -1,6 +1,7 @@
 import sequelize from '../config/db.js';
 import User from '../models/Users.js';
 import bcrypt from 'bcryptjs';
+import transporter from '../extra_services/nodemailer.js';
 
 class AuthService {
 
@@ -33,7 +34,7 @@ async getLastLogins() {
 //funcion registro
 async registerUser({ name, email, password, role,course, dni }) {
     try {
-      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role,course, dni });
+      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, course, dni });
       const exists = await User.findOne({ where: { email } });
       if (exists) throw new Error('El email ya está registrado');
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -47,6 +48,7 @@ async registerUser({ name, email, password, role,course, dni }) {
        
       });       
       console.log('Usuario creado:', user.toJSON());
+
       return user;
     } catch (error) {
       throw new Error('Error en registerUser: ' + error.message);
@@ -57,8 +59,8 @@ async registerUser({ name, email, password, role,course, dni }) {
 
   async DisableUser(userId){
     try{
-      const disablequery = "UPDATE users SET is_active = FALSE WHERE user_id = " +userId;
-      const result = await sequelize.query(disablequery);
+      const disablequery = "UPDATE users SET is_active = FALSE WHERE user_id = ?";
+      const result = await sequelize.query(disablequery, { replacements: [userId]});
       return result;
     }catch(error){
       console.log(error);
@@ -66,56 +68,133 @@ async registerUser({ name, email, password, role,course, dni }) {
   }
 
 
-  async patchUser(userId, data,hashedPassword) {
+  async patchUser(userId, data, hashedPassword) {
     try {
       const fields = [];
       const values = [];
-      if (data.name) {
-        fields.push('name = ?');
-        values.push(data.name);
-      }
-      if (data.email) {
-        fields.push('email = ?');
-        values.push(data.email);
-      }
-      if (hashedPassword) {
-        fields.push('password = ?');
-        values.push(hashedPassword);
-      }
-      if (data.role) {
-        fields.push('role = ?');
-        values.push(data.role);
-      }
-      if (data.course) {
-        fields.push('course = ?');
-        values.push(data.course);
-      }
-      if (data.dni) {
-        fields.push('dni = ?');
-        values.push(data.dni);
-      }
-      if (typeof data.has_certificate !== 'undefined') {
-  fields.push('has_certificate = ?');
-  values.push(data.has_certificate === true || data.has_certificate === 'true' ? 1 : 0);
-}//tenia error en mysql  al enviar true o false asi que setea por 1 o 0
+      const patchUser = {
 
-if (typeof data.is_active !== 'undefined') {
-  fields.push('is_active = ?');
-  values.push(data.is_active === true || data.is_active === 'true' ? 1 : 0);
-}//tenia error en mysql  al enviar true o false asi que setea por 1 o 0
+        name: data.name,
+        email: data.email,
+        password: hashedPassword,
+        role: data.role,
+        course: data.course,
+        dni: data.dni,
+        has_certificate: data.has_certificate
+
+      }
+
+      for (const [key, value] of Object.entries(patchUser)){
+
+            value !== undefined ? (
+              key === 'password' ?
+                fields.push(`password = ?`) & values.push(value) :
+                fields.push(`${key} = ?`) & values.push(value)
+            ) : '';
+        }
 
       if (fields.length === 0) {
         throw new Error('No se enviaron campos válidos para actualizar');
       }      
       
-      const sql = ` UPDATE users SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE user_id = ? `; 
+      const sql = ` UPDATE users SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?`; 
       values.push(userId);
       const [result] = await sequelize.query(sql, { replacements: values });
+
       return result;
     } catch (err) {
-      throw new Error('Error al actualizar el perfil: ' + err.message);
+      throw new Error(err.message);
     }
   }
+
+  async activateUser(userId){
+
+    try {
+      const sql = `
+      UPDATE users SET is_active = NOT is_active, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?;
+      SELECT email, is_active FROM users WHERE user_id = ?;
+      `;
+      const [result] = await sequelize.query(sql, {
+        replacements: [userId, userId],
+        multipleStatements: true
+      });
+
+      let [email, state] = [ result[1][0]['email'], result[1][0]['is_active'] ];
+
+      await transporter.sendMail({
+        from: `${process.env.GMAIL_FROM}`,
+        to: `misaelalvarezfutbol@gmail.com`,
+        subject: `Cuenta ${state ? '' : 'des'}activada`,
+        text: `Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul.
+              Tu cuenta de usuario ha sido ${state ? '' : 'des'}activada.
+              ${state ? '✔️' : '❌'} Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.
+              ${state ?
+                'Ir a la Biblioteca Digital: localhost:5173.com (ejemplo)' :
+                'Solicita la activación de tu cuenta al centrodeestudiantes@ejemplo.com enviando tu número de DNI.'}
+                
+                No respondas a este correo.
+              `,
+        html: `
+          <div>
+            <div style="
+              padding: 1px;
+              background-color:#6c3483;
+              text-align: center;
+              border-top-left-radius: 15px;
+              border-top-right-radius: 15px;">
+
+                <head>
+                    <h1>Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul</h1>
+                </head>
+            </div>
+
+            <div>
+
+                <body>
+                  <div style="
+                    border-style: inset;
+                    border-color: rgb(${state ? '0, 197, 26' : '197, 0, 26'});
+                    border-width: 10px;
+                    text-align: center;">
+
+                    <br>
+                    <strong>Tu cuenta de usuario ha sido </strong><strong style="color: rgb(${state ? '0, 197, 26' : '197, 0, 26'});">${state ? '' : 'DES'}ACTIVADA ${state ? '✔️' : '❌'}</strong>
+                    <hr style="
+                    background-color:#7c4dff;
+                    padding: 1px;
+                    border: none">
+                    <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
+                    <p>${state ?
+                    'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
+                    'Solicita la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> enviando tu número de DNI.'}</p>
+                
+                  </div>
+                  
+                  <div style="
+                    padding: 10px;
+                    background-color: #6351ce;
+                    text-align: center;
+                    border-bottom-left-radius: 15px;
+                    border-bottom-right-radius: 15px;">
+
+                        <strong>No respondas a este correo.</strong>
+
+                  </div>
+                
+                </body>
+            </div>
+
+            
+          </div>
+        `
+      });
+      
+      return result;
+    } catch (err){
+      throw new Error(err.message);
+    }
+  }
+
 
 async deleteUser(userId) {
     try {
@@ -127,6 +206,7 @@ async deleteUser(userId) {
       throw new Error('Error al eliminar el usuario: ' + error.message);
     }
   }
+
 
 // logout 
 logout(res) {

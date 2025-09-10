@@ -4,11 +4,13 @@ import { useNavigate } from "react-router";
 const LoginContent = () => {
   const navigate = useNavigate();
   const [error, setError] = React.useState(false);
+
   const tryLogin = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    try{
+    
+    try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
@@ -20,8 +22,9 @@ const LoginContent = () => {
           password: password,
         })
       });
+
       if (!res.ok) {
-        alert(`Credenciales inválidas. Por favor, inténtalo de nuevo.${res}` );
+        alert(`Credenciales inválidas. Por favor, inténtalo de nuevo. ${res}`);
         return
       }
       const data = await res.json();
@@ -32,7 +35,6 @@ const LoginContent = () => {
     catch (error) {
       console.error("Error during login:", error);
       alert("Credenciales inválidas. Por favor, inténtalo de nuevo.");
-      
     }
   }
 
