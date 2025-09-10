@@ -4,6 +4,7 @@ const chktoken = (req, res, next) => {
      //console.log('Cookies recibidas:', req.cookies);
   const token = req.cookies.token;
   //console.log('Token recibido:', token);
+
   if (!token) return res.status(403).send('Token no proporcionado');
 
   try {

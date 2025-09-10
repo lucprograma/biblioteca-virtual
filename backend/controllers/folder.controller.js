@@ -34,20 +34,15 @@ export const getFolderStructure = async (req, res) => {
 }
 
 export const getParentFolders = async (req, res) => {
-    try{
-        const parentFolders = await Folder.findAll({
-            where: {parent_id: null},
-            attributes: ['folder_id', 'name', 'year_level', 'type']
-        })
-        return res.status(200).json(parentFolders)
-    }
-    catch(error){
-        console.error('Error fetching parent folders:', error)
-        return res.status(500).json({
-            message: 'Server error'
-        })
-    }
-}
+  try {
+    const parentFolders = await Folder.findAll();
+    return res.json(parentFolders);
+  } catch (error) {
+    console.error("Error test parent folders:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 
 export const getByParentID = async (req, res) => {
     const { parent_id } = req.params;

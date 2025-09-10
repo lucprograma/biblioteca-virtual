@@ -1,6 +1,7 @@
 import {React, useState, useEffect }from "react";
 
 import ProfileCard from "./profileCard";
+//import DropButtonNavbar from "../layouts/drop-button-navbar";
 import { useNavigate } from "react-router";
 
 
@@ -82,7 +83,14 @@ const Navbar = ({ children }) => {
             </a>
           </li>
 
-
+             {user && (
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="/carnet">
+                Carnet
+              </a>
+            </li>
+          )}
+          
           {!user && (
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/login">
@@ -93,12 +101,25 @@ const Navbar = ({ children }) => {
 
           {user?.role === "admin" && (
             <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="/admin">
+                Administracion
+              </a>
+            </li>
+          )}
+           </ul>
+
+       {/*{user?.role === 'admin' && <DropButtonNavbar />}         
+          {user?.role === "admin" && (
+            <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/activation">
                 Lista inactivos
               </a>
             </li>
           )}
-        </ul>
+          
+        
+          */}
+
          {/* Logout a la derecha */}
         {user && (
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">          

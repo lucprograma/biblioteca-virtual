@@ -1,0 +1,101 @@
+/* src/styles/admin-quartz.css */
+/* Scope aislado SOLO para AdminPage */
+.admin-quartz {
+  /* Violeta suave estilo Quartz */
+  --page-bg: #686dc3;
+  --page-fg: #ffffff;
+
+  background-color: var(--page-bg);
+  color: var(--page-fg);
+  isolation: isolate; /* evita que sangren estilos fuera */
+}
+
+/* Menos espacio con el footer */
+.admin-quartz .container {
+  padding-top: 0.75rem;
+  padding-bottom: 0.25rem;
+}
+
+/* Links en esta vista */
+.admin-quartz a { color: #fff; }
+.admin-quartz a:hover { color: #cccccc; }
+
+/* Tarjeta suave (ligero glassmorphism) */
+.admin-quartz .admin-card-soft {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.5rem;
+  box-shadow: 1px 3px 24px -1px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Forzar columna única y ancho acotado de las acciones */
+.admin-quartz .card .d-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Cada opción ocupa todo el ancho y se separa de la siguiente */
+.admin-quartz .card .d-grid > a {
+  display: block !important;
+  width: 100% !important;
+}
+.admin-quartz .card .d-grid > a + a {
+  margin-top: 0.55rem;
+}
+
+/* Botón suave que combina con el fondo violeta */
+.admin-quartz .btn-soft {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0.6rem;
+  box-shadow: 1px 3px 24px -1px rgba(0, 0, 0, 0.15);
+  transition: background-color .15s ease, border-color .15s ease, transform .06s ease;
+}
+
+/* Tamaño compacto */
+.admin-quartz .btn-soft.btn-sm {
+  padding: 0.48rem 0.9rem;
+  font-weight: 500;
+}
+
+.admin-quartz .btn-soft:hover,
+.admin-quartz .btn-soft:focus {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.36);
+  text-decoration: none;
+}
+
+.admin-quartz .btn-soft:active {
+  background-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.42);
+  transform: translateY(1px);
+}
+.admin-quartz .admin-actions {
+  max-width: 420px; /* ajustá 320–420 si querés */
+}
+/* Escudo a la derecha */
+.admin-quartz .admin-escudo-wrap {
+  flex: 0 0 auto;
+}
+
+.admin-quartz .admin-escudo-img {
+  display: block;
+  max-width: 130px;
+  height: auto;
+  opacity: 0.95; /* leve suavizado para integrar con el fondo */
+}
+
+/* Un poco más grande en pantallas grandes */
+@media (min-width: 992px) {
+  .admin-quartz .admin-escudo-img {
+    max-width: 160px;
+  }
+}

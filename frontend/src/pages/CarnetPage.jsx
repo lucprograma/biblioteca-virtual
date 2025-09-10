@@ -7,11 +7,16 @@ export default function CarnetPage() {
   return (
     <div className="container d-flex justify-content-center py-4 w-100">
       <div className="w-100" style={{ maxWidth: 520 }}>
-        <h1 className="h5 text-center mb-3">Mi carnet</h1>
+        {/* Título en blanco sobre fondo azul */}
+        <div className="rounded-3 p-3 mb-3" style={{ background: "#003366" }}>
+          <h1 className="h5 text-center m-0 fw-bold text-white">
+            Mi carnet
+          </h1>
+        </div>
 
         <StudentIdCardPro
-          fetchUrl={`${API}/api/auth/me`}   // ← trae el usuario actual
-          qrEndpointBase={`${API}/api/qr`}  // ← arma .../qr/:studentId.png si no pasás qrSrc
+          fetchUrl={`${API}/api/auth/me`}
+          qrEndpointBase={`${API}/api/qr`}
           logoSrc="/escudo-ees1.png"
         />
       </div>

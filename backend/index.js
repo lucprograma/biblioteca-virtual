@@ -25,7 +25,6 @@ app.use(cookieParser());
 // Rutas agrupadas por módulo
 app.use('/api/auth', authRoutes);
 app.use('/api/news', newsRoutes);
-app.use("/uploads", express.static("uploads"))
 app.use('/api/folders', folderRoutes)
 app.use('/api/documents', documentsRoutes)
 app.use('/api/careers', careerRoutes);

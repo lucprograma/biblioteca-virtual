@@ -8,87 +8,50 @@ export default function NewsManager() {
   const [mensaje, setMensaje] = useState("")
   const navigate = useNavigate()
 
-  const API_URL = "http://localhost:3000/api/news"
-
-  // Cargar noticias desde el backend
-  const cargarNoticias = async () => {
-    try {
-      const response = await fetch(API_URL)
-      const data = await response.json()
-      setNoticias(data)
-    } catch (error) {
-      console.error("Error al obtener noticias:", error)
-      setNoticias([])
-    }
-  }
-
+  // Cargar desde localStorage
   useEffect(() => {
-    cargarNoticias()
+    const guardadas = localStorage.getItem("noticias")
+    if (guardadas) {
+      setNoticias(JSON.parse(guardadas))
+    }
   }, [])
 
   // Crear o editar noticia
-  const handleSubmit = async (noticia, file) => {
-    try {
-      const formData = new FormData()
-      formData.append("title", noticia.title)
-      formData.append("content", noticia.content)
-      if (file) formData.append("image", file)
+  const handleSubmit = (noticia) => {
+    let actualizadas
 
-      let response, data
-
-      if (noticiaEditando) {
-        formData.append("news_id", noticiaEditando.news_id)
-        response = await fetch(`${API_URL}/update`, {
-          method: "PATCH",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
-        })
-        data = await response.json()
-        setMensaje("Noticia actualizada con éxito.")
-      } else {
-        response = await fetch(`${API_URL}/`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
-        })
-        data = await response.json()
-        setMensaje(" Noticia publicada con éxito.")
-      }
-
-      // Recargar noticias
-      cargarNoticias()
+    if (noticiaEditando) {
+      const editada = { ...noticiaEditando, ...noticia }
+      actualizadas = noticias.map(n =>
+        n.news_id === noticiaEditando.news_id ? editada : n
+      )
+      setMensaje("✅ Noticia actualizada con éxito.")
       setNoticiaEditando(null)
-
-      setTimeout(() => {
-        setMensaje("")
-        navigate("/noticias")
-      }, 1500)
-    } catch (error) {
-      console.error("Error al guardar noticia:", error)
-      setMensaje(" Error al guardar la noticia.")
+    } else {
+      const nueva = {
+        ...noticia,
+        news_id: Date.now(),
+        published_at: new Date().toISOString()
+      }
+      actualizadas = [nueva, ...noticias]
+      setMensaje("✅ Noticia publicada con éxito.")
     }
+
+    setNoticias(actualizadas)
+    localStorage.setItem("noticias", JSON.stringify(actualizadas))
+
+    // Redirigir después de mostrar el mensaje
+    setTimeout(() => {
+      setMensaje("")
+      navigate("/noticias") // No pasamos state, porque ya está guardado
+    }, 1500)
   }
 
   // Eliminar noticia
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`${API_URL}/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify({ news_id: id })
-      })
-      await response.json()
-      setNoticias(noticias.filter(n => n.news_id !== id))
-    } catch (error) {
-      console.error("Error al eliminar noticia:", error)
-    }
+  const handleDelete = (id) => {
+    const filtradas = noticias.filter(n => n.news_id !== id)
+    setNoticias(filtradas)
+    localStorage.setItem("noticias", JSON.stringify(filtradas))
   }
 
   return (
@@ -108,21 +71,10 @@ export default function NewsManager() {
       {noticias.map(noticia => (
         <div key={noticia.news_id} className="row justify-content-center mb-4">
           <div className="col-md-8">
-            <div className="bg-white rounded-4 shadow p-4 text-center">
-              <h2>{noticia.title}</h2>
+            <div className="bg-white rounded-4 shadow p-4">
+              <h2 className="text-center">{noticia.title}</h2>
               <hr />
-              
-              {/* si hay imagen */}
-              {noticia.image && (
-                <img
-                  src={`http://localhost:3000/${noticia.image}`}
-                  alt={noticia.title}
-                  className="img-fluid rounded mb-3"
-                  style={{ maxHeight: "250px", objectFit: "cover" }}
-                />
-              )}
-
-              <p>{noticia.content}</p>
+              <p className="text-center">{noticia.content}</p>
               <p className="text-end text-muted">
                 Publicado: {new Date(noticia.published_at).toLocaleDateString()}
               </p>
