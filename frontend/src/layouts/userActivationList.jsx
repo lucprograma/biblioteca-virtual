@@ -2,7 +2,7 @@ import React from "react";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useGetUser } from "../hooks/getUser";
 export default function UserActivationTable() {
   const [users, setUsers] = useState([]);
   const [checkUsersFlag, setCheckUsersFlag] = useState(true)
@@ -43,7 +43,11 @@ export default function UserActivationTable() {
   }
   const fetchUnactive = async () => {
     try{
-        const respose = await fetch("http://localhost:3000/api/auth/unactive");
+        const respose = await fetch("http://localhost:3000/api/auth/profile",
+          {
+            credentials: "include"
+          }
+        );
         const users = await respose.json();
         if(!users ){
             console.error('Cannot get users');
