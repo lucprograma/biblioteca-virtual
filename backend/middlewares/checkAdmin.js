@@ -1,5 +1,6 @@
 export default function checkAdmin(req, res, next) {
   try {
+    console.table(req.user)
     if (req.user && req.user.role === 'admin') {
       return next(); // El usuario es admin, continúa
     }

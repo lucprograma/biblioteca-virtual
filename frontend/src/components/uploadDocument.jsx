@@ -11,7 +11,8 @@ const CreateDocument = () => {
             const response = await fetch('http://localhost:3000/api/documents/createDocument',
                 {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    credentials: "include"
         }
     );
         const data = response;
