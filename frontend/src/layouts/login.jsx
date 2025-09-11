@@ -120,6 +120,7 @@ const LoginContent = () => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
+ 
     try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -127,9 +128,10 @@ const LoginContent = () => {
         credentials: "include",
         body: JSON.stringify({ email, password }),
       });
+
       if (!res.ok) {
-        alert(`Credenciales inválidas. Por favor, inténtalo de nuevo.${res}`);
-        return;
+        alert(`Credenciales inválidas. Por favor, inténtalo de nuevo. ${res}`);
+        return
       }
       const data = await res.json();
       console.log("Login successful:", data);
