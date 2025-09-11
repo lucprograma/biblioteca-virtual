@@ -3,48 +3,63 @@
 /* ===================== */
 
 /* Contenedor base */
-.idcard {
-  width: 360px;
-  height: 220px;
+.idcard,
+.sidc-card {
+  width: 100%;
+  max-width: 360px; /* desktop */
+  min-height: 220px;
   border-radius: 1rem;
   background-color: #fff;
   overflow: hidden;
   font-family: "Segoe UI", sans-serif;
+  margin: 0 auto;
+}
+
+.sidc-card-lg {
+  width: 100%;
+  max-width: 600px;
+  min-height: 281px;
 }
 
 /* Encabezado con gradiente */
-.idcard-header {
+.idcard-header,
+.sidc-header {
   height: 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 12px;
-  background: linear-gradient(90deg, #4f46e5, #06b6d4);
   color: #fff;
   font-weight: 600;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+  background: linear-gradient(90deg, #003366, #0059b3);
 }
 
+.sidc-school { font-size: 0.9rem; font-weight: 600; }
+.sidc-badge  { text-transform: uppercase; font-size: 0.75rem; opacity: 0.95; }
+
 /* Pie */
-.idcard-footer {
-  height: 36px;
-  background: #f8f9fa;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  font-size: 0.75rem;
-  color: #6c757d;
+.idcard-footer,
+.sidc-footer {
+  height: 44px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 0 12px;
+  background: #f8f9fa;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.8rem;
+  color: #6c757d;
 }
 
 /* Imagen QR */
-.idcard-qr {
-  width: 80px;
-  height: 80px;
+.idcard-qr,
+.sidc-qr {
+  width: 72px;
+  height: 72px;
   border: 1px solid #dee2e6;
   border-radius: 0.5rem;
   background: #fff;
@@ -54,27 +69,78 @@
   justify-content: center;
 }
 
-.idcard-qr img {
+.idcard-qr img,
+.sidc-qr img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
 /* Fila de datos */
-.idcard-row {
-  font-size: 0.8rem;
+.idcard-row,
+.sidc-row {
+  font-size: 0.85rem;
   color: #6c757d;
   margin-bottom: 0.25rem;
+  line-height: 1.15;
 }
 
-.idcard-row strong {
-  color: #212529;
-}
+.idcard-row strong,
+.sidc-value { color: #212529; }
 
 /* Nombre destacado */
-.idcard-name {
+.idcard-name,
+.sidc-name {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
   color: #212529;
+}
+
+/* Nota */
+.sidc-note { margin-top: 0.5rem; color: #6c757d; font-size: 0.8rem; }
+
+/* Lista del reverso */
+.sidc-list {
+  padding-left: 18px;
+  margin-bottom: 12px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Modal */
+.sidc-modal .modal-body { background: #0b1220; }
+.sidc-modal .modal-header,
+.sidc-modal .modal-footer { background: #0b1220; color: #fff; }
+.sidc-modal-title { color: #fff; font-weight: 600; }
+.sidc-present-box { min-height: 320px; }
+
+/* 📱 Responsividad */
+@media (max-width: 576px) {
+  .idcard,
+  .sidc-card,
+  .sidc-card-lg { max-width: 95%; }
+  .sidc-name { font-size: 0.95rem; }
+  .sidc-row  { font-size: 0.8rem; }
+  .sidc-badge{ font-size: 0.7rem; }
+  .sidc-present-box { min-height: auto; padding: 1rem 0; }
+}
+
+/* 🔒 Bloque oculto para impresión (solo pantalla) */
+.print-only {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+/* Cruz blanca en el modal oscuro */
+.sidc-modal .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 1;
+}
+.sidc-modal .btn-close:hover,
+.sidc-modal .btn-close:focus {
+  filter: invert(1) grayscale(100%) brightness(250%);
+  box-shadow: none;
 }
