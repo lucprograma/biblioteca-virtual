@@ -14,7 +14,6 @@ import folderRoutes from './routes/folder.routes.js';
 import newsRoutes from './routes/news.route.js';
 import careerRoutes from './routes/careers.routes.js';
 import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
-import cors from 'cors';
 import path from "path";
 const app = express();
 app.use(cors({

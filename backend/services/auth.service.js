@@ -155,7 +155,8 @@ async registerUser({ name, email, password, role,course, dni }) {
                     border-style: inset;
                     border-color: rgb(${state ? '0, 197, 26' : '197, 0, 26'});
                     border-width: 10px;
-                    text-align: center;">
+                    text-align: center;
+                    background-image: url('../extra_services/email_images/bookcase_digital.jpg');">
 
                     <br>
                     <strong>Tu cuenta de usuario ha sido </strong><strong style="color: rgb(${state ? '0, 197, 26' : '197, 0, 26'});">${state ? '' : 'DES'}ACTIVADA ${state ? '✔️' : '❌'}</strong>

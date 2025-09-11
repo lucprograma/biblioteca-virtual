@@ -28,7 +28,7 @@ export default function UserActivationTable() {
   };
   const fetchActivate = async (id, activationFlag) => {
     try{
-      const res = await fetch("http://localhost:3000/api/auth/profile", {method: "PATCH",
+      const res = await fetch("http://localhost:3000/api/auth/lowuser", {method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({user_id: id, is_active: activationFlag}),
