@@ -1,27 +1,33 @@
 import newsService from '../services/news.service.js';
 import News from '../models/News.js';
 
+// controlador crear noticias
+export const addNews = async (req, res) => {
+  const author_id = req.user.user_id;
+  const { title, content } = req.body;
 
+  // Obtenemos la ruta de la imagen si se subió un archivo
+  const image_url = req.file ? `/uploads/${req.file.filename}` : null;
 
-//controlador crear noticias
-export const addNews = async (req, res) => {  
-    const author_id = req.user.user_id;           
-  const { title,content } = req.body;
   try {
-    const news = await newsService.addNews({ title, content, author_id });
-    res.status(201).json({ message: 'Noticia Creada', title });
+    const news = await newsService.addNews({ title, content, author_id, image_url });
+    res.status(201).json({ message: 'Noticia creada', title });
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear Noticia', error: error.message });
+    res.status(500).json({ message: 'Error al crear noticia', error: error.message });
   }
 };
 
-
+// controlador actualizar noticias
 export const updateNews = async (req, res) => {
-  try {  
-   
-    let news_id =  req.body?.news_id; //obtener id de noticia por body   
-    const data = req.body;     
-    const affectedRows = await newsService.patchNews(news_id, data);//manda variables al service
+  try {
+    const { news_id, ...data } = req.body;
+
+    // Si se sube una nueva imagen, agregamos su URL a los datos
+    if (req.file) {
+      data.image_url = `/uploads/${req.file.filename}`;
+    }
+
+    const affectedRows = await newsService.patchNews(news_id, data); //manda variables al service
     if (affectedRows === 0) {
       return res.status(404).json({ message: 'No se pudo actualizar la noticia' });
     }
@@ -31,10 +37,10 @@ export const updateNews = async (req, res) => {
   }
 };
 
-//controlador noticias
+// controlador obtener noticias
 export const getNews = async (req, res) => {
   try {
-    const news_id = req.body?.news_id;//para buscar por id desde el body
+    const news_id = req.body?.news_id; // para buscar por id desde el body
     let news;
     if (news_id) {
       news = await newsService.getNewsById(news_id);
@@ -50,17 +56,15 @@ export const getNews = async (req, res) => {
   }
 };
 
-
-//controlador delete
+// controlador delete
 export const deleteNews = async (req, res) => {
   try {
-    
-    const news_id = req.body.news_id; 
+    const news_id = req.body.news_id;
     const news = await News.findByPk(news_id);
     if (!news) return res.status(404).json({ message: 'Noticia no encontrada' });
     await news.destroy();
-    res.json({ message: 'Noticia eliminada ' });
+    res.json({ message: 'Noticia eliminada' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al eliminar noticia:' + error.message });
+    res.status(500).json({ message: 'Error al eliminar noticia: ' + error.message });
   }
 };
