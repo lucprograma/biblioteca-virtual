@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { data, useNavigate } from "react-router-dom"
 import NewsForm from "../components/NewsForm"
 
 export default function NewsManager() {
@@ -12,9 +12,36 @@ export default function NewsManager() {
   useEffect(() => {
     const guardadas = localStorage.getItem("noticias")
     if (guardadas) {
-      setNoticias(JSON.parse(guardadas))
+      getNews();
     }
   }, [])
+  const getNews = async () => {
+    fetch("http://localhost:3000/api/news/").then(res => 
+      res.json()
+    , err => {throw new Error(`Error appened getting news: ${err}`)}).then(data => setNoticias(data)).catch(err => {throw new Error(`Error appened getting news: ${err}`)})
+  }
+  const createNew = async(noticia) => {
+    try{
+      const nueva = {
+        ...noticia,
+        news_id: Date.now(),
+        published_at: new Date().toISOString()
+      }
+      const response = fetch('http://localhost:3000/api/news/',
+        {
+          method: 'POST',
+          headers: {
+    "Content-Type": "application/json"
+  },
+          credentials: 'include',
+          body: JSON.stringify(nueva)
+        }
+      ).then((res) => res, (err) => {throw new Error(`error fetching news:${err}`)}).catch(err => {throw new Error(`error fetching news:${err}`)})
+    }
+    catch(e){
+      throw new Error(`error fetching news:${e}`)
+    }
+  }
 
   // Crear o editar noticia
   const handleSubmit = (noticia) => {
@@ -28,11 +55,13 @@ export default function NewsManager() {
       setMensaje("✅ Noticia actualizada con éxito.")
       setNoticiaEditando(null)
     } else {
+      createNew(noticia);
       const nueva = {
         ...noticia,
         news_id: Date.now(),
         published_at: new Date().toISOString()
       }
+      
       actualizadas = [nueva, ...noticias]
       setMensaje("✅ Noticia publicada con éxito.")
     }
@@ -41,19 +70,37 @@ export default function NewsManager() {
     localStorage.setItem("noticias", JSON.stringify(actualizadas))
 
     // Redirigir después de mostrar el mensaje
-    setTimeout(() => {
-      setMensaje("")
-      navigate("/noticias") // No pasamos state, porque ya está guardado
-    }, 1500)
+    // setTimeout(() => {
+    //   setMensaje("")
+    //   navigate("/noticias") // No pasamos state, porque ya está guardado
+    // }, 1500)
   }
-
+  const deleteNew = async (id) => {
+    fetch("http://localhost:3000/api/news/delete", {
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        news_id: id
+      }),
+      method: "DELETE"
+    }).then(res => res.json()).then(data => data).catch(
+      err => {
+        throw new Error(`Error deleting new: ${err}`)
+      }
+    )
+  }
   // Eliminar noticia
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    if(deleteNew(id)){
     const filtradas = noticias.filter(n => n.news_id !== id)
-    setNoticias(filtradas)
-    localStorage.setItem("noticias", JSON.stringify(filtradas))
+    setNoticias(filtradas)}
+    return false
+    // localStorage.setItem("noticias", JSON.stringify(filtradas))
+    
   }
-
+  
   return (
     <div className="container py-5">
       <NewsForm
@@ -68,7 +115,7 @@ export default function NewsManager() {
         </div>
       )}
 
-      {noticias.map(noticia => (
+      {noticias.length > 0 && noticias.map(noticia => (
         <div key={noticia.news_id} className="row justify-content-center mb-4">
           <div className="col-md-8">
             <div className="bg-white rounded-4 shadow p-4">
