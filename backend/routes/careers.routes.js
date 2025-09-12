@@ -7,7 +7,7 @@ import checkAdmin from '../middlewares/checkAdmin.js';
 const router = express.Router();
 
 
-router.get('/', chkToken, checkAdmin, get_careers)//trae todas las carreras
+router.get('/', chkToken, checkAdmin, getAllCareer)//trae todas las carreras
 //router.post('/tokenchk', chkToken, ()=>{console.log("pass")});
 
 

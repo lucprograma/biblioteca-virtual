@@ -9,11 +9,11 @@ import { where } from 'sequelize';
 
 function hasTimeLimitPassed(originalDate) {
   const dateToCheck = new Date(originalDate); // Create a mutable copy
-  dateToCheck.setMonth(dateToCheck.getMonth() + 6); // Add one month
+  dateToCheck.setMonth(dateToCheck.getMonth() + 6); // Add six months
 
   const now = new Date(); // Current date and time
 
-  return dateToCheck <= now; // True if a month has passed
+  return dateToCheck <= now; // True if six months has passed
 }
 
 //LLAMA A CRON, SETEA LA VERIFICACION Y BAJA DE INACTIVIDAD DE USUARIOS CADA NOCHE A LAS 3 AM
@@ -23,8 +23,8 @@ export const startCronCheckUp = async () => {
     console.log("Ejecutando revision periodica de usuarios inactivos");
     const task = new CronJob("* * * * *",
     () => {
-    console.log("Revisando usuarios inactivos");
-    disableInactiveUsers();
+      console.log("Revisando usuarios inactivos");
+      disableInactiveUsers();
     },
     null,
     true,
@@ -40,8 +40,8 @@ export const disableInactiveUsers = async (req, res) =>
   console.log(logins)
   logins.forEach(login => {
     if(hasTimeLimitPassed(login.last_login)){
-      console.log("INTENTANDO DAR DE BAJA " + login.user_id)
-      authService.DisableUser(String(login.user_id))
+      console.log("INTENTANDO DAR DE BAJA AL USUARIO CON ID: " + login.user_id)
+      authService.activateUser();
     }; // Si usuario no loggeo hace 6 meses o mas
   });
 
@@ -191,7 +191,7 @@ export const activateUser = async (req, res) => {
       return res.status(404).json({ message: 'No se encontró el usuario o no hubo cambios' });
     }
 
-    res.json({ message: `Usuario ${affectedRows[1][0]['is_active'] ? 'activado' : 'desactivado'} correctamente` });
+    res.json({ message: `Usuario ${affectedRows[1][0]['is_active'] ? '' : 'des'}activado correctamente` });
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar el estado la cuenta: ' + error.message });
   }
