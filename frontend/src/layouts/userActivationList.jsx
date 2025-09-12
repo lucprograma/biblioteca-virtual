@@ -99,8 +99,12 @@ export default function UserActivationTable() {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <span className="badge bg-secondary">{user.is_active ? "Activo" : "Inactivo"}</span>
-                </td>
+                  {
+                  user.is_active ?
+                    <span className="badge bg-primary">Activo</span> :
+                    <span className="badge bg-secondary">Inactivo</span>
+                  }
+                  </td>
                 <td className="text-center">
                   {
                     !user.is_active ?
