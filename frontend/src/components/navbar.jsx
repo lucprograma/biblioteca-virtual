@@ -100,7 +100,13 @@ const Navbar = ({ children }) => {
                   </a>
                 </li>
               )}
-
+              {user?.role === "admin" && (
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/admin">
+                      Administración
+                    </a>
+                  </li>
+                )}
           
            </ul>
 
@@ -120,13 +126,7 @@ const Navbar = ({ children }) => {
             {user && (
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                {user?.role === "admin" && (
-                  <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="/admin">
-                      Administración
-                    </a>
-                  </li>
-                )}
+                
 
                 <ProfileCard user={user} handleLogout={handleLogout}/>
 
