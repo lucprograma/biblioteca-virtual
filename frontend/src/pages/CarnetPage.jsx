@@ -2,6 +2,7 @@
 import StudentIdCardPro from "../components/StudentIdCardPro";
 
 export default function CarnetPage() {
+
   const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   return (

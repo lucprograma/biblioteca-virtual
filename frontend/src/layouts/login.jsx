@@ -219,7 +219,7 @@ const LoginContent = () => {
               navigate("/signIn");
             }}
           >
-            creá una
+            Creá una
           </a>
         </p>
       </form>

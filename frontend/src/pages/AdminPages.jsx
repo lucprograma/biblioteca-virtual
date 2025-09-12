@@ -78,6 +78,7 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
+        <br></br>
       </div>
     </div>
   );
