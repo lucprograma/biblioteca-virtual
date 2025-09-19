@@ -22,7 +22,7 @@ export default function UserActivationTable() {
   }
   const fetchAll = async () => {
     try{
-      const response = await fetch("http://localhost:3000/api/auth/profile",
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
         {
           credentials: 'include',
           method: 'GET'
@@ -43,7 +43,7 @@ export default function UserActivationTable() {
   }
   const fetchUnactive = async () => {
     try{
-        const respose = await fetch("http://localhost:3000/api/auth/profile",
+        const respose = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
           {
             credentials: "include"
           }
@@ -66,7 +66,7 @@ export default function UserActivationTable() {
   };
   const fetchActivate = async (id, activationFlag) => {
     try{
-      const res = await fetch("http://localhost:3000/api/auth/lowuser", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/lowuser`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
