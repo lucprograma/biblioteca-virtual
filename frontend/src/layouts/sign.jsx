@@ -27,7 +27,7 @@ export default function SignInForm() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default function SignInForm() {
         </h2>
 
         <div className="mb-4">
-          <label className="block text-white mb-1">Nombre</label><br/>
+          <label className="block text-white mb-1">Nombre y Apellido</label><br/>
           <input
             type="text"
             name="name"

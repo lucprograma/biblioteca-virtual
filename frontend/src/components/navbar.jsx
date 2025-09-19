@@ -1,7 +1,10 @@
 import {React, useState, useEffect }from "react";
 
 import ProfileCard from "./profileCard";
+//import DropButtonNavbar from "../layouts/drop-button-navbar";
 import { useNavigate } from "react-router";
+
+//import Button from 'react-bootstrap/Button';
 
 
 const Navbar = ({ children }) => {
@@ -13,7 +16,7 @@ const Navbar = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/tokenchk", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/tokenchk`, {
           method: "post",
           credentials: "include", // envía la cookie automáticamente
         });
@@ -33,7 +36,7 @@ const Navbar = ({ children }) => {
   }, []);
    const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/logout", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -70,42 +73,65 @@ const Navbar = ({ children }) => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {/* Links principales a la izquierda */}
-        <ul className="navbar-nav mb-2 mb-lg-0">
-          <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/documentos">
-              Documentos
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/noticias">
-              Noticias
-            </a>
-          </li>
+            <ul className="navbar-nav mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/documentos">
+                  Documentos
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/noticias">
+                  Noticias
+                </a>
+              </li>
 
-
-          {!user && (
+             {/* {user && (
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/login">
-                LogIn
+              <a className="nav-link active" aria-current="page" href="/carnet">
+                Carnet
               </a>
             </li>
-          )}
+          )} */}
+          
+              {!user && (
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="/login">
+                    LogIn
+                  </a>
+                </li>
+              )}
+              {user?.role === "admin" && (
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/admin">
+                      Administración
+                    </a>
+                  </li>
+                )}
+          
+           </ul>
 
-          {user?.role === "admin" && (
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/activation">
-                Lista inactivos
-              </a>
-            </li>
-          )}
-        </ul>
-         {/* Logout a la derecha */}
-        {user && (
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">          
-            <ProfileCard user={user} handleLogout={handleLogout}/>
+            {/*{user?.role === 'admin' && <DropButtonNavbar />}         
+                {user?.role === "admin" && (
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/activation">
+                      Lista inactivos
+                    </a>
+                  </li>
+                )}
+                
+              
+                */}
 
-          </ul>
-        )}
+            {/* Logout a la derecha */}
+            {user && (
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                
+
+                <ProfileCard user={user} handleLogout={handleLogout}/>
+
+              </ul>
+            )}
     
           </div>
         </div>

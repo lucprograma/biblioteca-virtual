@@ -7,6 +7,6 @@ import checkToken from '../middlewares/checkToken.js';
 router.get("/", getAllDocuments);
 router.get("/find_tag/:tag", getByTag);
 router.get("/findByFolder/:folder_id", fetchByParent);
-router.post("/createDocument", checkAdmin, checkToken,upload.single('file'),
+router.post("/createDocument", checkToken, checkAdmin,upload.single('file'),
 createDocument)
 export default router

@@ -3,7 +3,6 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useGetUser } from "../hooks/getUser";
-
 export default function UserActivationTable() {
   const [users, setUsers] = useState([]);
   const [checkUsersFlag, setCheckUsersFlag] = useState(true)
@@ -23,7 +22,7 @@ export default function UserActivationTable() {
   }
   const fetchAll = async () => {
     try{
-      const response = await fetch("http://localhost:3000/api/auth/profile",
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
         {
           credentials: 'include',
           method: 'GET'
@@ -44,7 +43,11 @@ export default function UserActivationTable() {
   }
   const fetchUnactive = async () => {
     try{
-        const respose = await fetch("http://localhost:3000/api/auth/unactive");
+        const respose = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
+          {
+            credentials: "include"
+          }
+        );
         const users = await respose.json();
         if(!users ){
             console.error('Cannot get users');
@@ -63,10 +66,11 @@ export default function UserActivationTable() {
   };
   const fetchActivate = async (id, activationFlag) => {
     try{
-      const res = await fetch("http://localhost:3000/api/auth/profile", {method: "PATCH",
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/lowuser`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({user_id: id, is_active: activationFlag}),
+        body: JSON.stringify({user_id: id}),
       });
       if(!res.ok) throw new Error("Error al actualizar perfil");
       const data = res.json()
@@ -95,32 +99,39 @@ export default function UserActivationTable() {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <span className="badge bg-secondary">{user.is_active ? "Activo" : "Inactivo"}</span>
-                </td>
+                  {
+                  user.is_active ?
+                    <span className="badge bg-primary">Activo</span> :
+                    <span className="badge bg-secondary">Inactivo</span>
+                  }
+                  </td>
                 <td className="text-center">
-                  {!user.is_active? <button
-                    className="btn btn-sm btn-success me-2"
-                    onClick={() => handleActivate(user.user_id)}
-                  >
-                    <CheckCircle size={18} className="me-1" />
-                    Activar
-                  </button> : 
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDeactivate(user.user_id)}
-                  >
-                    <XCircle size={18} className="me-1" />
-                    Desactivar
-                  </button>}
+                  {
+                    !user.is_active ?
+                      <button
+                        className="btn btn-sm btn-success me-2"
+                        onClick={() => handleActivate(user.user_id)}
+                      >
+                        <CheckCircle size={18} className="me-1" />
+                        Activar
+                      </button> : 
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleDeactivate(user.user_id)}
+                      >
+                        <XCircle size={18} className="me-1" />
+                        Desactivar
+                      </button>
+                  }
                 </td>
               </tr>
             )));
   }
   useEffect(()=> {
-    fetchAll().then((result) => {
+    fetchUnactive().then((result) => {
       setUsers(result)
     })
-  }, [checkUsersFlag, user])
+  }, [checkUsersFlag])
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
@@ -163,7 +174,7 @@ export default function UserActivationTable() {
         Mostrar solo inactivos
       </label>        
       </div>
-        <table className="table table-dark table-hover align-middle">
+        <table className="table table-dark table-hover align-middle table-responsive">
           <thead>
             <tr style={{ borderBottom: "2px solid white" }}>
               <th>#</th>

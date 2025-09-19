@@ -9,22 +9,24 @@ import { where } from 'sequelize';
 
 function hasTimeLimitPassed(originalDate) {
   const dateToCheck = new Date(originalDate); // Create a mutable copy
-  dateToCheck.setMonth(dateToCheck.getMonth() + 6); // Add one month
+  dateToCheck.setMonth(dateToCheck.getMonth() + 6); // Add six months
 
   const now = new Date(); // Current date and time
 
-  return dateToCheck <= now; // True if a month has passed
+  return dateToCheck <= now; // True if six months has passed
 }
 
 //LLAMA A CRON, SETEA LA VERIFICACION Y BAJA DE INACTIVIDAD DE USUARIOS CADA NOCHE A LAS 3 AM
 
 export const startCronCheckUp = async () => {
-      console.log("Ejecutando revision periodica de usuarios inactivos");
+
+    console.log("Ejecutando revision periodica de usuarios inactivos");
     const task = new CronJob("* * * * *",
-    ()=>{
-    console.log("Revisando usuarios inactivos")
-    disableInactiveUsers();
-    },null,
+    () => {
+      console.log("Revisando usuarios inactivos");
+      disableInactiveUsers();
+    },
+    null,
     true,
     "America/Argentina/Buenos_Aires"
 )
@@ -38,8 +40,8 @@ export const disableInactiveUsers = async (req, res) =>
   console.log(logins)
   logins.forEach(login => {
     if(hasTimeLimitPassed(login.last_login)){
-      console.log("INTENTANDO DAR DE BAJA "+login.user_id)
-      authService.DisableUser(String(login.user_id))
+      console.log("INTENTANDO DAR DE BAJA AL USUARIO CON ID: " + login.user_id)
+      authService.activateUser();
     }; // Si usuario no loggeo hace 6 meses o mas
   });
 
@@ -85,7 +87,7 @@ export const getUsersAdmin = async (req, res) => {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
       return res.json(user);
-    }else{
+    } else{
     const users = await User.findAll({
       attributes: { exclude: ['password'] }
     });
@@ -131,8 +133,9 @@ export const login = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { name, email, password, dni } = req.body;
-  console.log("dsasa");
+  
+  const { name, email, password, role, course, dni } = req.body;
+
   try {
     const exists = await User.findOne({ where: { email }, attributes: ["email"] });
     if (exists) return res.status(400).json({ message: 'El email ya está registrado' });
@@ -143,6 +146,8 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role,
+      course,
       dni
     });
 
@@ -173,6 +178,22 @@ export const patchProfile = async (req, res) => {
     res.json({ message: 'Perfil actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar el perfil: ' + error.message });
+  }
+};
+
+export const activateUser = async (req, res) => {
+  try {  
+   
+    let userId = req.body.user_id;
+    const affectedRows = await authService.activateUser(userId);
+
+    if (affectedRows === 0) {
+      return res.status(404).json({ message: 'No se encontró el usuario o no hubo cambios' });
+    }
+
+    res.json({ message: `Usuario ${affectedRows[1][0]['is_active'] ? '' : 'des'}activado correctamente` });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el estado la cuenta: ' + error.message });
   }
 };
 
