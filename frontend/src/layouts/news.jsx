@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StateMessage from "../components/stateMesagge";
+import { useGetUser } from "../hooks/getUser";
 
 const News = () => {
   const navigate = useNavigate();
   const [news, setNews] = useState([]);
-  const userRole = localStorage.getItem("role");
+  const { user } = useGetUser();
 
   const fetchNews = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/news/");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/news/`);
       const data = await response.json();
-      console.log(data);
+      console.log('news:',data);
       setNews(data);
     } catch (error) {
       console.error("Error al obtener noticias:", error);
@@ -57,11 +58,11 @@ const News = () => {
         style={{ maxHeight: "80vh", overflowY: "auto" }}
       >
         {/* para admins */}
-        {userRole === "admin" && (
+        {user?.role === "admin" && (
           <div className="text-center pt-4">
             <button
               className="btn btn-primary"
-              onClick={() => navigate("/news/manage")}
+              onClick={() => navigate("/gestor-noticias")}
             >
               Gestionar noticias
             </button>
@@ -69,10 +70,10 @@ const News = () => {
         )}
 
         {/* rendes */}
-        {news.length < 1 ? (
-          <StateMessage message="No se encontraron noticias" />
-        ) : (
+        {news.length > 0 ? (
           renderNews(news)
+        ) : (
+          <StateMessage message="No se encontraron noticias" />
         )}
       </div>
     </div>

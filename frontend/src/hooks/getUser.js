@@ -9,7 +9,7 @@ export function useGetUser() {
     let alive = true;
     setLoading(true);
 
-    fetch("http://localhost:3000/api/auth/tokenchk", { method: "POST", credentials: "include" })
+    fetch(`${import.meta.env.VITE_API_URL}/api/auth/tokenchk`, { method: "POST", credentials: "include" })
       .then((res) => {
         if (!res.ok) throw new Error("No autorizado");
         return res.json();

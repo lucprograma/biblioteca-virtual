@@ -5,7 +5,7 @@ const DocumentsBar = ({ folderState }) => {
   const [folders, setFolders] = useState([]);
   const getFolderStructure = async () => {
     try{
-      const folders = await fetch("http://localhost:3000/api/folders/");
+      const folders = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/`);
       const data = await folders.json();
       console.table("data collected", data)
       return data;

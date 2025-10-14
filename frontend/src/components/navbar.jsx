@@ -16,7 +16,7 @@ const Navbar = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/tokenchk", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/tokenchk`, {
           method: "post",
           credentials: "include", // envía la cookie automáticamente
         });
@@ -36,7 +36,7 @@ const Navbar = ({ children }) => {
   }, []);
    const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/logout", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -85,13 +85,13 @@ const Navbar = ({ children }) => {
                 </a>
               </li>
 
-              {user && (
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/carnet">
-                  Carnet
-                </a>
-              </li>
-              )}
+             {/* {user && (
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="/carnet">
+                Carnet
+              </a>
+            </li>
+          )} */}
           
               {!user && (
                 <li className="nav-item">
@@ -100,7 +100,13 @@ const Navbar = ({ children }) => {
                   </a>
                 </li>
               )}
-
+              {user?.role === "admin" && (
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/admin">
+                      Administración
+                    </a>
+                  </li>
+                )}
           
            </ul>
 
@@ -120,13 +126,7 @@ const Navbar = ({ children }) => {
             {user && (
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                {user?.role === "admin" && (
-                  <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="/admin">
-                      Administración
-                    </a>
-                  </li>
-                )}
+                
 
                 <ProfileCard user={user} handleLogout={handleLogout}/>
 

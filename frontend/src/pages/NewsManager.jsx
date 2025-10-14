@@ -8,7 +8,7 @@ export default function NewsManager() {
   const [mensaje, setMensaje] = useState("");
   const navigate = useNavigate();
 
-  const API_URL = "http://localhost:3000/api/news";
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/news`;
 
   const cargarNoticias = async () => {
     try {
@@ -112,7 +112,7 @@ export default function NewsManager() {
               <hr />
               {noticia.image && (
                 <img
-                  src={`http://localhost:3000/${noticia.image}`}
+                  src={`${import.meta.env.VITE_API_URL}/${noticia.image}`}
                   alt={noticia.title}
                   className="img-fluid rounded mb-3"
                   style={{ maxHeight: "250px", objectFit: "cover" }}
