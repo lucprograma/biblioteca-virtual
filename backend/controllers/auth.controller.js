@@ -134,7 +134,7 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   
-  const { name, email, password, role, course, dni } = req.body;
+  const { name, email, password, role, dni, course } = req.body;
 
   try {
     const exists = await User.findOne({ where: { email }, attributes: ["email"] });
@@ -147,8 +147,8 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       role,
-      course,
-      dni
+      dni,
+      course
     });
 
     res.status(201).json({ message: 'Usuario registrado correctamente', user_id: user.user_id });
