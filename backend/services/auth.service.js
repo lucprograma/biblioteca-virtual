@@ -155,7 +155,7 @@ class AuthService {
                     <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
                     <p>${state ?
                     'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
-                    'Solicita la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> enviando tu número de DNI.'}</p>
+                    'Envía un mensaje para solicitar la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> junto a tu número de DNI.'}</p>
                 
                   </div>
                   
