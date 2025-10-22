@@ -68,8 +68,9 @@ sequelize.authenticate()
 
 //Verificar conexión con el servicio de Gmail.
 transporter.verify()
-.then(
+.then(() => {
   console.log("📨 Mail service connected succesfully!")
-).catch((err) =>
+})
+.catch((err) => {
   console.error("🔌 Error to connect with the mail service!\n", err)
-);
+});
