@@ -1,6 +1,8 @@
+import  {getByParentID, getFolderStructure, getParentFolders} from '../controllers/folder.controller.js';
+
 import express from 'express';
 const router = express.Router();
-import  {getByParentID, getFolderStructure, getParentFolders} from '../controllers/folder.controller.js';
+
 
 router.get("/", getFolderStructure);
 router.get("/parentsFolders", getParentFolders);
