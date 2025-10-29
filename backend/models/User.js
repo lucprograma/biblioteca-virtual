@@ -12,10 +12,11 @@ const User = sequelize.define('User', {
   has_certificate: { type: DataTypes.BOOLEAN, defaultValue: true },
   is_active: { type: DataTypes.BOOLEAN, defaultValue: true },
   last_login: { type: DataTypes.DATEONLY, defaultValue: DataTypes.NOW },
-  created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+  created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 }, {
   tableName: 'users',
-  timestamps: false,
+  timestamps: false
 });
+
 
 export default User;

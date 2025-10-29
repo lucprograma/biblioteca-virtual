@@ -1,7 +1,7 @@
 import sequelize from './db.js';
 import { startCronCheckUp } from '../../controllers/auth.controller.js';
 
-function authConectionDB(app) {
+function authConnectionDB(app) {
 
     sequelize.authenticate()
     .then(() => {
@@ -18,4 +18,4 @@ function authConectionDB(app) {
     });
 }
 
-export default authConectionDB;
+export default authConnectionDB;

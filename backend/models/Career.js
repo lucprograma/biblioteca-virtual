@@ -21,17 +21,5 @@ const Career = sequelize.define('Career', {
   timestamps: false
 });
 
-// Relaciones
-Course.hasMany(Folder, {
-  foreignKey: 'parent_id',
-  sourceKey: 'id_career',
-  as: 'folders'
-});
-
-Folder.belongsTo(Career, {
-  foreignKey: 'parent_id',
-  targetKey: 'id_career',
-  as: 'career'
-});
 
 export default Career;

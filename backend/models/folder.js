@@ -17,5 +17,4 @@ const Folder = sequelize.define(
   });
 
 
-
 export default Folder;

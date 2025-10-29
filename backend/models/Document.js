@@ -11,8 +11,9 @@ const Document = sequelize.define('Document', {
     created_at: {type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 },{
   tableName: 'documents',
-  timestamps: false,
+  timestamps: false
 }
 );
+
 
 export default Document;

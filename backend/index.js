@@ -5,7 +5,7 @@ dotenv.config();
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import authConectionDB from './config/db/index.js';
+import authConnectionDB from './config/db/index.js';
 import mailServiceStatus from './extra_services/mail/index.js';
 
 //Routes
@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 });
 
 // Conexión a la base de datos y levantamos el servidor
-authConectionDB(app);
+authConnectionDB(app);
 
 //Verificar conexión con el servicio de Gmail.
 mailServiceStatus();

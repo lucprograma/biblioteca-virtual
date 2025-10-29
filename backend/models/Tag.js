@@ -5,7 +5,7 @@ const Tag = sequelize.define('Tag', {
   tag_id: { 
     type: DataTypes.INTEGER, 
     primaryKey: true, 
-    autoIncrement: true 
+    autoIncrement: true
   },
   name: { 
     type: DataTypes.STRING, 
@@ -13,7 +13,8 @@ const Tag = sequelize.define('Tag', {
   },
 }, {
   tableName: 'tags',
-  timestamps: false,
+  timestamps: false
 });
+
 
 export default Tag;
