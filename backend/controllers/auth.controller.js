@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/Users.js';
+import User from '../models/User.js';
 import { CronJob } from 'cron';
 import authService from '../services/auth.service.js';
 import { where } from 'sequelize';

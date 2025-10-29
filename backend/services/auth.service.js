@@ -1,7 +1,7 @@
-import sequelize from '../config/db.js';
-import User from '../models/Users.js';
+import sequelize from '../config/db/db.js';
+import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
-import transporter from '../extra_services/nodemailer.js';
+import transporter from '../extra_services/mail/nodemailer.js';
 
 class AuthService {
 
@@ -35,8 +35,10 @@ async getLastLogins() {
 async registerUser({ name, email, password, role,course, dni }) {
     try {
       console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, course, dni });
+      
       const exists = await User.findOne({ where: { email } });
       if (exists) throw new Error('El email ya está registrado');
+      
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({
         name,
@@ -45,8 +47,9 @@ async registerUser({ name, email, password, role,course, dni }) {
         role,
         course,
         dni
+      
+      });      
        
-      });       
       console.log('Usuario creado:', user.toJSON());
 
       return user;

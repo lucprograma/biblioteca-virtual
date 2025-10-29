@@ -52,7 +52,15 @@ CREATE TABLE `comments` (
 -- Volcado de datos para la tabla `comments`
 --
 
-INSERT INTO `comments` (`comment_id`, `document_id`, `user_id`, `content`, `created_at`, `modified_at`) VALUES
+INSERT INTO `comments` (
+  `comment_id`,
+  `document_id`,
+  `user_id`,
+  `content`,
+  `created_at`,
+  `modified_at`
+)
+VALUES
 (1, 1, 23, 'Muy buen material, gracias.', '2025-09-04 21:47:33', '2025-09-04 21:47:33'),
 (2, 1, 23, '¿Tienen la versión actualizada?', '2025-09-04 21:47:33', '2025-09-04 21:47:33'),
 (3, 2, 23, 'Esto me ayudó para el examen.', '2025-09-04 21:47:33', '2025-09-04 21:47:33');
@@ -60,14 +68,27 @@ INSERT INTO `comments` (`comment_id`, `document_id`, `user_id`, `content`, `crea
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `course`
+-- Estructura de tabla para la tabla `careers`
 --
 
-CREATE TABLE `course` (
-  `id_course` int(11) NOT NULL,
+CREATE TABLE `careers` (
+  `id_career` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `course`
+--
+
+INSERT INTO `course` (`id_course`, `name`, `created_at`) VALUES
+(1, 'Ingeniería en Sistemas', '2025-09-10 18:07:33'),
+(2, 'Licenciatura en Informática', '2025-09-10 18:07:33'),
+(3, 'Tecnicatura en Programación', '2025-09-10 18:07:33'),
+(4, 'Administración de Empresas', '2025-09-10 18:07:33'),
+(5, 'Contador Público', '2025-09-10 18:07:33'),
+(6, 'Diseño Gráfico', '2025-09-10 18:07:33'),
+(7, 'Profesorado en Matemática', '2025-09-10 18:07:33');
 
 -- --------------------------------------------------------
 
@@ -89,7 +110,16 @@ CREATE TABLE `documents` (
 -- Volcado de datos para la tabla `documents`
 --
 
-INSERT INTO `documents` (`document_id`, `title`, `content`, `image`, `uploaded_by`, `folder_id`, `created_at`) VALUES
+INSERT INTO `documents` (
+  `document_id`,
+  `title`,
+  `content`,
+  `image`,
+  `uploaded_by`,
+  `folder_id`,
+  `created_at`
+)
+VALUES
 (1, 'Manual de Programación', 'Contenido del manual...', NULL, 23, 2, '2025-09-04 21:47:33'),
 (2, 'Apuntes de SQL', 'Aquí van los apuntes...', NULL, 23, 2, '2025-09-04 21:47:33'),
 (3, 'Examen Final 2024', 'Preguntas y consignas...', NULL, 23, 3, '2025-09-04 21:47:33');
@@ -110,7 +140,12 @@ CREATE TABLE `document_tags` (
 -- Volcado de datos para la tabla `document_tags`
 --
 
-INSERT INTO `document_tags` (`document_tags_id`, `document_id`, `tag_id`) VALUES
+INSERT INTO `document_tags` (
+  `document_tags_id`,
+  `document_id`,
+  `tag_id`
+)
+VALUES
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 4);
@@ -126,7 +161,7 @@ CREATE TABLE `folders` (
   `name` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `parent_id` int(11) DEFAULT NULL,
-  `type` enum('Course','Year') DEFAULT NULL,
+  `type` enum('career','Year') DEFAULT NULL,
   `year_level` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -134,7 +169,15 @@ CREATE TABLE `folders` (
 -- Volcado de datos para la tabla `folders`
 --
 
-INSERT INTO `folders` (`folder_id`, `name`, `created_at`, `parent_id`, `type`, `year_level`) VALUES
+INSERT INTO `folders` (
+  `folder_id`,
+  `name`,
+  `created_at`,
+  `parent_id`,
+  `type`,
+  `year_level`
+)
+VALUES
 (1, 'Carpeta Principal', '2025-09-04 21:47:33', NULL, '', NULL),
 (2, 'Apuntes de Programación', '2025-09-04 21:47:33', NULL, '', NULL),
 (3, 'Exámenes', '2025-09-04 21:47:33', NULL, NULL, NULL);
@@ -159,8 +202,9 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`news_id`, `title`, `content`, `image`, `author_id`, `published_at`) VALUES
-(1, 'Nueva Biblioteca Digital', 'Se inauguró la biblioteca digital para estudiantes.', NULL, 23, '2025-09-04 21:47:33'),
-(2, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 23, '2025-09-04 21:47:33');
+(2, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 23, '2025-09-04 21:47:33'),
+(5, 'okwdmalñkdcmwldckdm', 'w1ps´lpsl´qwpsl´qpsl´qlps´qpslq´wslq´wslw´plw', NULL, 24, '2025-09-12 11:14:02'),
+(6, 'xgncvnxcvnxcnv', 'cnxnxcvnxcncxvncvncncvvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, 24, '2025-09-12 17:29:34');
 
 -- --------------------------------------------------------
 
@@ -180,7 +224,14 @@ CREATE TABLE `strikes` (
 -- Volcado de datos para la tabla `strikes`
 --
 
-INSERT INTO `strikes` (`strike_id`, `comment_id`, `valid`, `user_id`, `created_at`) VALUES
+INSERT INTO `strikes` (
+  `strike_id`,
+  `comment_id`,
+  `valid`,
+  `user_id`,
+  `created_at`
+)
+VALUES
 (1, 2, 1, 23, '2025-09-04 21:47:33'),
 (2, 3, 0, 23, '2025-09-04 21:47:33');
 
@@ -199,7 +250,11 @@ CREATE TABLE `tags` (
 -- Volcado de datos para la tabla `tags`
 --
 
-INSERT INTO `tags` (`tag_id`, `name`) VALUES
+INSERT INTO `tags` (
+  `tag_id`,
+  `name`
+)
+VALUES
 (3, 'Educación'),
 (4, 'Examen'),
 (1, 'Programación'),
@@ -217,7 +272,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','regular') NOT NULL,
-  `course` varchar(255) NOT NULL,
+  `career` varchar(255) NOT NULL,
   `dni` int(10) UNSIGNED DEFAULT NULL,
   `has_certificate` tinyint(1) DEFAULT 1,
   `is_active` tinyint(1) DEFAULT 1,
@@ -230,7 +285,21 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `course`, `dni`, `has_certificate`, `is_active`, `last_login`, `created_at`, `updated_at`) VALUES
+INSERT INTO `users` (
+  `user_id`,
+  `name`,
+  `email`,
+  `password`,
+  `role`,
+  `career`,
+  `dni`,
+  `has_certificate`,
+  `is_active`,
+  `last_login`,
+  `created_at`,
+  `updated_at`
+)
+VALUES
 (23, 'Usuario Dummy', 'dummy@mail.com', '123456', 'admin', 'Ninguno', 8388607, 1, 0, '2025-09-04', '2025-09-04 21:47:33', '2025-09-04 21:47:33'),
 (24, 'facundo manuel di blasio', 'facu@mail.com', '$2b$10$lKU/61dImpytOeGGfu.qlOLNRgEeP9TjXVNgVQG1NylqmL1Fdmu3K', 'admin', '', 8388607, 1, 1, '2025-09-04', '2025-09-05 00:49:26', '2025-09-05 00:49:26');
 
@@ -253,10 +322,10 @@ ALTER TABLE `comments`
   ADD KEY `comments_ibfk_2` (`user_id`);
 
 --
--- Indices de la tabla `course`
+-- Indices de la tabla `careers`
 --
-ALTER TABLE `course`
-  ADD PRIMARY KEY (`id_course`);
+ALTER TABLE `careers`
+  ADD PRIMARY KEY (`id_career`);
 
 --
 -- Indices de la tabla `documents`
@@ -279,7 +348,7 @@ ALTER TABLE `document_tags`
 --
 ALTER TABLE `folders`
   ADD PRIMARY KEY (`folder_id`),
-  ADD KEY `fk_folders_course` (`parent_id`);
+  ADD KEY `fk_folders_career` (`parent_id`);
 
 --
 -- Indices de la tabla `news`
@@ -327,10 +396,10 @@ ALTER TABLE `comments`
   MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `course`
+-- AUTO_INCREMENT de la tabla `careers`
 --
 ALTER TABLE `course`
-  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `documents`
@@ -403,7 +472,7 @@ ALTER TABLE `document_tags`
 -- Filtros para la tabla `folders`
 --
 ALTER TABLE `folders`
-  ADD CONSTRAINT `fk_folders_course` FOREIGN KEY (`parent_id`) REFERENCES `course` (`id_course`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_folders_career` FOREIGN KEY (`parent_id`) REFERENCES `careers` (`id_career`) ON DELETE SET NULL,
   ADD CONSTRAINT `fk_folders_parent` FOREIGN KEY (`parent_id`) REFERENCES `folders` (`folder_id`) ON DELETE SET NULL;
 
 --

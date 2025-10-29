@@ -1,6 +1,6 @@
-import sequelize from "../config/db.js";
+import sequelize from "../config/db/db.js";
 import { DataTypes } from "sequelize";
-import Document from "./Documents.js";
+
 const Folder = sequelize.define(
   "Folder",
   {
@@ -15,14 +15,7 @@ const Folder = sequelize.define(
     tableName: "folders",
     timestamps: false,
   });
-Folder.hasMany(Folder, {
-  foreignKey: "parent_id",
-  sourceKey: "folder_id",
-  as: "children",})
-Folder.belongsTo(Folder, {
-    foreignKey: "parent_id",
-    targetKey: "folder_id",
-    as: "parent",
-});
+
+
 
 export default Folder;

@@ -1,4 +1,4 @@
-import sequelize from '../config/db.js';
+import sequelize from '../config/db/db.js';
 import News from '../models/News.js';
 import { Op } from 'sequelize'; // importamos operador de Sequelize para comparaciones
 

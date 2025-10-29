@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
-import Folder from './folder.js';
+import sequelize from '../config/db/db.js';
+import Folder from './Folder.js';
 
-const Course = sequelize.define('Course', {
-  id_course: { 
+const Career = sequelize.define('Career', {
+  id_career: { 
     type: DataTypes.INTEGER, 
     primaryKey: true, 
     autoIncrement: true 
@@ -17,21 +17,21 @@ const Course = sequelize.define('Course', {
     defaultValue: DataTypes.NOW 
   }
 }, {
-  tableName: 'course',
+  tableName: 'career',
   timestamps: false
 });
 
 // Relaciones
 Course.hasMany(Folder, {
   foreignKey: 'parent_id',
-  sourceKey: 'id_course',
+  sourceKey: 'id_career',
   as: 'folders'
 });
 
-Folder.belongsTo(Course, {
+Folder.belongsTo(Career, {
   foreignKey: 'parent_id',
-  targetKey: 'id_course',
-  as: 'course'
+  targetKey: 'id_career',
+  as: 'career'
 });
 
-export default Course;
+export default Career;
