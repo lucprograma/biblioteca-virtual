@@ -20,10 +20,8 @@ function hasTimeLimitPassed(originalDate) {
 
 export const startCronCheckUp = async () => {
 
-    console.log("Ejecutando revision periodica de usuarios inactivos");
     const task = new CronJob("* * * * *",
     () => {
-      console.log("Revisando usuarios inactivos");
       disableInactiveUsers();
     },
     null,
@@ -78,7 +76,6 @@ export const getUnactive = async (req, res) => {
 export const getUsersAdmin = async (req, res) => {
   try {
     const  user_id  = req.body?.user_id || null;
-    //console.log('ID recibido en getUsersAdmin:', user_id);
     if (user_id) {
       const user = await User.findByPk(user_id, {
         attributes: { exclude: ['password'] }
@@ -165,7 +162,6 @@ export const patchProfile = async (req, res) => {
     console.log('userId:', userId);
     console.log(' body:', req.body);
    
-    //console.log ('ID del usuario a actualizar controlador:', userId);
     const data = req.body; 
     let hashedPassword = null;//declaro variable    
     if (data.password) {

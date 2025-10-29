@@ -8,7 +8,14 @@ export default function UserActivationTable() {
   const [checkUsersFlag, setCheckUsersFlag] = useState(true)
   const { user } = useGetUser();
   const [filters, setFilters] = useState({});
-
+  useEffect(()=> {
+    const loadUsers = async () => {
+      const allUsers = await fetchAll();
+      setUsers(allUsers);
+      console.log("users loaded", allUsers)
+    }
+    loadUsers();
+  }, [checkUsersFlag])
   const addFilter = (name, fn) => {
     setFilters((prev) => ({ ...prev, [name]: fn }));
   };
@@ -41,52 +48,43 @@ export default function UserActivationTable() {
         return [];
     }
   }
-  const fetchUnactive = async () => {
-    try{
-        const respose = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
-          {
-            credentials: "include"
-          }
-        );
-        const users = await respose.json();
-        if(!users ){
-            console.error('Cannot get users');
-        }
-        console.log('users fetched with sucess', users)
-        return users;
-    }
-    catch(err){
-        console.error(`Error fetching users:${err}`)
-        return [];
-    }
-  };
-  const handleActivate = (id) => {
-    console.log("Activando usuario con ID:", id);
-    fetchActivate(id, true)
-  };
   const fetchActivate = async (id, activationFlag) => {
-    try{
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/lowuser`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({user_id: id}),
-      });
-      if(!res.ok) throw new Error("Error al actualizar perfil");
-      const data = res.json()
-      setCheckUsersFlag(!checkUsersFlag);
-    }
-    catch (err) {
-      console.log(err);
-    }
-  }
-  const handleDeactivate = (id) => {
-    console.log("Desactivando usuario con ID:", id);
-    fetchActivate(id, false)
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/lowuser`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ 
+        user_id: id,
+       }),
+    });
 
-  };
+    if (!res.ok) throw new Error("Error al actualizar perfil");
+
+    // Actualiza dinámicamente el estado local sin refetch
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.user_id === id ? { ...u, is_active: !u.is_active } : u
+      )
+    );
+    setCheckUsersFlag(!checkUsersFlag);
+  } catch (err) {
+    console.error("Error al actualizar usuario:", err);
+  }
+};
+
+const handleActivate = (id) => {
+  console.log("Activando usuario con ID:", id);
+  fetchActivate(id, true);
+};
+
+const handleDeactivate = (id) => {
+  console.log("Desactivando usuario con ID:", id);
+  fetchActivate(id, false);
+};
+
   const renderUsers = (filterListFunctions) => {
-    if(!users || typeof users[0] === 'undefined'){
+    if(!users || users.length === 0 || typeof users[0] === 'undefined'){
       return <tr><p>No hay usuarios en la lista</p></tr>
     }
     const visibles = users.filter((u) =>
@@ -127,11 +125,6 @@ export default function UserActivationTable() {
               </tr>
             )));
   }
-  useEffect(()=> {
-    fetchUnactive().then((result) => {
-      setUsers(result)
-    })
-  }, [checkUsersFlag])
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
@@ -185,17 +178,9 @@ export default function UserActivationTable() {
             </tr>
           </thead>
           <tbody>
-              {
-              
-                users.length > 0 ? (
-                  renderUsers(filters)
-                ) : (<tr>
-                <td colSpan="5" className="text-center text-muted">
-                  No hay usuarios inactivos
-                </td>
-              </tr>)
-              }
-          </tbody>
+  {renderUsers(filters)}
+</tbody>
+
         </table>
       </div>
     </div>

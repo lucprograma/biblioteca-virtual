@@ -43,6 +43,7 @@ export default function NewsManager() {
         response = await fetch(`${API_URL}/update`, {
           method: "PATCH",
           body: formData,
+          credentials: 'include',
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
@@ -51,6 +52,7 @@ export default function NewsManager() {
       } else {
         response = await fetch(`${API_URL}/`, {
           method: "POST",
+          credentials: 'include',
           body: formData,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -78,9 +80,10 @@ export default function NewsManager() {
     try {
       await fetch(`${API_URL}/delete`, {
         method: "DELETE",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ news_id: id })
       });
