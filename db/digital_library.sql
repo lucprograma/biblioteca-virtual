@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-09-2025 a las 23:24:43
+-- Tiempo de generación: 24-09-2025 a las 23:01:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,19 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `digital_library`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `career`
---
-
-CREATE TABLE `career` (
-  `career_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+create database if not exists digital_library;
+use digital_library;
 -- --------------------------------------------------------
 
 --
@@ -68,6 +57,19 @@ CREATE TABLE `course` (
   `name` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `course`
+--
+
+INSERT INTO `course` (`id_course`, `name`, `created_at`) VALUES
+(1, 'Ingeniería en Sistemas', '2025-09-10 18:07:33'),
+(2, 'Licenciatura en Informática', '2025-09-10 18:07:33'),
+(3, 'Tecnicatura en Programación', '2025-09-10 18:07:33'),
+(4, 'Administración de Empresas', '2025-09-10 18:07:33'),
+(5, 'Contador Público', '2025-09-10 18:07:33'),
+(6, 'Diseño Gráfico', '2025-09-10 18:07:33'),
+(7, 'Profesorado en Matemática', '2025-09-10 18:07:33');
 
 -- --------------------------------------------------------
 
@@ -159,8 +161,9 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`news_id`, `title`, `content`, `image`, `author_id`, `published_at`) VALUES
-(1, 'Nueva Biblioteca Digital', 'Se inauguró la biblioteca digital para estudiantes.', NULL, 23, '2025-09-04 21:47:33'),
-(2, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 23, '2025-09-04 21:47:33');
+(2, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 23, '2025-09-04 21:47:33'),
+(5, 'okwdmalñkdcmwldckdm', 'w1ps´lpsl´qwpsl´qpsl´qlps´qpslq´wslq´wslw´plw', NULL, 24, '2025-09-12 11:14:02'),
+(6, 'xgncvnxcvnxcnv', 'cnxnxcvnxcncxvncvncncvvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, 24, '2025-09-12 17:29:34');
 
 -- --------------------------------------------------------
 
@@ -239,12 +242,6 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `course`, `
 --
 
 --
--- Indices de la tabla `career`
---
-ALTER TABLE `career`
-  ADD PRIMARY KEY (`career_id`);
-
---
 -- Indices de la tabla `comments`
 --
 ALTER TABLE `comments`
@@ -315,12 +312,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `career`
---
-ALTER TABLE `career`
-  MODIFY `career_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
@@ -330,7 +321,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT de la tabla `course`
 --
 ALTER TABLE `course`
-  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `documents`
@@ -354,7 +345,7 @@ ALTER TABLE `folders`
 -- AUTO_INCREMENT de la tabla `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `strikes`
