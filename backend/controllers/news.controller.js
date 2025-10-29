@@ -21,7 +21,6 @@ export const addNews = async (req, res) => {
 export const updateNews = async (req, res) => {
   try {
     const { news_id, ...data } = req.body;
-
     // Si se sube una nueva imagen, agregamos su URL a los datos
     if (req.file) {
       data.image_url = `/uploads/${req.file.filename}`;

@@ -24,7 +24,7 @@ const allowedOrigins = [
 const corsOptions = {
         origin: true, // Reflects the request origin, allowing all origins dynamically
         credentials: true, // Allow cookies and other credentials
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed HTTP methods
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Specify allowed HTTP methods
         allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed request headers
     };
 app.use(cors(corsOptions));
