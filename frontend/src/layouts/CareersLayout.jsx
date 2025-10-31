@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ModalForm from "../components/ModalForm";
+import { Col, Row, Card } from "react-bootstrap";
+import { BookHalf } from "react-bootstrap-icons";
 
 function CareersLayout() {
   const [careers, setCareers] = useState([]);
   const [name, setName] = useState("");
   const [editando, setEditando] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const getCareers = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/careers/`, {
@@ -37,24 +41,34 @@ function CareersLayout() {
         }
       );
       const data = await response.json();
-      setCareers(data);
       return data;
     } catch (error) {
       console.error("Error fetching careers:", error);
-      return new Error("Error fetching careers");
+      throw new Error("Error fetching careers");
     }}
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!fetchCareers()) return;
-    if (editando) {
-      setCareers((prev) =>
-        prev.map((c) => (c.id === editando.id ? { ...c, name } : c))
-      );
-    } else {
-      setCareers((prev) => [...prev, { id: Date.now(), name }]);
+    setLoading(true);
+    setError(null);
+    try{
+      await fetchCareers();
+      if (editando) {
+        setCareers((prev) =>
+          prev.map((c) => (c.id === editando.id ? { ...c, name } : c))
+        );
+      } else {
+        setCareers((prev) => [...prev, { id: Date.now(), name }]);
+      }
+      setName("");
+      setEditando(null);
     }
-    setName("");
-    setEditando(null);
+    catch(error){
+      setError("Error al guardar la carrera");
+      setTimeout(() => setError(null), 3000);  
+    }
+    finally{
+      setLoading(false);
+    }
   };
 
   const handleEditar = (career) => {
@@ -63,10 +77,6 @@ function CareersLayout() {
     new bootstrap.Modal("#uploadDocumentModal").show();
   };
   
-  const handleEliminar = (id) => {
-    if (window.confirm("¿Eliminar carrera?"))
-      setCareers((prev) => prev.filter((c) => c.id !== id));
-  };
 
   return (
     <div className="container py-4">
@@ -84,44 +94,43 @@ function CareersLayout() {
           Nueva Carrera
         </button>
       </div>
-
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {careers.map((c, i) => (
-            <tr key={c.id}>
-              <td>{i + 1}</td>
-              <td>{c.name}</td>
-              <td>
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEditar(c)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleEliminar(c.id)}
-                >
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <Row className="justify-content-md-center">
+            {careers.map((c, i) => (
+              //card de carrera
+              <Col key={c.id} xs={12} md={4} lg={3} className="mb-4 me-3">
+                <div className=""></div>
+                <Card style={{ width: '18rem',
+                  backgroundColor: '#74b835ff',
+                  color: 'white'
+                 }}>
+                  <div className="d-flex justify-content-center p-4">
+                    <BookHalf size={64} />
+                  </div>
+                <Card.Body>
+                <hr />
+                  <Card.Title>{c.name}</Card.Title>
+                  <hr />
+                  <button
+                    className="btn btn-danger btn-sm me-2 text-white"
+                    onClick={() => handleEditar(c)}
+                  >
+                    Editar
+                  </button>
+                </Card.Body>
+              </Card>
+              </Col>
+            ))}
+          </Row>
 
       {/* Tu modal */}
       <ModalForm
         title={editando ? "Editar Carrera" : "Nueva Carrera"}
         handleSubmit={handleSubmit}
       >
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {loading && <div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>}
         <div className="mb-3">
           <label className="form-label">Nombre</label>
           <input
