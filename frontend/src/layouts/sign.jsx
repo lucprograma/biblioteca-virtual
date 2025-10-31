@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useNavigate} from 'react-router';
 import PasswordInput from "../components/passwordInput";
+
 export default function SignInForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -13,6 +14,15 @@ export default function SignInForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/careers`) // tu endpoint que devuelve [{id, name}, ...]
+      .then((res) => res.json())
+      .then((data) => setCourses(data))
+      .catch((err) => console.error(err));
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,7 +37,7 @@ export default function SignInForm() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,15 +102,20 @@ export default function SignInForm() {
 
         <div className="mb-6">
           <label className="block text-white mb-1">Carrera</label><br/>
-          <input
-            type="text"
+          <select
             name="course"
             value={formData.course}
             onChange={handleChange}
             required
             className="w-full p-2 rounded bg-neutral-700 text-black outline-none focus:ring-2 focus:ring-red-500"
-            placeholder="Ingrese su carrera"
-          />
+          >
+            <option value="">Seleccione su carrera</option>
+            {courses.map((course) => (
+              <option key={course.id} value={course.name}>
+                {course.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-6">

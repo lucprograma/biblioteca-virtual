@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-09-2025 a las 23:24:43
+-- Tiempo de generación: 24-09-2025 a las 23:01:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `digital_library`
 --
+
+create database if not exists digital_library;
+use digital_library;
 
 -- --------------------------------------------------------
 
@@ -72,6 +75,19 @@ VALUES
 --
 
 INSERT INTO `careers` (`id_career`, `name`, `created_at`) VALUES
+(1, 'Ingeniería en Sistemas', '2025-09-10 18:07:33'),
+(2, 'Licenciatura en Informática', '2025-09-10 18:07:33'),
+(3, 'Tecnicatura en Programación', '2025-09-10 18:07:33'),
+(4, 'Administración de Empresas', '2025-09-10 18:07:33'),
+(5, 'Contador Público', '2025-09-10 18:07:33'),
+(6, 'Diseño Gráfico', '2025-09-10 18:07:33'),
+(7, 'Profesorado en Matemática', '2025-09-10 18:07:33');
+
+--
+-- Volcado de datos para la tabla `course`
+--
+
+INSERT INTO `course` (`id_course`, `name`, `created_at`) VALUES
 (1, 'Ingeniería en Sistemas', '2025-09-10 18:07:33'),
 (2, 'Licenciatura en Informática', '2025-09-10 18:07:33'),
 (3, 'Tecnicatura en Programación', '2025-09-10 18:07:33'),
@@ -298,12 +314,6 @@ VALUES
 --
 
 --
--- Indices de la tabla `career`
---
-ALTER TABLE `career`
-  ADD PRIMARY KEY (`career_id`);
-
---
 -- Indices de la tabla `comments`
 --
 ALTER TABLE `comments`
@@ -374,12 +384,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `career`
---
-ALTER TABLE `career`
-  MODIFY `career_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
@@ -413,7 +417,7 @@ ALTER TABLE `folders`
 -- AUTO_INCREMENT de la tabla `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `strikes`

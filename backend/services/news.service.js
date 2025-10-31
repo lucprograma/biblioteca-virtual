@@ -80,7 +80,7 @@ class NewsService {
     threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3); // restamos 3 meses a la variable
     return await News.findAll({
       where: {
-        published_at: { // iltra por campo created_at
+        published_at: { // filtra por campo created_at
           [Op.gte]: threeMonthsAgo // gte mayor o igual que
         }
       },

@@ -22,7 +22,7 @@ const Home = () => (
           borderRadius: "1rem",
         }}
       >
-        <h1>Bienvenido a la pagina principal</h1>
+        <h1>Bienvenido a la página principal</h1>
         <p>¡Somos la biblioteca del Instituto 2!</p>
       </div>
     </div>

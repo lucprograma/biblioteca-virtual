@@ -11,6 +11,7 @@ import mailServiceStatus from './extra_services/mail/index.js';
 //Routes
 import routerApi from './routes/index.js';
 
+
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",

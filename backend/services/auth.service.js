@@ -5,34 +5,34 @@ import transporter from '../extra_services/mail/nodemailer.js';
 
 class AuthService {
 
-//busca por id
-async getUserById(id) {
-  const user = await User.findByPk(id, {
-    attributes: { exclude: ['password'] }
-  });
-  return user;
-}
+  //busca por id
+  async getUserById(id) {
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] }
+    });
+    return user;
+  }
 
-//trae todos usuarios
-async getAllUsers() {
-  const users = await User.findAll({
-    attributes: { exclude: ['password'] }
-  });
-  return users;
-}
+  //trae todos usuarios
+  async getAllUsers() {
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] }
+    });
+    return users;
+  }
 
-async getLastLogins() {
-  const logins = await User.findAll({
-    attributes : ['user_id','last_login' ]
-  })
+  async getLastLogins() {
+    const logins = await User.findAll({
+      attributes : ['user_id','last_login' ]
+    })
 
-  return logins;
-}
+    return logins;
+  }
 
 
 
-//funcion registro
-async registerUser({ name, email, password, role,course, dni }) {
+  //funcion registro
+  async registerUser({ name, email, password, role, course, dni }) {
     try {
       console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, course, dni });
       
@@ -48,25 +48,12 @@ async registerUser({ name, email, password, role,course, dni }) {
         course,
         dni
       
-      });      
-       
+      });       
       console.log('Usuario creado:', user.toJSON());
 
       return user;
     } catch (error) {
       throw new Error('Error en registerUser: ' + error.message);
-    }
-  }
-
-  //funcion patch
-
-  async DisableUser(userId){
-    try{
-      const disablequery = "UPDATE users SET is_active = FALSE WHERE user_id = ?";
-      const result = await sequelize.query(disablequery, { replacements: [userId]});
-      return result;
-    }catch(error){
-      console.log(error);
     }
   }
 
@@ -126,7 +113,7 @@ async registerUser({ name, email, password, role,course, dni }) {
 
       await transporter.sendMail({
         from: `${process.env.GMAIL_FROM}`,
-        to: `misaelalvarezfutbol@gmail.com`,
+        to: `${email}`,
         subject: `Cuenta ${state ? '' : 'des'}activada`,
         text: `Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul.
               Tu cuenta de usuario ha sido ${state ? '' : 'des'}activada.
@@ -170,7 +157,7 @@ async registerUser({ name, email, password, role,course, dni }) {
                     <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
                     <p>${state ?
                     'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
-                    'Solicita la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> enviando tu número de DNI.'}</p>
+                    'Envía un mensaje para solicitar la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> junto a tu número de DNI.'}</p>
                 
                   </div>
                   

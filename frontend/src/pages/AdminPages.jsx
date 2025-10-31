@@ -13,7 +13,7 @@ export default function AdminPage() {
   React.useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/tokenchk", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/tokenchk`, {
           method: "POST",
           credentials: "include",
         });
@@ -78,6 +78,7 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
+        <br></br>
       </div>
     </div>
   );

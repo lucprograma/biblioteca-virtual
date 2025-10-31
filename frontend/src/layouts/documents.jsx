@@ -21,7 +21,7 @@ const Documents = ({folder_id}) => {
           console.log('folder id is null');
           return [];
         }
-        const response = await fetch(`http://localhost:3000/api/documents/findByFolder/${folder_id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/documents/findByFolder/${folder_id}`);
         const docs = response.json();
         return docs;
     }
@@ -32,7 +32,7 @@ const Documents = ({folder_id}) => {
   }
   const handleDownload = (content) => {
   const link = document.createElement('a');
-  link.href = `http://localhost:3000/download/${content}`;
+  link.href = `${import.meta.env.VITE_API_URL}/download/${content}`;
   link.click();
 };
 //verificamos que la respuesta contenga documentos
@@ -58,12 +58,12 @@ const Documents = ({folder_id}) => {
           <div className="card">
             <div className="card-header">{document.title}</div>
             <div className="card-body">
-              <iframe src={`http://localhost:3000/uploads/${document.content}`} width="100%" height="300px" title="Document 1"></iframe>
+              <iframe src={`${import.meta.env.VITE_API_URL}/uploads/${document.content}`} width="100%" height="300px" title="Document 1"></iframe>
             </div>
             <div className="card-footer d-flex justify-content-center">
               <button
                 className="btn btn-danger btn-sm px-4 py-2"
-                onClick={() => openPdf(`http://localhost:3000/uploads/${document.content}`)}
+                onClick={() => openPdf(`${import.meta.env.VITE_API_URL}/uploads/${document.content}`)}
               >
                 Open
               </button>

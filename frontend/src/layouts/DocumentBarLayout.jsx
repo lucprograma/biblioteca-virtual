@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useGetUser } from "../hooks/getUser";
 const DocumentBarLayout = ({ folderState }) => {
-  const [user, setUser] = useState(null);
+  const { user }= useGetUser();
   const fetchUser = async () => {
         try {
           const {user, loading, error} = await useGetUser();
