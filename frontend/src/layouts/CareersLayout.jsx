@@ -26,7 +26,7 @@ function CareersLayout() {
   const fetchCareers = async () => {
     try {
       const targetEndpoint = editando
-        ? `${import.meta.env.VITE_API_URL}/api/careers/${editando.id}`
+        ? `${import.meta.env.VITE_API_URL}/api/careers/${editando.id_course}`
         : `${import.meta.env.VITE_API_URL}/api/careers/`;
       const method = editando ? "PATCH" : "POST";
       const response = await fetch(
@@ -128,8 +128,8 @@ function CareersLayout() {
         handleSubmit={handleSubmit}
       >
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {loading && <div class="spinner-border" role="status">
-  <span class="visually-hidden">Loading...</span>
+        {loading && <div className="spinner-border" role="status">
+  <span className="visually-hidden">Loading...</span>
 </div>}
         <div className="mb-3">
           <label className="form-label">Nombre</label>
