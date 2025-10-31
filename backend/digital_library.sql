@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `career`
+-- Estructura de tabla para la tabla `careers`
 --
 
-CREATE TABLE `career` (
+CREATE TABLE `careers` (
   `career_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
@@ -68,20 +68,10 @@ VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `careers`
+-- Volcado de datos para la tabla `careers`
 --
 
-CREATE TABLE `careers` (
-  `id_career` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `course`
---
-
-INSERT INTO `course` (`id_course`, `name`, `created_at`) VALUES
+INSERT INTO `careers` (`id_career`, `name`, `created_at`) VALUES
 (1, 'Ingeniería en Sistemas', '2025-09-10 18:07:33'),
 (2, 'Licenciatura en Informática', '2025-09-10 18:07:33'),
 (3, 'Tecnicatura en Programación', '2025-09-10 18:07:33'),
@@ -203,8 +193,8 @@ CREATE TABLE `news` (
 
 INSERT INTO `news` (`news_id`, `title`, `content`, `image`, `author_id`, `published_at`) VALUES
 (2, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 23, '2025-09-04 21:47:33'),
-(5, 'okwdmalñkdcmwldckdm', 'w1ps´lpsl´qwpsl´qpsl´qlps´qpslq´wslq´wslw´plw', NULL, 24, '2025-09-12 11:14:02'),
-(6, 'xgncvnxcvnxcnv', 'cnxnxcvnxcncxvncvncncvvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, 24, '2025-09-12 17:29:34');
+(5, 'Charla de ciberseguridad', 'Aprende a cómo navegar seguramente en Internet', NULL, 24, '2025-09-12 11:14:02'),
+(6, 'Fecha de elecciones estudiantiles', 'El día de la fecha se celebrarán las votaciones...', NULL, 24, '2025-09-12 17:29:34');
 
 -- --------------------------------------------------------
 
@@ -318,8 +308,8 @@ ALTER TABLE `career`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`),
-  ADD KEY `comments_ibfk_1` (`document_id`),
-  ADD KEY `comments_ibfk_2` (`user_id`);
+  ADD KEY `comments_ibfk_1` (`document_id`)  N DELETE CASCADE,
+  ADD KEY `comments_ibfk_2` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Indices de la tabla `careers`
@@ -332,38 +322,38 @@ ALTER TABLE `careers`
 --
 ALTER TABLE `documents`
   ADD PRIMARY KEY (`document_id`),
-  ADD KEY `documents_ibfk_1` (`uploaded_by`),
-  ADD KEY `documents_ibfk_2` (`folder_id`);
+  ADD KEY `documents_ibfk_1` (`uploaded_by`) ON DELETE CASCADE,
+  ADD KEY `documents_ibfk_2` (`folder_id`) ON DELETE CASCADE;
 
 --
 -- Indices de la tabla `document_tags`
 --
 ALTER TABLE `document_tags`
   ADD PRIMARY KEY (`document_tags_id`),
-  ADD KEY `document_tags_ibfk_1` (`document_id`),
-  ADD KEY `document_tags_ibfk_2` (`tag_id`);
+  ADD KEY `document_tags_ibfk_1` (`document_id`) ON DELETE CASCADE,
+  ADD KEY `document_tags_ibfk_2` (`tag_id`) ON DELETE CASCADE;
 
 --
 -- Indices de la tabla `folders`
 --
 ALTER TABLE `folders`
   ADD PRIMARY KEY (`folder_id`),
-  ADD KEY `fk_folders_career` (`parent_id`);
+  ADD KEY `fk_folders_career` (`parent_id`) ON DELETE CASCADE;
 
 --
 -- Indices de la tabla `news`
 --
 ALTER TABLE `news`
   ADD PRIMARY KEY (`news_id`),
-  ADD KEY `news_ibfk_1` (`author_id`);
+  ADD KEY `news_ibfk_1` (`author_id`) ON DELETE CASCADE;
 
 --
 -- Indices de la tabla `strikes`
 --
 ALTER TABLE `strikes`
   ADD PRIMARY KEY (`strike_id`),
-  ADD KEY `strikes_ibfk_1` (`comment_id`),
-  ADD KEY `strikes_ibfk_2` (`user_id`);
+  ADD KEY `strikes_ibfk_1` (`comment_id`) ON DELETE CASCADE,
+  ADD KEY `strikes_ibfk_2` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Indices de la tabla `tags`

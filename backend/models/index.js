@@ -83,10 +83,11 @@ Folder.hasMany(Document, {
 Folder.hasMany(Folder, {
   foreignKey: "parent_id",
   sourceKey: "folder_id",
-  as: "children",});
+  as: "children"
+});
 
 Folder.belongsTo(Folder, {
-    foreignKey: "parent_id",
-    targetKey: "folder_id",
-    as: "parent",
+  foreignKey: "parent_id",
+  targetKey: "folder_id",
+  as: "parent",
 });

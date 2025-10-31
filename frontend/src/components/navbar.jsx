@@ -102,7 +102,7 @@ const Navbar = ({ children }) => {
           {user?.role === "admin" && (
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/admin">
-                Administracion
+                Administración
               </a>
             </li>
           )}
