@@ -18,7 +18,6 @@ import tagsRoutes from './routes/tags.routes.js';
 import {startCronCheckUp} from '../backend/controllers/auth.controller.js'
 import path from "path";
 const app = express();
-<<<<<<< Updated upstream
 const allowedOrigins = [
   "http://localhost:5173",
   "http://192.168.0.239:5173",
@@ -31,13 +30,7 @@ const corsOptions = {
         allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed request headers
     };
 app.use(cors(corsOptions));
-=======
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
->>>>>>> Stashed changes
 app.use("/uploads", express.static("uploads"))
 // Middleware para que pueda leer JSON
 app.use(express.json());

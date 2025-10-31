@@ -1,5 +1,5 @@
 import sequelize from '../config/db.js';
-import Tags from '../models/tags.js';
+import Tags from '../models/Tags.js';
 //import bcrypt from 'bcryptjs';
 
 
