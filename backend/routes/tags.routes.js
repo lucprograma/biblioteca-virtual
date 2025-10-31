@@ -13,12 +13,10 @@ import {
 const router = express.Router();
 
 
-router.use(chkToken)
-
 router.get("/", getAllTags);
 
 
-router.use(checkAdmin)
+router.use(chkToken, checkAdmin)
 
 router.post("/", createTag);
 router.put("/", updateTag);

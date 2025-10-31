@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db/db.js';
-import Folder from './Folder.js';
 
 const Career = sequelize.define('Career', {
   id_career: { 
@@ -17,7 +16,7 @@ const Career = sequelize.define('Career', {
     defaultValue: DataTypes.NOW 
   }
 }, {
-  tableName: 'career',
+  tableName: 'careers',
   timestamps: false
 });
 

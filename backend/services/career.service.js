@@ -5,10 +5,10 @@ import { Career } from '../models/index.js';
 class CareerService {
 
 async getAllCareer() {
-  const Career = await Career.findAll({
-   attributes : ['id_course','name' ]
+  const Careers = await Career.findAll({
+   attributes : [ 'career_id', 'name' ]
   });
-  return Career;
+  return Careers;
 }
 
 async registerCareer({ name}) {
@@ -49,9 +49,9 @@ async patchCourse(id, data) {
 
  
     const sql = `
-      UPDATE course
+      UPDATE career
       SET ${fields.join(', ')}, created_at = CURRENT_TIMESTAMP
-      WHERE id_course = ?
+      WHERE career_id = ?
     `;
     
     values.push(id);

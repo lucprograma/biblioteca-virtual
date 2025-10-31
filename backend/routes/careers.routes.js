@@ -11,9 +11,10 @@ import checkAdmin from '../middlewares/checkAdmin.js';
 const router = express.Router();
 
 
-router.use(checkToken, checkAdmin)
-
 router.get('/', getAllCareer)//trae todas las carreras
+
+
+router.use(checkToken, checkAdmin)
 
 router.post('/', NewCareer)
 

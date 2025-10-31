@@ -17,6 +17,7 @@ const Tags = () => {
                 }
             );
             if (!res) throw new Error('Error al obtener los tags.');
+            console.log(res.data[1])
 
             setTags(res.data)
         } catch (err) {

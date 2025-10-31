@@ -7,7 +7,7 @@ class TagService {
       const tags = await Tag.findAll({
         attributes: { exclude: [''] }
       });
-
+      
       return tags;
     }
 
