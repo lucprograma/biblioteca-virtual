@@ -6,7 +6,7 @@ const News = sequelize.define('News', {
   title: { type: DataTypes.STRING, allowNull: false },
   content: { type: DataTypes.STRING, allowNull: false },
   author_id: { type: DataTypes.INTEGER, allowNull: false },
-  image_url: { type: DataTypes.STRING, allowNull: true }, // Nuevo campo para la URL de la imagen
+  image: { type: DataTypes.STRING, allowNull: true }, // Nuevo campo para la URL de la imagen
   published_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 }, {
   tableName: 'news',

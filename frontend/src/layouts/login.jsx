@@ -122,7 +122,7 @@ const LoginContent = () => {
     const password = event.target.password.value;
  
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

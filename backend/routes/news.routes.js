@@ -27,6 +27,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // rutas
+router.get('/', getNews); // obtener todas las noticias o por id desde body. Desprotegido
+
 
 router.use(checkToken, checkAdmin);
 
@@ -36,6 +38,6 @@ router.delete('/delete', deleteNews);
 
 router.patch('/update', upload.single('image'), updateNews);
 
-router.get('/', getNews); // obtener todas las noticias o por id desde body. desprotegido
+
 
 export default router;

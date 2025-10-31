@@ -3,6 +3,7 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useGetUser } from "../hooks/getUser";
+
 export default function UserActivationTable() {
   const [users, setUsers] = useState([]);
   const [checkUsersFlag, setCheckUsersFlag] = useState(true)
@@ -20,9 +21,10 @@ export default function UserActivationTable() {
       return copy;
     });
   }
+
   const fetchAll = async () => {
     try{
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
+      const response = await fetch(`${import.meta.env.VITE_API_URL}auth/profile`,
         {
           credentials: 'include',
           method: 'GET'
@@ -43,7 +45,7 @@ export default function UserActivationTable() {
   }
   const fetchUnactive = async () => {
     try{
-        const respose = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`,
+        const respose = await fetch(`${import.meta.env.VITE_API_URL}auth/profile`,
           {
             credentials: "include"
           }
@@ -66,7 +68,7 @@ export default function UserActivationTable() {
   };
   const fetchActivate = async (id, activationFlag) => {
     try{
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/lowuser`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}auth/lowuser`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

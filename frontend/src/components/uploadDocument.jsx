@@ -8,7 +8,7 @@ const CreateDocument = () => {
         event.preventDefault();
         const formData = new FormData(event.target);
         try{
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/documents/createDocument`,
+            const response = await fetch(`${import.meta.env.VITE_API_URL}documents/createDocument`,
                 {
                     method: 'POST',
                     body: formData,
@@ -27,7 +27,7 @@ if (modalRef.current) {
       }    }
   const fetchYears = async (parent_id) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/byParent/${parent_id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}folders/byParent/${parent_id}`);
       const data = await response.json();
       setYears(data);
     } catch (error) {
@@ -37,7 +37,7 @@ if (modalRef.current) {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/parentsFolders`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}folders/parentsFolders`);
         const data = await response.json();
         setCourses(data);
       } catch (error) {

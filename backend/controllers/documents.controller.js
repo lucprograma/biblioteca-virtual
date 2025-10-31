@@ -1,6 +1,5 @@
 import sequelize from '../config/db/db.js';
-import Document from '../models/Document.js';
-import Folder from '../models/Folder.js';
+import { Document, Folder } from '../models/index.js';
 
 export const getAllDocuments = async (req, res) => {
     try {

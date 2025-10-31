@@ -1,5 +1,5 @@
 import sequelize from '../config/db/db.js';
-import Career from '../models/Career.js';
+import { Career } from '../models/index.js';
 
 
 class CareerService {

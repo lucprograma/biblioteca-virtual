@@ -24,6 +24,7 @@ import ProfilePanel from './layouts/profileDetail'
 import NewsManager from './pages/NewsManager'
 import CarnetPage from './pages/CarnetPage'
 import './styles/idcard.css'
+import Tags from './pages/Tags'
 function App() {
   const [count, setCount] = useState(0)
   const [folderID, setFolderID] = useState(null);
@@ -33,16 +34,17 @@ function App() {
 
 
     <Routes>
-          <Route path="/" element={<ContentRenderer> <Home/></ContentRenderer>} />
-          <Route path="/documentos" element={<ContentRenderer><DocumentBarLayout folderState={setFolderID}></DocumentBarLayout> <Documents folder_id={folderID}/> <CreateDocument/></ContentRenderer>} />
-          <Route path="/noticias" element={<ContentRenderer> <News/></ContentRenderer>} />
-          <Route path="/login" element={<ContentRenderer> <LoginContent/></ContentRenderer>} />
-          <Route path="/signIn" element={<ContentRenderer> <SignInForm/></ContentRenderer>} />
-          <Route path="/activation" element={<ContentRenderer> <UserActivationTable/></ContentRenderer>} />
-          <Route path="/profile" element={<ContentRenderer><ProfilePanel/></ContentRenderer>} />
-          <Route path="/gestor-noticias"element={<ContentRenderer><NewsManager /></ContentRenderer>}/>        
-          <Route path="/admin" element={<ContentRenderer><AdminPage/></ContentRenderer>} />
-         <Route path="/carnet" element={<ContentRenderer><CarnetPage/></ContentRenderer>} />
+          <Route path="/" element={<ContentRenderer> <Home/> </ContentRenderer>} />
+          <Route path="/documentos" element={<ContentRenderer> <DocumentBarLayout folderState={setFolderID}></DocumentBarLayout> <Documents folder_id={folderID}/> <CreateDocument /> </ContentRenderer>} />
+          <Route path="/noticias" element={<ContentRenderer> <News /> </ContentRenderer>} />
+          <Route path="/login" element={<ContentRenderer> <LoginContent /> </ContentRenderer>} />
+          <Route path="/signIn" element={<ContentRenderer> <SignInForm /> </ContentRenderer>} />
+          <Route path="/activation" element={<ContentRenderer> <UserActivationTable /> </ContentRenderer>} />
+          <Route path="/profile" element={<ContentRenderer> <ProfilePanel /> </ContentRenderer>} />
+          <Route path="/gestor-noticias"element={<ContentRenderer> <NewsManager /></ContentRenderer>}/>        
+          <Route path="/admin" element={<ContentRenderer> <AdminPage /> </ContentRenderer>} />
+          <Route path="/tags" element={<ContentRenderer> <Tags /> </ContentRenderer>} />
+          <Route path="/carnet" element={<ContentRenderer> <CarnetPage /> </ContentRenderer>} />
       </Routes>
     </Router>
   )

@@ -91,3 +91,5 @@ Folder.belongsTo(Folder, {
   targetKey: "folder_id",
   as: "parent",
 });
+
+export { Career, DocumentTag, Document, Folder, Tag };

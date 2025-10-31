@@ -119,8 +119,8 @@ class AuthService {
               Tu cuenta de usuario ha sido ${state ? '' : 'des'}activada.
               ${state ? '✔️' : '❌'} Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.
               ${state ?
-                'Ir a la Biblioteca Digital: localhost:5173.com (ejemplo)' :
-                'Solicita la activación de tu cuenta al centrodeestudiantes@ejemplo.com enviando tu número de DNI.'}
+                'Ir a la Biblioteca Digital: http://i2azul.mooo.com:5173' :
+                'Solicita la activación de tu cuenta envíando un mensaje a nuestra cuenta de instragram @centrou.c.e junto a tu número de DNI.'}
                 
                 No respondas a este correo.
               `,
@@ -156,8 +156,8 @@ class AuthService {
                     border: none">
                     <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
                     <p>${state ?
-                    'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
-                    'Envía un mensaje para solicitar la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> junto a tu número de DNI.'}</p>
+                    'Ir a la <a href="http://i2azul.mooo.com:5173/">Biblioteca Digital</a>' :
+                    'Envía un mensaje a nuestra <a href="https://www.instagram.com/accounts/login/?next=%2Fcentrou.c.e%2F&source=omni_redirect">cuenta de Instragram del Centro de Estudiantes</a> para solicitar la activación de tu cuenta junto a tu número de DNI.'}</p>
                 
                   </div>
                   

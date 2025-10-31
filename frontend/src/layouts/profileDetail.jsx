@@ -3,6 +3,7 @@ import { Alert } from "../components/Alert";
 import { AlertButton } from "../components/AlertButton";
 import { useNavigate } from "react-router-dom";
 import { useGetUser } from "../hooks/getUser";
+
 function ProfilePanel() {
   const {user} =  useGetUser();
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ function ProfilePanel() {
   };
   const handleSaveUser = async (data) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}auth/profile`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -52,7 +53,7 @@ function ProfilePanel() {
         is_active: false
       });
       if (!res.ok) throw new Error("Error al actualizar perfil");
-     const logoutRes = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+      const logoutRes = await fetch(`${import.meta.env.VITE_API_URL}auth/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -60,7 +61,7 @@ function ProfilePanel() {
       if (!res.ok) throw new Error("Error al cerrar sesión");
       navigate("/login")
     }
-    catch{
+    catch (err) {
       console.log(err);
     }
   }

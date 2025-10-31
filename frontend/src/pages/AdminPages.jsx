@@ -13,7 +13,7 @@ export default function AdminPage() {
   React.useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/tokenchk`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}auth/tokenchk`, {
           method: "POST",
           credentials: "include",
         });
@@ -60,6 +60,9 @@ export default function AdminPage() {
               </a>
               <a href="/documentos" className="btn btn-soft btn-sm">
                 Agregar o Editar documentos
+              </a>
+              <a href="/tags" className="btn btn-soft btn-sm">
+                Gestionar tags
               </a>
               {/*<a href="/admin/herramientas" className="btn btn-soft btn-sm">
                 Crear o Editar Carrera

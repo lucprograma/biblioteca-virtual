@@ -1,4 +1,4 @@
-import Tag from '../models/Tag.js';
+import { Tag } from '../models/index.js';
 
 
 class TagService {

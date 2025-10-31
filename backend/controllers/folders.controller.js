@@ -1,6 +1,6 @@
-import { response } from 'express'
-import Folder from '../models/Folder.js'
-import Document from '../models/Document.js'
+import { Folder, Document } from '../models/index.js';
+
+
 export const getFolderStructure = async (req, res) => {
     try{
         console.log("Fetching folders...")

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const News = () => {
   const [newsList, setNewsList] = useState([]);
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/api/news`;
+  const API_URL = `${import.meta.env.VITE_API_URL}news`;
 
   const cargarNoticias = async () => {
     try {
@@ -44,7 +44,7 @@ const News = () => {
                 
                 {noticia.image && (
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/${noticia.image}`}
+                    src={`${import.meta.env.VITE_API_URL}${noticia.image}`}
                     alt={noticia.title}
                     className="img-fluid rounded mb-3"
                     style={{ maxHeight: "250px", objectFit: "cover" }}

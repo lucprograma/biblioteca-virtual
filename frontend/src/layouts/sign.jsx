@@ -17,7 +17,7 @@ export default function SignInForm() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/careers`) // tu endpoint que devuelve [{id, name}, ...]
+    fetch(`${import.meta.env.VITE_API_URL}careers`) // tu endpoint que devuelve [{id, name}, ...]
       .then((res) => res.json())
       .then((data) => setCourses(data))
       .catch((err) => console.error(err));
@@ -37,7 +37,7 @@ export default function SignInForm() {
     setMessage("");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
