@@ -149,11 +149,11 @@ const Tags = () => {
 
                             <div className="col-12 d-flex justify-content-center mt-4" style={{width: 200}}>
                             
-                                <br></br>
+                                
 
                                 <form className="d-flex flex-column gap-2">
                                     <div style={{width:200}}>
-                                        <label htmlFor="tag">{
+                                        <label htmlFor="tag" style={{paddingBottom: 5}}>{
                                                 collapse === "agregar" ? "Nombre de la etiqueta:" :
                                                 (collapse === "editar" ? "Nuevo nombre de etiqueta:" : "Etiqueta seleccionada:")
                                             }</label>
