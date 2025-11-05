@@ -39,9 +39,10 @@ export async function createTag(req, res) {
 export async function updateTag(req, res) {
 
   try {
-    const { newName, id } = req.body
+    console.log(req.body)
+    const { name, id } = req.body
 
-    const result = await TagService.updateTag({ newName, id });
+    const result = await TagService.updateTag({ name, id });
     if (!result) res.status(400).json("Error al actualizar tag.")
 
     res.status(201).json("Nombre de tag actualizado.")

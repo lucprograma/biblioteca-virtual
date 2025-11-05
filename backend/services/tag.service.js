@@ -34,15 +34,15 @@ class TagService {
   }
 
 
-  async updateTag({ newName, id }) {
+  async updateTag({ name, id }) {
     
     try {
 
-      const exists = await Tag.findOne({ where: { name: newName }});
+      const exists = await Tag.findOne({ where: { name: name }});
       if (exists) throw new Error('El nombre ya existe.');
 
       const tag = await Tag.update(
-        { name: newName },
+        { name: name },
         { where: { tag_id: id } }
       );
       

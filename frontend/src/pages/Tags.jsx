@@ -4,7 +4,7 @@ const Tags = () => {
 
     const API_URL = import.meta.env.VITE_API_URL;
 
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([{tag_id: -1, name: ""}]);
     const [newTag, setNewTag] = useState("");
     const [modTag, setModTag] = useState(null);
     const [deleteTag, setDeleteTag] = useState(null)
@@ -18,7 +18,10 @@ const Tags = () => {
                 {
                     method: method,
                     credentials: 'include',
-                    body: data
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
                 }
             );
 
@@ -42,20 +45,25 @@ const Tags = () => {
             );
 
             if (!res.ok) throw new Error('Error al obtener los tags.');
-
+            
             setTags(await res.json())
         } catch (err) {
             console.error(`Message: ${err}`);
         }
     }
 
-
-
     const handleSubmit = (data) => requestTag('POST', data, 'Error al añadir el tag.');
     const handleEdit = (data) => requestTag('PUT', data, 'Error al actualizar el tag.');
     const handleDelete = (data) => requestTag('DELETE', data, 'Error al eliminar el tag.');
     
-
+    function encontrarTag(id = -1) {
+        const arrNuevo = tags.filter(tag => tag.tag_id == id);
+        if (arrNuevo.length == 0) {
+            return "";
+        } 
+        return arrNuevo[0].name
+        
+    }
 
     useEffect(() => {
         fetchTags()
@@ -97,31 +105,7 @@ const Tags = () => {
                     Gestión de etiquetas
                 </h4>
 
-                <div className="col-auto">
-                    <label for="selectTag" style={{paddingBottom: 10, fontSize: 18}}>
-                        <strong>
-                            Seleccione una etiqueta:
-                        </strong>
-                    </label>
-                    
-                    <select
-                        className="form-select"
-                        multiple
-                        style={{width: 300, height: 400}}
-                        id="selectTag"
-                        name="tag"
-                        onChange={(e) => { setModTag(e.target.value), setDeleteTag(e.target.value) }}
-                        data-bs-theme="dark"
-                    >
-                        {
-                            tags.map((tag) => (
-                                <div style={{borderBottom: '1px solid gray'}}>
-                                    <option key={tag.id} value={tag.name}>{tag.name}</option>
-                                </div>
-                            ))
-                        }
-                    </select>
-                </div>
+                
 
 
                 <div className="col-auto">
@@ -183,39 +167,71 @@ const Tags = () => {
                                 onSubmit={(e) => {
 
                                         e.preventDefault();
-                                        const data = new FormData(e.target);
-
+                                        const formData = new FormData(e.target);
+                                        const data = Object.fromEntries(formData.entries());
+                                        collapse === ''
                                         collapse === 'agregar' ? handleSubmit(data) :
                                         (
-                                            collapse === 'editar' ? handleEdit(data) : 
+                                            collapse === 'editar' ? handleEdit(data) :
                                             handleDelete(data)
                                         )
 
                                     }
                                 }
                             >
+
+                                <div className="col-auto">
+                                    <label htmlFor="selectTag" style={{paddingBottom: 10, fontSize: 18}}>
+                                        <strong>
+                                            Seleccione una etiqueta:
+                                        </strong>
+                                    </label>
+                                    
+                                    <select
+                                        className="form-select"
+                                        multiple
+                                        style={{width: 300, height: 400}}
+                                        id="selectTag"
+                                        name="id"
+                                        onChange={(e) => { setModTag(e.target.value), setDeleteTag(e.target.value) }}
+                                        data-bs-theme="dark"
+                                    >
+                                        {
+                                            tags.map((tag) => (
+
+                                                <option
+                                                    key={tag.tag_id}
+                                                    value={tag.tag_id}
+                                                    name={tag.name}
+                                                    style={{borderBottom: '1px solid gray'}}
+                                                >
+                                                    {tag.name}
+                                                </option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                                
                                 <div style={{width:200}}>
                                     <label htmlFor="tag" style={{paddingBottom: 5}}>
                                         {
                                             collapse === "agregar" ? "Nombre de la etiqueta:" :
-                                            (collapse === "editar" ? "Modificar nombre:" : "Etiqueta seleccionada:")
+                                            (collapse === "editar" ? "Modificar nombre:" :
+                                            "Etiqueta seleccionada:")
                                         }
                                     </label>
                                     <input
                                         className="form-control"
                                         type="text"
                                         id="tag"
-                                        name={
-                                            collapse === "agregar" ? "newTag" :
-                                            (collapse === "editar" ? "modTag" : "deleteTag")
-                                        }
+                                        name="name"
                                         value={
                                             collapse === "agregar" ? newTag :
-                                            (collapse === "editar" ? modTag : deleteTag)
+                                            (collapse === "editar" ? encontrarTag(modTag) : encontrarTag(deleteTag))
                                         }
                                         onChange={(e) => {
                                                 if (collapse === "agregar") setNewTag(e.target.value);
-                                                else if (collapse === "editar") setModTag(e.target.value);
+                                                if (collapse === "editar") setModTag(e.target.value);
                                             }
                                         }
                                         readOnly={collapse === 'eliminar'}

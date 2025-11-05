@@ -21,7 +21,7 @@ function hasTimeLimitPassed(originalDate) {
 export const startCronCheckUp = async () => {
 
     console.log("Ejecutando revision periodica de usuarios inactivos");
-    const task = new CronJob("* * * * *",
+    const task = new CronJob("0 0 * * 0",
     () => {
       console.log("Revisando usuarios inactivos");
       disableInactiveUsers();
