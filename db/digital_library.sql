@@ -36,6 +36,23 @@ CREATE TABLE `careers` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `careers`
+--
+
+INSERT INTO `careers` (`career_id`, `name`, `created_at`) VALUES
+(1, 'Profesorado de la educación secundaria en Psicología', '2025-09-10 18:07:33'),
+(2, 'Profesorado de Educación Especial', '2025-09-10 18:07:33'),
+(3, 'Profesorado de Educación Inical', '2025-09-10 18:07:33'),
+(4, 'Profesorado de la educación secundaria en Ciencias Políticas', '2025-09-10 18:07:33'),
+(5, 'Tecnicatura Superior en Análisis de Sistemas', '2025-09-10 18:07:33'),
+(6, 'Tecnicatura Superior en Publicidad', '2025-09-10 18:07:33'),
+(7, 'Tecnicatura Superior en Acompañamiento Terapéutico', '2025-09-10 18:07:33'),
+(8, 'Tecnicatura Superior en Administración Pública', '2025-09-10 18:07:33'),
+(9, 'Tecnicatura Superior en Administración de Pymes', '2025-09-10 18:07:33'),
+(10, 'Tecnicatura Superior en Trabajo Social', '2025-09-10 18:07:33');
+
+
 -- --------------------------------------------------------
 
 --
@@ -67,37 +84,6 @@ VALUES
 (1, 1, 23, 'Muy buen material, gracias.', '2025-09-04 21:47:33', '2025-09-04 21:47:33'),
 (2, 1, 23, '¿Tienen la versión actualizada?', '2025-09-04 21:47:33', '2025-09-04 21:47:33'),
 (3, 2, 23, 'Esto me ayudó para el examen.', '2025-09-04 21:47:33', '2025-09-04 21:47:33');
-
--- --------------------------------------------------------
-
---
--- Volcado de datos para la tabla `careers`
---
-
-INSERT INTO `careers` (`career_id`, `name`, `created_at`) VALUES
-(1, 'Profesorado de la educación secundaria en Psicología', '2025-09-10 18:07:33'),
-(2, 'Profesorado de Educación Especial', '2025-09-10 18:07:33'),
-(3, 'Profesorado de Educación Inical', '2025-09-10 18:07:33'),
-(4, 'Profesorado de la educación secundaria en Ciencias Políticas', '2025-09-10 18:07:33'),
-(5, 'Tecnicatura Superior en Análisis de Sistemas', '2025-09-10 18:07:33'),
-(6, 'Tecnicatura Superior en Publicidad', '2025-09-10 18:07:33'),
-(7, 'Tecnicatura Superior en Acompañamiento Terapéutico', '2025-09-10 18:07:33'),
-(8, 'Tecnicatura Superior en Administración Pública', '2025-09-10 18:07:33'),
-(9, 'Tecnicatura Superior en Administración de Pymes', '2025-09-10 18:07:33'),
-(10, 'Tecnicatura Superior en Trabajo Social', '2025-09-10 18:07:33');
-
---
--- Volcado de datos para la tabla `course`
---
-
-INSERT INTO `course` (`id_course`, `name`, `created_at`) VALUES
-(1, 'Ingeniería en Sistemas', '2025-09-10 18:07:33'),
-(2, 'Licenciatura en Informática', '2025-09-10 18:07:33'),
-(3, 'Tecnicatura en Programación', '2025-09-10 18:07:33'),
-(4, 'Administración de Empresas', '2025-09-10 18:07:33'),
-(5, 'Contador Público', '2025-09-10 18:07:33'),
-(6, 'Diseño Gráfico', '2025-09-10 18:07:33'),
-(7, 'Profesorado en Matemática', '2025-09-10 18:07:33');
 
 -- --------------------------------------------------------
 

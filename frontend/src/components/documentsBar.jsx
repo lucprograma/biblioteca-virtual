@@ -1,11 +1,14 @@
 import React from "react";
 import { useRef, useEffect, useState } from "react";
+
+
 const DocumentsBar = ({ folderState }) => {
+
   const baseUlref = useRef(null);
   const [folders, setFolders] = useState([]);
   const getFolderStructure = async () => {
     try{
-      const folders = await fetch(`${import.meta.env.VITE_API_URL}folders/`);
+      const folders = await fetch(`${import.meta.env.VITE_API_URL}folders`);
       const data = await folders.json();
       console.table("data collected", data)
       return data;
@@ -14,9 +17,11 @@ const DocumentsBar = ({ folderState }) => {
         console.error("Error fetching folder structure:", error);
       };
   };
+
    useEffect(() => {
     getFolderStructure().then(setFolders);
   }, []);
+
   const renderBar = (folderList) => {
       if(!folderList || typeof folderList[0].folder_id === 'undefined'){
         return (
@@ -24,7 +29,7 @@ const DocumentsBar = ({ folderState }) => {
         )
       }
       console.log(folderList)
-      return(
+      return (
         folderList.map(folder => (
           <li key={folder.folder_id}>
             <span
@@ -36,22 +41,25 @@ const DocumentsBar = ({ folderState }) => {
               style={{ cursor: "pointer" }}
 
               onClick={() => {
-                if(folder.type === "Year"){
-                folderState(folder.folder_id)}
+                if(folder.type === "Year") {
+                  folderState(folder.folder_id)
+                }
               }}
             >
-              📁{folder.type === "Course"? folder.name : folder.year_level}
+              📁{folder.type === "Career" ? folder.name : folder.year_level}
             </span>
             <ul className="collapse list-unstyled ps-3" id={`folder${folder.folder_id}`}>
-        <>
-          {folder.children?.length > 0 && renderBar(folder.children)}
-          {folder.documents?.length > 0 && addDocs(folder.documents)}
-        </>
-</ul>
+              <>
+                {folder.children?.length > 0 && renderBar(folder.children)}
+                {folder.documents?.length > 0 && addDocs(folder.documents)}
+              </>
+            </ul>
           </li>
         ))
       )
   }
+
+  
   const addDocs = (docList) => {
 
   return docList.map(document => (

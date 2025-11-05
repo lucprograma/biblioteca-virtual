@@ -161,20 +161,20 @@ export default function UserActivationTable() {
   />
 </div>
         <div className="mb-2 text-white">
-        <label>
-        <input
-          type="checkbox"
-          onChange={(e) => {
-            if (e.target.checked) {
-              console
-              addFilter("unactive", (u) => u.is_active === false);
-            } else {
-              removeFilter("unactive");
-            }
-          }}
-        />
-        Mostrar solo inactivos
-      </label>        
+          <label>
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  console
+                  addFilter("unactive", (u) => u.is_active === false);
+                } else {
+                  removeFilter("unactive");
+                }
+              }}
+            />{" "}
+            Mostrar solo inactivos
+        </label>        
       </div>
         <table className="table table-dark table-hover align-middle table-responsive">
           <thead>

@@ -4,10 +4,12 @@ import { Tag } from '../models/index.js';
 class TagService {
 
   async getAllTags() {
-      const tags = await Tag.findAll({
-        attributes: { exclude: [''] }
-      });
-      
+      const tags = await Tag.findAll(
+        {
+          order: [[ 'name' ]]
+        }
+      );
+            
       return tags;
     }
 

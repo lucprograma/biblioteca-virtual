@@ -9,5 +9,3 @@ export default function checkAdmin(req, res, next) {
     return res.status(500).json({ message: 'Error al verificar el rol' });
   }
 };
-
-

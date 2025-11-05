@@ -1,7 +1,6 @@
 import React from "react";
 import DisplayButton from "../components/displayButton";
 import DocumentsBar from "../components/documentsBar";
-import { useState } from "react";
 import { useEffect } from "react";
 import { useGetUser } from "../hooks/getUser";
 

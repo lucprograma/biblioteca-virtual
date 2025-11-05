@@ -5,6 +5,7 @@ import TagService from '../services/tag.service.js';
 export async function getAllTags(req, res) {
   try {
     const tags = await TagService.getAllTags();
+    
     return res.status(200).json(tags);
   } catch (error) {
     console.error('Error en getAllTags:', error);

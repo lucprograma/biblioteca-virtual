@@ -14,12 +14,12 @@ export default function SignInForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const [courses, setCourses] = useState([]);
+  const [careers, setCareers] = useState([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}careers`) // tu endpoint que devuelve [{id, name}, ...]
       .then((res) => res.json())
-      .then((data) => setCourses(data))
+      .then((data) => setCareers(data))
       .catch((err) => console.error(err));
   }, []);
 
@@ -109,10 +109,10 @@ export default function SignInForm() {
             required
             className="w-full p-2 rounded bg-neutral-700 text-black outline-none focus:ring-2 focus:ring-red-500"
           >
-            <option value="">Seleccione su carrera</option>
-            {courses.map((course) => (
-              <option key={course.id} value={course.name}>
-                {course.name}
+            <option selected>Seleccione su carrera</option>
+            {careers.map((career) => (
+              <option key={career.id} value={career.name}>
+                {career.name}
               </option>
             ))}
           </select>

@@ -5,47 +5,61 @@ const CreateDocument = () => {
     const [years, setYears] = React.useState([]);
     const modalRef = React.useRef(null);
     const handleSubmit = async (event) => {
+
         event.preventDefault();
         const formData = new FormData(event.target);
-        try{
+
+        try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}documents/createDocument`,
                 {
                     method: 'POST',
                     body: formData,
                     credentials: "include"
-        }
-    );
-        const data = response;
-        alert('Documento creado exitosamente!!:', data);
-         }
-        catch(error){
+                }
+            );
+            const data = response;
+
+            alert('Documento creado exitosamente!!:', data);
+
+         } catch(error) {
             console.error("Error uploading document:", error);
         }
-if (modalRef.current) {
+
+      if (modalRef.current) {
         const modal = window.bootstrap.Modal.getOrCreateInstance(modalRef.current);
         modal.hide();
-      }    }
-  const fetchYears = async (parent_id) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}folders/byParent/${parent_id}`);
-      const data = await response.json();
-      setYears(data);
-    } catch (error) {
-      console.error("Error fetching years:", error);
-    }
-  }
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}folders/parentsFolders`);
-        const data = await response.json();
-        setCourses(data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
       }
     }
-    fetchCourses();
-  }, []);
+
+    const fetchYears = async (parent_id) => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}folders/byParent/${parent_id}`);
+        const data = await response.json();
+
+        setYears(data);
+
+      } catch (error) {
+        console.error("Error fetching years:", error);
+      }
+    }
+
+    useEffect(() => {
+      const fetchCourses = async () => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}folders/parentsFolders`);
+          const data = await response.json();
+
+          setCourses(data);
+
+        } catch (error) {
+          console.error("Error fetching courses:", error);
+        }
+      }
+
+      fetchCourses();
+    }, []);
+
+    
   return (
     // Modal
     <div className="modal fade" ref={modalRef} id="uploadDocumentModal" tabIndex="-1" aria-labelledby="uploadDocumentModalLabel" aria-hidden="true">
