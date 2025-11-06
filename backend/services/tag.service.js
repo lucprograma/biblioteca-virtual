@@ -37,8 +37,8 @@ class TagService {
   async updateTag({ name, id }) {
     
     try {
-
       const exists = await Tag.findOne({ where: { name: name }});
+      
       if (exists) throw new Error('El nombre ya existe.');
 
       const tag = await Tag.update(
@@ -58,12 +58,13 @@ class TagService {
     try {
       
       const exists = await Tag.findOne({ where: { tag_id: id }});
+      
       if (!exists) throw new Error('El tag no existe.');
 
       const tag = await Tag.destroy(
         { where: { tag_id:  id  } }
       );
-      console.log(tag)
+      
       return tag;
     } catch(err) {
       throw new Error('Error al eliminar el tag: ' + err.message)

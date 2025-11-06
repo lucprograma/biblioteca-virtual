@@ -19,7 +19,7 @@ router.get("/", getAllTags);
 router.use(chkToken, checkAdmin)
 
 router.post("/", createTag);
-router.put("/", updateTag);
+router.patch("/", updateTag);
 router.delete("/", deleteTag);
 
 export default router

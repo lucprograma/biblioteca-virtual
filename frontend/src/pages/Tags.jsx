@@ -4,30 +4,43 @@ const Tags = () => {
 
     const API_URL = import.meta.env.VITE_API_URL;
 
-    const [tags, setTags] = useState([{tag_id: -1, name: ""}]);
+    const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState("");
-    const [modTag, setModTag] = useState(null);
-    const [deleteTag, setDeleteTag] = useState(null)
-    const [collapse, setCollapse] = useState(false);
+    const [modTag, setModTag] = useState("");
+    const [deleteTag, setDeleteTag] = useState("")
+    const [collapse, setCollapse] = useState("");
+    const [editFlag, setEditFlag] = useState(true);
 
     
-    const requestTag = async (method, data, errorMessage) => {
+    const requestToTags = async (method = 'GET', data = null, errorMessage = 'Error en la solicitud.') => {
 
         try {
-            const res = await fetch(`${API_URL}tags`,
-                {
-                    method: method,
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }
-            );
+
+            const options = {
+                credentials: 'include'
+            }
+
+            if (method !== 'GET') {
+                options.method = method;
+                options.headers = {
+                    'Content-Type': 'application/json'
+                };
+                options.body = JSON.stringify(data);
+            } else {
+                errorMessage = "Error al obtener los tags.";
+            }
+
+            const res = await fetch(`${API_URL}tags`, options);
 
             if (!res.ok) throw new Error(errorMessage);
 
-            setTags(await res.json())
+            if (method === 'GET') {
+                setTags(await res.json())
+            } else {
+                requestToTags();
+                method === 'PATCH' ? setDeleteTag(data.name) : null; //Si actualiza nombre, al cambiar al botón "Eliminar", el nombre aparecerá actualizado.
+            }
+            
         } catch (err) {
             console.error(`Message: ${err}`);
         }
@@ -35,38 +48,23 @@ const Tags = () => {
     }
 
 
-    const fetchTags = async () => {
+    const handleSubmit = (data) => requestToTags('POST', data, 'Error al añadir el tag.');
+    const handleEdit = (data) => requestToTags('PATCH', data, 'Error al actualizar el tag.');
+    const handleDelete = (data) => requestToTags('DELETE', data, 'Error al eliminar el tag.');
+
+    const findTagName = async (id) => {
 
         try {
-            const res = await fetch(`${API_URL}tags`,
-                {
-                    credentials: 'include'
-                }
-            );
-
-            if (!res.ok) throw new Error('Error al obtener los tags.');
-            
-            setTags(await res.json())
+            const tagName = tags.filter((tag) => tag.tag_id === Number(id))[0].name;
+            setModTag(tagName);
+            setDeleteTag(tagName);
         } catch (err) {
-            console.error(`Message: ${err}`);
+            console.error(`Message: ${err.message}`)
         }
-    }
-
-    const handleSubmit = (data) => requestTag('POST', data, 'Error al añadir el tag.');
-    const handleEdit = (data) => requestTag('PUT', data, 'Error al actualizar el tag.');
-    const handleDelete = (data) => requestTag('DELETE', data, 'Error al eliminar el tag.');
-    
-    function encontrarTag(id = -1) {
-        const arrNuevo = tags.filter(tag => tag.tag_id == id);
-        if (arrNuevo.length == 0) {
-            return "";
-        } 
-        return arrNuevo[0].name
-        
     }
 
     useEffect(() => {
-        fetchTags()
+        requestToTags()
     }, []);
     
 
@@ -103,176 +101,181 @@ const Tags = () => {
                     }}
                 >
                     Gestión de etiquetas
-                </h4>
+                </h4>             
 
-                
-
-
-                <div className="col-auto">
-                    <div style={{paddingTop: 38}}>
-
-                        <button
-                            className={`btn btn-${collapse === 'agregar' ? "primary" : "outline-primary"}`}
-                            type="button"
-                            onClick={() => { setCollapse('agregar')}}
-                            style={{ width: 200}}
-                        >
-                            Agregar
-                        </button>                     
-                        
-                    </div>
+                <div className="col-auto">                   
                     
+                    <form
+                        className="d-flex flex-row gap-2"
+                        onSubmit={(e) => {
 
-
-                    <div style={{paddingTop: 20}}>
-
-                        <button
-                            className={`btn btn-${collapse === 'editar' ? "warning" : "outline-warning"}`}
-                            type="button"
-                            onClick={() => { setCollapse('editar')}}
-                            style={{ width: 200}}
-                        >
-                            Editar
-                        </button>
-
-                    </div>
-
-                    
-
-                    <div style={{paddingTop: 20}}>
-
-                        <button
-                            className={`btn btn-${collapse === 'eliminar' ? "danger" : "outline-danger"}`}
-                            type="button"
-                            onClick={() => { setCollapse('eliminar')}}
-                            style={{ width: 200}}
-                            data-bs-toggle="button"
-                            aria-pressed="true"
-                        >
-                            Eliminar
-                        </button>
-                        
-                    </div>
-
-                    
-
-                    { (['agregar', 'editar', 'eliminar'].includes(collapse)) && (
-
-                        <div className="col-12 d-flex justify-content-center mt-4" style={{width: 200}}>
-                        
+                                e.preventDefault();
+                                const formData = new FormData(e.target);
+                                const data = Object.fromEntries(formData.entries());
                             
-
-                            <form
-                                className="d-flex flex-column gap-2"
-                                onSubmit={(e) => {
-
-                                        e.preventDefault();
-                                        const formData = new FormData(e.target);
-                                        const data = Object.fromEntries(formData.entries());
-                                        collapse === ''
-                                        collapse === 'agregar' ? handleSubmit(data) :
-                                        (
-                                            collapse === 'editar' ? handleEdit(data) :
-                                            handleDelete(data)
-                                        )
-
-                                    }
+                                if (collapse === 'agregar') {
+                                    data.name ? handleSubmit(data) : alert("Ingrese un nombre.")
+                                } else if (collapse === 'editar') {
+                                    handleEdit(data);
+                                } else {
+                                    handleDelete(data)
                                 }
+
+                            }
+                        }
+                    >
+                        <div className="col-auto">
+                            <label htmlFor="selectTag" style={{paddingBottom: 10, fontSize: 18}}>
+                                <strong>
+                                    Seleccione una etiqueta:
+                                </strong>
+                            </label>
+                            
+                            <select
+                                className="form-select"
+                                multiple
+                                style={{width: 300, height: 400}}
+                                id="selectTag"
+                                name="id"
+                                onChange={(e) => {
+                                    findTagName(e.target.value);
+                                    editFlag === true ? setEditFlag(false) : null
+                                }}
+                                disabled={collapse === 'agregar'}
+                                data-bs-theme="dark"
                             >
+                                {
+                                    tags.map((tag) => (
 
-                                <div className="col-auto">
-                                    <label htmlFor="selectTag" style={{paddingBottom: 10, fontSize: 18}}>
-                                        <strong>
-                                            Seleccione una etiqueta:
-                                        </strong>
-                                    </label>
-                                    
-                                    <select
-                                        className="form-select"
-                                        multiple
-                                        style={{width: 300, height: 400}}
-                                        id="selectTag"
-                                        name="id"
-                                        onChange={(e) => { setModTag(e.target.value), setDeleteTag(e.target.value) }}
-                                        data-bs-theme="dark"
-                                    >
-                                        {
-                                            tags.map((tag) => (
-
-                                                <option
-                                                    key={tag.tag_id}
-                                                    value={tag.tag_id}
-                                                    name={tag.name}
-                                                    style={{borderBottom: '1px solid gray'}}
-                                                >
-                                                    {tag.name}
-                                                </option>
-                                            ))
-                                        }
-                                    </select>
-                                </div>
-                                
-                                <div style={{width:200}}>
-                                    <label htmlFor="tag" style={{paddingBottom: 5}}>
-                                        {
-                                            collapse === "agregar" ? "Nombre de la etiqueta:" :
-                                            (collapse === "editar" ? "Modificar nombre:" :
-                                            "Etiqueta seleccionada:")
-                                        }
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="tag"
-                                        name="name"
-                                        value={
-                                            collapse === "agregar" ? newTag :
-                                            (collapse === "editar" ? encontrarTag(modTag) : encontrarTag(deleteTag))
-                                        }
-                                        onChange={(e) => {
-                                                if (collapse === "agregar") setNewTag(e.target.value);
-                                                if (collapse === "editar") setModTag(e.target.value);
-                                            }
-                                        }
-                                        readOnly={collapse === 'eliminar'}
-                                    />
-                                </div>
-                                
-                                <div className="d-flex justify-content-between">
-                                    <input
-                                        className={
-                                            `btn btn-outline-${
-                                                collapse === "agregar" ? "success" :
-                                                (collapse === "editar" ? "warning" : "danger")}
-                                            ${
-                                            collapse === "agregar" ? "bg-success bg-opacity-10" :
-                                            (collapse === "editar" ? "bg-warning bg-opacity-10" : "")
-                                            }
-                                            `                                
-                                        }
-                                        type="submit"
-                                        value={
-                                                collapse === "agregar" ? "Crear" :
-                                                (collapse === "editar" ? "Actualizar" : "Borrar")
-                                            }
-                                    />
-
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-danger g-3 bg-danger bg-opacity-10"
-                                        onClick={() => { setCollapse(null) }}
-                                    >
-                                            Cancelar
-                                    </button>
-                                </div>
-                            </form>
-                        
+                                        <option
+                                            key={tag.tag_id}
+                                            value={tag.tag_id}
+                                            style={{borderBottom: '1px solid gray'}}
+                                        >
+                                            {tag.name}
+                                        </option>
+                                    ))
+                                }
+                            </select>
                         </div>
 
-                    )}
+                        <div 
+                            className="col-auto d-flex flex-column align-items-start"
+                            style={{ paddingLeft: 10}}
+                        >
+
+                            <div style={{ paddingTop: 38}}>
+                                <button
+                                    className={`btn btn-${collapse === 'agregar' ? "primary" : "outline-primary"}`}
+                                    type="button"
+                                    onClick={() => { setCollapse('agregar')}}
+                                    style={{ width: 200 }}
+                                >
+                                    Agregar
+                                </button>                     
+                            </div>
+                                          
+                        
+                            <div style={{ paddingTop: 20 }}>
+                                <button
+                                    className={`btn btn-${collapse === 'editar' ? "warning" : "outline-warning"}`}
+                                    type="button"
+                                    onClick={() => { setCollapse('editar') }}
+                                    style={{ width: 200 }}
+                                >
+                                    Editar
+                                </button>
+                            </div>
+                        
+
+                            <div style={{ paddingTop: 20 }}>
+                                <button
+                                    className={`btn btn-${collapse === 'eliminar' ? "danger" : "outline-danger"}`}
+                                    type="button"
+                                    onClick={() => { setCollapse('eliminar') }}
+                                    style={{ width: 200 }}
+                                    data-bs-toggle="button"
+                                    aria-pressed="true"
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
+                            
+                        
+
+                            { (['agregar', 'editar', 'eliminar'].includes(collapse)) && (
+
+                                <div className="mt-4" style={{width: 200}}>
+                                                                                        
+                                    <div style={{width:200}}>
+                                        <label htmlFor="tagName" style={{paddingBottom: 5}}>
+                                            {
+                                                collapse === "agregar" ? "Nombre de la etiqueta:" :
+                                                (collapse === "editar" ? "Modificar nombre:" :
+                                                "Etiqueta seleccionada:")
+                                            }
+                                        </label>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            id="tagName"
+                                            name="name"
+                                            value={
+                                                collapse === "agregar" ? newTag :
+                                                (collapse === "editar" ? modTag : deleteTag)
+                                            }
+                                            onChange={(e) => {
+                                                    if (collapse === "agregar") setNewTag(e.target.value);
+                                                    if (collapse === "editar") setModTag(e.target.value);
+                                                }
+                                            }
+                                            disabled={collapse === 'editar' ? editFlag : collapse === 'eliminar' }
+                                        />
+                                    </div>
+                                    
+                                    <div className="d-flex justify-content-between mt-3">
+                                        <input
+                                            className={
+                                                `btn btn-outline-${
+                                                    collapse === "agregar" ? "success" :
+                                                    (collapse === "editar" ? "warning" : "danger")
+                                                }
+                                                ${
+                                                    collapse === "agregar" ? "bg-success bg-opacity-10" :
+                                                    (collapse === "editar" ? "bg-warning bg-opacity-10" : "")
+                                                }
+                                                `                                
+                                            }
+                                            type="submit"
+                                            value={
+                                                    collapse === "agregar" ? "Crear" :
+                                                    (collapse === "editar" ? "Actualizar" : "Borrar")
+                                            }
+                                            disabled={
+                                                collapse === 'agregar' ? newTag === "" :
+                                                (
+                                                    collapse === 'editar' || collapse === 'eliminar' ? editFlag : false
+                                                )
+                                            }
+                                        />
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger g-3 bg-danger bg-opacity-10"
+                                            onClick={() => { setCollapse(null) }}
+                                        >
+                                                Cancelar
+                                        </button>
+                                    </div>
+                                                            
+                                </div>
+
+                            )}
+                        </div>
+                    </form>
                 </div>
 
-            </div> 
+            </div>
         </div>
 
     )
