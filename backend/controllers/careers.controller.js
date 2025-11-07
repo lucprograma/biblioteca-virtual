@@ -15,14 +15,12 @@ export const NewCareer = async (req, res) => {
   const { name } = req.body;
 
   try {
-    //const exists = await Career.findOne({ where: { course }, attributes: ["name"] });
-    //if (exists) return res.status(400).json({ message: 'El Nombre ya está registrado' });
-
-   
-
+     
     const Career = await CareerService.registerCareer({
       name
     });
+
+    if (Career) return res.status(400).json({ message: 'El Nombre ya está registrado' });
 
     res.status(201).json({ message: 'Carrera registrada correctamente' });
   } catch (error) {
@@ -47,4 +45,3 @@ export const updateCareer = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-

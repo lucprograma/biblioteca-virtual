@@ -95,7 +95,20 @@ class AuthService {
       throw new Error(err.message);
     }
   }
-
+  async sendEmail(to, subject, text, html) {
+    try {
+      await transporter.sendMail({
+        from: `${process.env.GMAIL_FROM}`,
+        to,
+        subject,
+        text,
+        html
+      });
+      return 'Email enviado correctamente';
+    } catch (err) {
+      return `Fallo el envío de email: ${err.message}`;
+    }
+  }
   async activateUser(userId){
 
     try {
@@ -108,10 +121,11 @@ class AuthService {
         multipleStatements: true
       });
 
-      let [email, state] = [ result[1][0]['email'], result[1][0]['is_active'] ];
+      console.log("resultado activacion",result);
 
-      await transporter.sendMail({
-        from: `${process.env.GMAIL_FROM}`,
+      let [email, state] = [ result[1][0]['email'], result[1][0]['is_active'] ];
+      
+      await this.sendEmail({
         to: `${email}`,
         subject: `Cuenta ${state ? '' : 'des'}activada`,
         text: `Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul.
@@ -178,7 +192,7 @@ class AuthService {
           </div>
         `
       });
-      
+
       return result;
     } catch (err){
       throw new Error(err.message);

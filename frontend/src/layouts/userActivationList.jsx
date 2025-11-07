@@ -5,10 +5,21 @@ import { useEffect } from "react";
 import { useGetUser } from "../hooks/getUser";
 
 export default function UserActivationTable() {
+
   const [users, setUsers] = useState([]);
   const [checkUsersFlag, setCheckUsersFlag] = useState(true)
   const { user } = useGetUser();
   const [filters, setFilters] = useState({});
+
+  useEffect(()=> {
+    const loadUsers = async () => {
+      const allUsers = await fetchAll();
+      setUsers(allUsers);
+      console.log("users loaded", allUsers)
+    }
+    loadUsers();
+  }, [checkUsersFlag]);
+    
 
   const addFilter = (name, fn) => {
     setFilters((prev) => ({ ...prev, [name]: fn }));
@@ -21,6 +32,7 @@ export default function UserActivationTable() {
       return copy;
     });
   }
+
 
   const fetchAll = async () => {
     try{
@@ -43,6 +55,8 @@ export default function UserActivationTable() {
         return [];
     }
   }
+
+
   const fetchUnactive = async () => {
     try{
         const respose = await fetch(`${import.meta.env.VITE_API_URL}auth/profile`,
@@ -62,33 +76,49 @@ export default function UserActivationTable() {
         return [];
     }
   };
-  const handleActivate = (id) => {
-    console.log("Activando usuario con ID:", id);
-    fetchActivate(id, true)
-  };
+
+  
+  
+
   const fetchActivate = async (id, activationFlag) => {
-    try{
+    try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}auth/lowuser`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({user_id: id}),
+        body: JSON.stringify({ 
+          user_id: id,
+        })
       });
-      if(!res.ok) throw new Error("Error al actualizar perfil");
-      const data = res.json()
+
+      if (!res.ok) throw new Error("Error al actualizar perfil");
+
+      // Actualiza dinámicamente el estado local sin refetch
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.user_id === id ? { ...u, is_active: !u.is_active } : u
+        )
+      );
       setCheckUsersFlag(!checkUsersFlag);
+    } catch (err) {
+      console.error("Error al actualizar usuario:", err);
     }
-    catch (err) {
-      console.log(err);
-    }
-  }
+  };
+
+
+  const handleActivate = (id) => {
+      console.log("Activando usuario con ID:", id);
+      fetchActivate(id, true)
+    };
+
   const handleDeactivate = (id) => {
     console.log("Desactivando usuario con ID:", id);
-    fetchActivate(id, false)
-
+    fetchActivate(id, false);
   };
+
+
   const renderUsers = (filterListFunctions) => {
-    if(!users || typeof users[0] === 'undefined'){
+    if(!users || users.length === 0 || typeof users[0] === 'undefined'){
       return <tr><p>No hay usuarios en la lista</p></tr>
     }
     const visibles = users.filter((u) =>
@@ -129,37 +159,35 @@ export default function UserActivationTable() {
               </tr>
             )));
   }
-  useEffect(()=> {
-    fetchUnactive().then((result) => {
-      setUsers(result)
-    })
-  }, [checkUsersFlag])
 
   return (
+
     <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
       <div style={{ width: "80%" }}>
         {/* Input búsqueda por nombre */}
         <h2 className="text-white mb-4 text-center">Activación de Usuarios</h2>
-<div class="input-group mb-3 w-25">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">@</span>
-  </div>
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Username"
-    aria-label="Username"
-    aria-describedby="basic-addon1"
-    onChange={(e) => {
-      const value = e.target.value.toLowerCase();
-      if (value) {
-        addFilter("search", (u) => u.name.toLowerCase().includes(value));
-      } else {
-        removeFilter("search");
-      }
-    }}
-  />
-</div>
+
+        <div class="input-group mb-3 w-25">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Username"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            onChange={(e) => {
+              const value = e.target.value.toLowerCase();
+              if (value) {
+                addFilter("search", (u) => u.name.toLowerCase().includes(value));
+              } else {
+                removeFilter("search");
+              }
+            }}
+          />
+        </div>
+
         <div className="mb-2 text-white">
           <label>
             <input
@@ -176,6 +204,7 @@ export default function UserActivationTable() {
             Mostrar solo inactivos
         </label>        
       </div>
+
         <table className="table table-dark table-hover align-middle table-responsive">
           <thead>
             <tr style={{ borderBottom: "2px solid white" }}>
@@ -187,18 +216,10 @@ export default function UserActivationTable() {
             </tr>
           </thead>
           <tbody>
-              {
-              
-                users.length > 0 ? (
-                  renderUsers(filters)
-                ) : (<tr>
-                <td colSpan="5" className="text-center text-muted">
-                  No hay usuarios inactivos
-                </td>
-              </tr>)
-              }
+            {renderUsers(filters)}
           </tbody>
         </table>
+
       </div>
     </div>
   );

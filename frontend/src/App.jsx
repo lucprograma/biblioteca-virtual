@@ -25,8 +25,8 @@ import NewsManager from './pages/NewsManager'
 import CarnetPage from './pages/CarnetPage'
 import './styles/idcard.css'
 import Tags from './pages/Tags'
+
 function App() {
-  const [count, setCount] = useState(0)
   const [folderID, setFolderID] = useState(null);
 
   return (

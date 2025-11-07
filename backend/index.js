@@ -26,6 +26,7 @@ const corsOptions = {
     };
 
 app.use(cors(corsOptions));
+
 app.use("/uploads", express.static("uploads"))
 // Middleware para que pueda leer JSON
 app.use(express.json());
