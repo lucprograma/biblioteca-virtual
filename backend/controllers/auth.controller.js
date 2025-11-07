@@ -21,13 +21,13 @@ export const startCronCheckUp = async () => {
 
     console.log("Ejecutando revision periodica de usuarios inactivos");
     const task = new CronJob("0 0 * * 0",
-    () => {
-      disableInactiveUsers();
-    },
-    null,
-    true,
-    "America/Argentina/Buenos_Aires"
-)
+      () => {
+        disableInactiveUsers();
+      },
+      null,
+      true,
+      "America/Argentina/Buenos_Aires"
+    )
 }
 
 export const disableInactiveUsers = async (req, res) => 
@@ -232,5 +232,3 @@ export const logout = (req, res) => {
     res.status(500).json({ message: 'Error al cerrar sesión', error: error.message });
   }
 };
-
-

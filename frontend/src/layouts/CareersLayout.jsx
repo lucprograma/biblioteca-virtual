@@ -4,6 +4,7 @@ import { Col, Row, Card } from "react-bootstrap";
 import { BookHalf } from "react-bootstrap-icons";
 
 function CareersLayout() {
+
   const [careers, setCareers] = useState([]);
   const [name, setName] = useState("");
   const [editando, setEditando] = useState(null);

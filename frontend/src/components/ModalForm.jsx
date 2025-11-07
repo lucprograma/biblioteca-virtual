@@ -1,7 +1,9 @@
 import React from 'react';
 
 const ModalForm = ({ handleSubmit, title, children }) => {
+
   return (
+
     <div
       className="modal fade"
       id="uploadDocumentModal"
@@ -50,6 +52,7 @@ const ModalForm = ({ handleSubmit, title, children }) => {
         </div>
       </div>
     </div>
+    
   );
 };
 

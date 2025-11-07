@@ -19,7 +19,7 @@ export default function UserActivationTable() {
     }
     loadUsers();
   }, [checkUsersFlag]);
-    
+
 
   const addFilter = (name, fn) => {
     setFilters((prev) => ({ ...prev, [name]: fn }));
@@ -55,29 +55,6 @@ export default function UserActivationTable() {
         return [];
     }
   }
-
-
-  const fetchUnactive = async () => {
-    try{
-        const respose = await fetch(`${import.meta.env.VITE_API_URL}auth/profile`,
-          {
-            credentials: "include"
-          }
-        );
-        const users = await respose.json();
-        if(!users ){
-            console.error('Cannot get users');
-        }
-        console.log('users fetched with sucess', users)
-        return users;
-    }
-    catch(err){
-        console.error(`Error fetching users:${err}`)
-        return [];
-    }
-  };
-
-  
   
 
   const fetchActivate = async (id, activationFlag) => {
@@ -119,7 +96,7 @@ export default function UserActivationTable() {
 
   const renderUsers = (filterListFunctions) => {
     if(!users || users.length === 0 || typeof users[0] === 'undefined'){
-      return <tr><p>No hay usuarios en la lista</p></tr>
+      return <tr>No hay usuarios en la lista</tr>
     }
     const visibles = users.filter((u) =>
     Object.values(filters).every((fn) => fn(u))
@@ -167,13 +144,13 @@ export default function UserActivationTable() {
         {/* Input búsqueda por nombre */}
         <h2 className="text-white mb-4 text-center">Activación de Usuarios</h2>
 
-        <div class="input-group mb-3 w-25">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">@</span>
+        <div className="input-group mb-3 w-25">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="basic-addon1">@</span>
           </div>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             placeholder="Username"
             aria-label="Username"
             aria-describedby="basic-addon1"

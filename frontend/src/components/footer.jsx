@@ -1,7 +1,9 @@
 import React from "react";
 import idoslogo from "../assets/idoslogo.jpeg";
 import centrologo from "../assets/centrologo.jpeg";
+
 const Footer = () => (
+
   <footer
     className="text-center text-lg-start text-white"
     style={{ backgroundColor: "#1c2331" }}
@@ -132,4 +134,6 @@ const Footer = () => (
     </div>
   </footer>
 );
+
+
 export default Footer;

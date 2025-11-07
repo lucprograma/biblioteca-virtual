@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NewsForm from "../components/NewsForm";
 
 export default function NewsManager() {
+  
   const [noticias, setNoticias] = useState([]);
   const [noticiaEditando, setNoticiaEditando] = useState(null);
   const [mensaje, setMensaje] = useState("");
