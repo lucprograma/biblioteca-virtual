@@ -18,7 +18,7 @@ import CreateDocument from './components/uploadDocument';
 import SignInForm from './layouts/sign';
 import UserActivationTable from './layouts/userActivationList';
 import ProfilePanel from './layouts/profileDetail'
-
+import CareerLayout from './layouts/CareersLayout'
 
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
@@ -45,6 +45,8 @@ function App() {
           <Route path="/admin" element={<ContentRenderer> <AdminPage /> </ContentRenderer>} />
           <Route path="/tags" element={<ContentRenderer> <Tags /> </ContentRenderer>} />
           <Route path="/carnet" element={<ContentRenderer> <CarnetPage /> </ContentRenderer>} />
+         <Route path="/gestionar-carreras" element={<ContentRenderer><CareerLayout></CareerLayout></ContentRenderer>} />
+
       </Routes>
     </Router>
   )

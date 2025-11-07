@@ -1,5 +1,6 @@
 import React from "react";
-
+import idoslogo from "../assets/idoslogo.jpeg";
+import centrologo from "../assets/centrologo.jpeg";
 const Footer = () => (
   <footer
     className="text-center text-lg-start text-white"
@@ -11,29 +12,31 @@ const Footer = () => (
       style={{ backgroundColor: "#6351ce" }}
     >
       {/* Left */}
-      <div className="me-5">
+      <div className="me-5 justify-content-center align-items-center d-flex">
         <span>Mantenete conectado en las redes sociales</span>
       </div>
       {/* Right */}
       <div>
-        <a href="#" className="text-white me-4">
-          <i className="fab fa-facebook-f"></i>
-        </a>
-        <a href="#" className="text-white me-4">
-          <i className="fab fa-twitter"></i>
-        </a>
-        <a href="#" className="text-white me-4">
-          <i className="fab fa-google"></i>
-        </a>
-        <a href="#" className="text-white me-4">
-          <i className="fab fa-instagram"></i>
-        </a>
-        <a href="#" className="text-white me-4">
-          <i className="fab fa-linkedin"></i>
-        </a>
-        <a href="#" className="text-white me-4">
-          <i className="fab fa-github"></i>
-        </a>
+          <img src={idoslogo} alt=""
+          className="me-4"
+            style={
+              {
+                height: "64px",
+                borderRadius: "50%",
+                width: "64px"
+              }
+            }
+          />
+          <img src={centrologo} alt=""
+          className="me-4"
+            style={
+              {
+                height: "64px",
+                borderRadius: "50%",
+                width: "64px"
+              }
+            }
+          />
       </div>
     </section>
     {/* Section: Links */}
@@ -97,23 +100,8 @@ const Footer = () => (
               }}
             />
             <p>
-              <a href="#!" className="text-white">
-                Your Account
-              </a>
-            </p>
-            <p>
-              <a href="#!" className="text-white">
-                Become an Affiliate
-              </a>
-            </p>
-            <p>
-              <a href="#!" className="text-white">
-                Shipping Rates
-              </a>
-            </p>
-            <p>
-              <a href="#!" className="text-white">
-                Help
+              <a href="https://www.instagram.com/centrou.c.e?igsh=MWo1NDYxODV2aTBnYw==" className="text-white">
+                Instagram
               </a>
             </p>
           </div>
@@ -130,15 +118,7 @@ const Footer = () => (
             <p>
               <i className="fas fa-home mr-3"></i> New York, NY 10012, US
             </p>
-            <p>
-              <i className="fas fa-envelope mr-3"></i> info@example.com
-            </p>
-            <p>
-              <i className="fas fa-phone mr-3"></i> + 01 234 567 88
-            </p>
-            <p>
-              <i className="fas fa-print mr-3"></i> + 01 234 567 89
-            </p>
+
           </div>
         </div>
       </div>
