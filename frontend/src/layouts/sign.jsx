@@ -6,7 +6,7 @@ export default function SignInForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    course:"",
+    career:"",
     password: "",
     dni: "",
   });
@@ -103,8 +103,8 @@ export default function SignInForm() {
         <div className="mb-6">
           <label className="block text-white mb-1">Carrera</label><br/>
           <select
-            name="course"
-            value={formData.course}
+            name="career"
+            value={formData.career}
             onChange={handleChange}
             required
             className="w-full p-2 rounded bg-neutral-700 text-black outline-none focus:ring-2 focus:ring-red-500"

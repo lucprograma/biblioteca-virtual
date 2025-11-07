@@ -16,8 +16,8 @@ export default function CarnetPage() {
         </div>
 
         <StudentIdCardPro
-          fetchUrl={`${API}/api/auth/me`}
-          qrEndpointBase={`${API}/api/qr`}
+          fetchUrl={`${API}auth/me`}
+          qrEndpointBase={`${API}qr`}
           logoSrc="/escudo-ees1.png"
         />
       </div>

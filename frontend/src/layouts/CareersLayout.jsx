@@ -12,7 +12,7 @@ function CareersLayout() {
   const [error, setError] = useState(null);
   const getCareers = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/careers/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}careers`, {
         credentials: "include",
       });
       const data = await response.json();
@@ -27,8 +27,8 @@ function CareersLayout() {
   const fetchCareers = async () => {
     try {
       const targetEndpoint = editando
-        ? `${import.meta.env.VITE_API_URL}/api/careers/${editando.id_course}`
-        : `${import.meta.env.VITE_API_URL}/api/careers/`;
+        ? `${import.meta.env.VITE_API_URL}careers/${editando.id_course}`
+        : `${import.meta.env.VITE_API_URL}careers`;
       const method = editando ? "PATCH" : "POST";
       const response = await fetch(
         targetEndpoint,

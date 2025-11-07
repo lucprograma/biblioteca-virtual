@@ -8,13 +8,13 @@ import Tag from "./Tag.js";
 //Career connections
 Career.hasMany(Folder, {
   foreignKey: 'parent_id',
-  sourceKey: 'id_career',
+  sourceKey: 'career_id',
   as: 'folders'
 });
 
 Folder.belongsTo(Career, {
   foreignKey: 'parent_id',
-  targetKey: 'id_career',
+  targetKey: 'career_id',
   as: 'career'
 });
 
