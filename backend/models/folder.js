@@ -8,7 +8,7 @@ const Folder = sequelize.define(
     name: { type: DataTypes.STRING, allowNull: false },
     created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     parent_id: { type: DataTypes.INTEGER, allowNull: true },
-    type: {type: DataTypes.ENUM('Course', 'Year'), allowNull: false, defaultValue: 'Course'},
+    type: {type: DataTypes.ENUM('Career', 'Year'), allowNull: false, defaultValue: 'Career'},
     year_level: { type: DataTypes.ENUM('Primer Año', 'Segundo Año', 'Tercer Año', 'Cuarto Año', 'Quinto Año'), allowNull: true}
   },
   {

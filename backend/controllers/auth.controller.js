@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { CronJob } from 'cron';
 import authService from '../services/auth.service.js';
-import { where } from 'sequelize';
 //controlador get por id o todo
 
 
@@ -134,7 +133,7 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   
-  const { name, email, password, role, dni, course } = req.body;
+  const { name, email, password, role, dni, career } = req.body;
 
   try {
     const exists = await User.findOne({ where: { email }, attributes: ["email"] });
@@ -148,7 +147,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       role,
       dni,
-      course
+      career
     });
 
     res.status(201).json({ message: 'Usuario registrado correctamente', user_id: user.user_id });

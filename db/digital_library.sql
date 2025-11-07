@@ -381,8 +381,8 @@ ALTER TABLE `comments`
 --
 -- AUTO_INCREMENT de la tabla `careers`
 --
-ALTER TABLE `course`
-  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `career`
+  MODIFY `career_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `documents`

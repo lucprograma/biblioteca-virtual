@@ -32,9 +32,9 @@ class AuthService {
 
 
   //funcion registro
-  async registerUser({ name, email, password, role, course, dni }) {
+  async registerUser({ name, email, password, role, career, dni }) {
     try {
-      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, course, dni });
+      console.log('Datos recibidos en servicio registerUser:', { name, email, password, role, career, dni });
       
       const exists = await User.findOne({ where: { email } });
       if (exists) throw new Error('El email ya está registrado');
@@ -45,7 +45,7 @@ class AuthService {
         email,
         password: hashedPassword,
         role,
-        course,
+        career,
         dni
       
       });       
@@ -68,7 +68,7 @@ class AuthService {
         email: data.email,
         password: hashedPassword,
         role: data.role,
-        course: data.course,
+        career: data.career,
         dni: data.dni,
         has_certificate: data.has_certificate
 

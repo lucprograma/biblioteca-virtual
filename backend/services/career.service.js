@@ -32,7 +32,7 @@ async registerCareer({ name}) {
 
 
 
-async patchCourse(id, data) {
+async patchCareer(id, data) {
   try {
     const fields = [];
     const values = [];

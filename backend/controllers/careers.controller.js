@@ -36,7 +36,7 @@ export const updateCareer = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
   
-    const affectedRows = await CareerService.patchCourse(id, data);
+    const affectedRows = await CareerService.patchCareer(id, data);
 
     if (affectedRows === 0) {
       return res.status(404).json({ message: 'no hubo cambios' });
