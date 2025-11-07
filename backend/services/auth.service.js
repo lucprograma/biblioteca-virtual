@@ -47,7 +47,6 @@ class AuthService {
         role,
         career,
         dni
-      
       });       
       console.log('Usuario creado:', user.toJSON());
 
