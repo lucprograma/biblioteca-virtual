@@ -16,7 +16,7 @@ const Navbar = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}auth/tokenchk`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/tokenchk`, {
           method: "post",
           credentials: "include", // envía la cookie automáticamente
         });
@@ -36,7 +36,7 @@ const Navbar = ({ children }) => {
   }, []);
    const handleLogout = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}auth/logout`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

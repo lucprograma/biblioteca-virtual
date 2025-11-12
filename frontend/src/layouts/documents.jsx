@@ -21,7 +21,7 @@ const Documents = ({folder_id}) => {
           console.log('folder id is null');
           return [];
         }
-        const response = await fetch(`${import.meta.env.VITE_API_URL}documents/findByFolder/${folder_id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/documents/findByFolder/${folder_id}`);
         const docs = response.json();
         return docs;
     }

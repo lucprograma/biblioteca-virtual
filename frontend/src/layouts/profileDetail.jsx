@@ -31,7 +31,7 @@ function ProfilePanel() {
   };
   const handleSaveUser = async (data) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}auth/profile`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -53,7 +53,7 @@ function ProfilePanel() {
         is_active: false
       });
       if (!res.ok) throw new Error("Error al actualizar perfil");
-      const logoutRes = await fetch(`${import.meta.env.VITE_API_URL}auth/logout`, {
+      const logoutRes = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

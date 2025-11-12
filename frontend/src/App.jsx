@@ -22,9 +22,10 @@ import CareerLayout from './layouts/CareersLayout'
 
 // Vista de gestión de noticias
 import NewsManager from './pages/NewsManager'
-import CarnetPage from './pages/CarnetPage'
-import './styles/idcard.css'
-import Tags from './pages/Tags'
+
+import CarnetPage from './pages/CarnetPage';
+
+import Tags from './pages/Tags';
 
 function App() {
   const [folderID, setFolderID] = useState(null);

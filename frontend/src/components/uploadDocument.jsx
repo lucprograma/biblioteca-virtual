@@ -13,7 +13,7 @@ const CreateDocument = () => {
         const formData = new FormData(event.target);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}documents/createDocument`,
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/documents/createDocument`,
                 {
                     method: 'POST',
                     body: formData,
@@ -36,7 +36,7 @@ const CreateDocument = () => {
 
     const fetchYears = async (parent_id) => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}folders/byParent/${parent_id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/byParent/${parent_id}`);
         const data = await response.json();
 
         setYears(data);
@@ -50,7 +50,7 @@ const CreateDocument = () => {
     useEffect(() => {
       const fetchCareers = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}careers`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/careers`);
           const data = await response.json();
 
           setcareers(data);

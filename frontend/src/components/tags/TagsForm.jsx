@@ -10,8 +10,6 @@ export default function TagsForm() {
         handleEdit,
         handleDelete,
         findTagName,
-        editFlag,
-        setEditFlag,
         tags,
         collapse,
         setCollapse,
@@ -46,8 +44,6 @@ export default function TagsForm() {
             >
                 <TagSelect
                     findTagName={findTagName}
-                    editFlag={editFlag}
-                    setEditFlag={setEditFlag}
                     collapseIs={collapseIs}
                     tags={tags}
                 />
@@ -105,7 +101,12 @@ export default function TagsForm() {
                                             if (collapseIs('editar')) setModTag(e.target.value);
                                         }
                                     }
-                                    disabled={collapseIs('editar') ? editFlag : collapseIs('eliminar') }
+                                    disabled={
+                                        collapseIs('editar') ? modTag === "" :
+                                        (
+                                            collapseIs('eliminar') ? deleteTag === "" : false
+                                        )
+                                    }
                                 />
                             </div>
                             
@@ -131,7 +132,10 @@ export default function TagsForm() {
                                     disabled={
                                         collapseIs('agregar') ? newTag === "" :
                                         (
-                                            collapseIs('editar') || collapseIs('eliminar') ? editFlag : false
+                                            collapseIs('editar') ? modTag === "" :
+                                            (
+                                                collapseIs('eliminar') ? deleteTag === "" : false
+                                            )
                                         )
                                     }
                                 />

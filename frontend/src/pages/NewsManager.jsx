@@ -9,7 +9,7 @@ export default function NewsManager() {
   const [mensaje, setMensaje] = useState("");
   const navigate = useNavigate();
 
-  const API_URL = `${import.meta.env.VITE_API_URL}news`;
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/news`;
 
   const cargarNoticias = async () => {
     try {

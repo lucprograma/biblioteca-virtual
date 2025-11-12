@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react';
 
 export default function useTags() {
 
-    const API_URL = import.meta.env.VITE_API_URL;
+    const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState("");
     const [modTag, setModTag] = useState("");
     const [deleteTag, setDeleteTag] = useState("")
     const [collapse, setCollapse] = useState("");
-    const [editFlag, setEditFlag] = useState(true);
 
     const collapseIs = (mode) => {
         return collapse === mode
@@ -33,7 +32,7 @@ export default function useTags() {
                 errorMessage = "Error al obtener los tags.";
             }
 
-            const res = await fetch(`${API_URL}tags`, options);
+            const res = await fetch(`${API_URL}/tags`, options);
 
             if (!res.ok) throw new Error(errorMessage);
 
@@ -45,7 +44,7 @@ export default function useTags() {
                 (
                     method === 'PATCH' ? setDeleteTag(data.name) : //Si actualiza nombre, al cambiar al botón "Eliminar", el nombre aparecerá actualizado en el campo (solo para efectos visuales).
                     (
-                        method === 'DELETE' ? setDeleteTag("") : null //Lo mismo al eliminar, se vacía el campo.
+                        method === 'DELETE' ? (setDeleteTag(""), setModTag("")) : null //Lo mismo al eliminar, se vacían los campos.
                     )
                 );
             }
@@ -82,8 +81,6 @@ export default function useTags() {
         handleEdit,
         handleDelete,
         findTagName,
-        editFlag,
-        setEditFlag,
         tags,
         collapse,
         setCollapse,

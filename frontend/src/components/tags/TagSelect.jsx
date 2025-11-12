@@ -1,8 +1,6 @@
 export default function TagSelect(
     {
         findTagName,
-        editFlag,
-        setEditFlag,
         collapseIs,
         tags
     }
@@ -27,7 +25,6 @@ export default function TagSelect(
                 name="id"
                 onChange={(e) => {
                     findTagName(e.target.value);
-                    editFlag === true ? setEditFlag(false) : null
                 }}
                 disabled={collapseIs('agregar')}
                 data-bs-theme="dark"

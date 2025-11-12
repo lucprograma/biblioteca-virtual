@@ -10,7 +10,7 @@ const News = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}news`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/news`);
       const data = await response.json();
       console.log('news:', data);
       setNews(data);
