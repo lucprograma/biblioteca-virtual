@@ -1,4 +1,3 @@
-import React from "react";
 import { useRef, useEffect, useState } from "react";
 
 
@@ -6,6 +5,7 @@ const DocumentsBar = ({ folderState }) => {
 
   const baseUlref = useRef(null);
   const [folders, setFolders] = useState([]);
+  
   const getFolderStructure = async () => {
     try{
       const folders = await fetch(`${import.meta.env.VITE_API_URL}folders`);
@@ -19,8 +19,8 @@ const DocumentsBar = ({ folderState }) => {
   };
 
    useEffect(() => {
-    getFolderStructure().then(setFolders);
-  }, []);
+      getFolderStructure().then(setFolders);
+    }, []);
 
   const renderBar = (folderList) => {
       if(!folderList || typeof folderList[0].folder_id === 'undefined'){

@@ -6,6 +6,7 @@ import { useGetUser } from "../hooks/getUser";
 
 
 const DocumentBarLayout = ({ folderState }) => {
+  
   const { user }= useGetUser();
   const fetchUser = async () => {
         try {
@@ -20,6 +21,7 @@ const DocumentBarLayout = ({ folderState }) => {
           console.log(err);
         }
       };
+
   useEffect(()=>{
     fetchUser();
   }, []);

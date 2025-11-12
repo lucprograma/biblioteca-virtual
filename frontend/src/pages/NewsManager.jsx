@@ -51,12 +51,12 @@ export default function NewsManager() {
         });
         setMensaje(" Noticia actualizada con éxito.");
       } else {
-        response = await fetch(`${API_URL}/`, {
+        response = await fetch(`${API_URL}`, {
           method: "POST",
           credentials: 'include',
           body: formData,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            'Content-Type': 'application/json'
           }
         });
         setMensaje(" Noticia publicada con éxito.");

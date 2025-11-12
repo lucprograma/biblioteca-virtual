@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
+import useTags from "../hooks/tags/useTags";
 
 const CreateDocument = () => {
-    const [courses, setCourses] = React.useState([]);
+    const [careers, setcareers] = React.useState([]);
     const [years, setYears] = React.useState([]);
     const modalRef = React.useRef(null);
+    const { tags } = useTags();
+
     const handleSubmit = async (event) => {
 
         event.preventDefault();
@@ -43,20 +46,21 @@ const CreateDocument = () => {
       }
     }
 
+    
     useEffect(() => {
-      const fetchCourses = async () => {
+      const fetchCareers = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}folders/parentsFolders`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL}careers`);
           const data = await response.json();
 
-          setCourses(data);
+          setcareers(data);
 
         } catch (error) {
-          console.error("Error fetching courses:", error);
+          console.error("Error fetching careers:", error);
         }
       }
 
-      fetchCourses();
+      fetchCareers();
     }, []);
 
     
@@ -86,8 +90,8 @@ const CreateDocument = () => {
                 <select className="form-select" onChange={e => fetchYears(e.target.value)} name="career" id="careerSelect" required>
                   <option value="" disabled selected>Selecciona una carrera</option>
                   {
-                    courses.map((course) => (
-                        <option key={course.folder_id} value={course.folder_id}>{course.name}</option>
+                    careers.map((career) => (
+                        <option key={career.career_id} value={career.career_id}>{career.name}</option>
                       ))
                   }
                   {/* <option value="1">Analisis de Sistemas</option>*/}
@@ -118,10 +122,19 @@ const CreateDocument = () => {
               <div className="mb-3">
                 <label htmlFor="tagSelect" className="form-label">Tags</label>
                 <select multiple className="form-select" id="tagSelect" required>
-                  <option value="apuntes">Apuntes</option>
-                  <option value="parcial">Parcial</option>
-                  <option value="resumen">Resumen</option>
-                  <option value="guia">Guía</option>
+                  <option value="" disabled selected>Selecciona una carrera</option>
+                  {
+                    tags.map((tag) => (
+
+                        <option
+                            key={tag.tag_id}
+                            value={tag.tag_id}
+                            style={{borderBottom: '1px solid gray'}}
+                        >
+                            {tag.name}
+                        </option>
+                    ))
+                  }
                 </select>
                 <div className="form-text text-light">Mantén presionado Ctrl (o Cmd en Mac) para seleccionar múltiples tags.</div>
               </div>

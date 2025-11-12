@@ -78,14 +78,14 @@ const NewsForm = ({ onSuccess, editing, initialData }) => {
         />
       </div>
 
-      {/* <div className="mb-3">
+      <div className="mb-3">
         <label className="form-label">Imagen (opcional)</label>
         <input
           type="file"
           className="form-control"
           onChange={(e) => setFile(e.target.files[0])}
         />
-      </div> */}
+      </div>
 
       <div className="text-end">
         <button type="submit" className="btn btn-primary">

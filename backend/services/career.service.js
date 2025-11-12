@@ -6,7 +6,8 @@ class CareerService {
 
 async getAllCareer() {
   const Careers = await Career.findAll({
-   attributes : [ 'career_id', 'name' ]
+   attributes : [ 'career_id', 'name' ],
+   order: ['name']
   });
   return Careers;
 }
