@@ -12,7 +12,7 @@ async getAllCareer() {
   return Careers;
 }
 
-async registerCareer({ name}) {
+async registerCareer({ name }) {
     try {
       //console.log('Datos recibidos en servicio registerCareer:', { name });
       const exists = await Career.findOne({ where: {name} });
