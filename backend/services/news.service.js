@@ -1,4 +1,4 @@
-import sequelize from '../config/db.js';
+import sequelize from '../config/db/db.js';
 import News from '../models/News.js';
 import { Op } from 'sequelize'; // importamos operador de Sequelize para comparaciones
 
@@ -9,7 +9,7 @@ class NewsService {
         title,
         content,
         author_id,
-        image_url: imageUrl, 
+        image_url: imageUrl,
       });
       return news;
     } catch (error) {

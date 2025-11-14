@@ -1,6 +1,8 @@
 import { response } from 'express'
-import Folder from '../models/folder.js'
+import Folder from '../models/Folder.js'
 import Document from '../models/Documents.js'
+
+
 export const getFolderStructure = async (req, res) => {
     try{
         console.log("Fetching folders...")
@@ -51,6 +53,7 @@ export const getByParentID = async (req, res) => {
             where: { parent_id },
             attributes: ['folder_id', 'name', 'year_level', 'type']
         });
+
         return res.status(200).json(folders);
     } catch (error) {
         console.error('Error fetching folders by parent ID:', error);

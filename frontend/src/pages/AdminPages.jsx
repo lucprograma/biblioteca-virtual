@@ -51,22 +51,25 @@ export default function AdminPage() {
         <div className="card p-3 admin-card-soft">
           <div className="d-flex flex-column flex-md-row align-items-start">
             {/* Opciones (izquierda) */}
+
             <div className="admin-actions d-flex flex-column gap-2 me-md-3">
+              
+              <a href="/documentos" className="btn btn-soft btn-sm">
+                Gestionar documentos
+              </a>
               <a href="/gestor-noticias" className="btn btn-soft btn-sm">
-                Crear noticia
+                Gestionar noticias
+              </a>
+              <a href="/gestionar-carreras" className="btn btn-soft btn-sm">
+                Gestionar carreras
+              </a>
+              <a href="/tags" className="btn btn-soft btn-sm">
+                Gestionar etiquetas
               </a>
               <a href="/activation" className="btn btn-soft btn-sm">
                 Lista de usuarios inactivos
               </a>
-              <a href="/documentos" className="btn btn-soft btn-sm">
-                Agregar o Editar documentos
-              </a>
-              <a href="/gestionar-carreras" className="btn btn-soft btn-sm">
-                Agregar o Editar carreras
-              </a>
-              {/*<a href="/admin/herramientas" className="btn btn-soft btn-sm">
-                Crear o Editar Carrera
-              </a>*/}
+              
             </div>
 
             {/* Escudo (derecha) */}

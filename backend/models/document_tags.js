@@ -1,13 +1,15 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
+import sequelize from '../config/db/db.js';
 import Document from './document.js';
-import Tag from './tag.js'; // asumimos que ya tenés este modelo con PK `tag_id`
+import Tag from './Tag.js'; // asumimos que ya tenés este modelo con PK `tag_id`
 
 const DocumentTag = sequelize.define('DocumentTag', {
   document_tags_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   document_id: {
     type: DataTypes.INTEGER,
@@ -34,6 +36,7 @@ const DocumentTag = sequelize.define('DocumentTag', {
     { fields: ['tag_id'] },
   ],
 });
+
 // Muchos a muchos a través de document_tags
 Document.belongsToMany(Tag, {
   through: DocumentTag,

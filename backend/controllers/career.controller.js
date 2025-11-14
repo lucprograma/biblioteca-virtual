@@ -1,4 +1,3 @@
-import careerService from '../services/career.service.js';
 import CareerService from '../services/career.service.js';
 
 export async function getAllCareer(req, res) {

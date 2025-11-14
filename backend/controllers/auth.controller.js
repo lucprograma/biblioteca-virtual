@@ -20,7 +20,7 @@ function hasTimeLimitPassed(originalDate) {
 
 export const startCronCheckUp = async () => {
 
-    const task = new CronJob("* * * * *",
+    const task = new CronJob("0 0 * * 0",
     () => {
       disableInactiveUsers();
     },
@@ -232,5 +232,3 @@ export const logout = (req, res) => {
     res.status(500).json({ message: 'Error al cerrar sesión', error: error.message });
   }
 };
-
-

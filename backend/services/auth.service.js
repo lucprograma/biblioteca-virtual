@@ -1,4 +1,4 @@
-import sequelize from '../config/db.js';
+import sequelize from '../config/db/db.js';
 import User from '../models/Users.js';
 import bcrypt from 'bcryptjs';
 import transporter from '../extra_services/nodemailer.js';
@@ -94,6 +94,8 @@ class AuthService {
       throw new Error(err.message);
     }
   }
+
+  /*
   async sendEmail(to, subject, text, html) {
     try {
       await transporter.sendMail({
@@ -108,7 +110,9 @@ class AuthService {
       return `Fallo el envío de email: ${err.message}`;
     }
   }
-  async activateUser(userId){
+  */
+
+  async activateUser(userId) {
 
     try {
       const sql = `
@@ -119,17 +123,21 @@ class AuthService {
         replacements: [userId, userId],
         multipleStatements: true
       });
-      console.log("resultado activacion",result);
+
+      console.log("Resultado de activación:", result);
+
       let [email, state] = [ result[1][0]['email'], result[1][0]['is_active'] ];
-      await this.sendEmail({
+      
+      await transporter.sendMail({
+        from: `${process.env.GMAIL_FROM}`,
         to: `${email}`,
         subject: `Cuenta ${state ? '' : 'des'}activada`,
         text: `Biblioteca Digital del I.S.F.D. y T. Nº 2 de Azul.
               Tu cuenta de usuario ha sido ${state ? '' : 'des'}activada.
               ${state ? '✔️' : '❌'} Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.
               ${state ?
-                'Ir a la Biblioteca Digital: localhost:5173.com (ejemplo)' :
-                'Solicita la activación de tu cuenta al centrodeestudiantes@ejemplo.com enviando tu número de DNI.'}
+                'Ir a la Biblioteca Digital: http://i2azul.mooo.com:5173' :
+                'Solicita la activación de tu cuenta envíando un mensaje a nuestra cuenta de instragram @centrou.c.e junto a tu número de DNI.'}
                 
                 No respondas a este correo.
               `,
@@ -165,8 +173,8 @@ class AuthService {
                     border: none">
                     <p>Ya ${state ? '' : 'no'} podés acceder a tu Carnet Digital Estudiantil y participar en los foros bibliográficos.</p>
                     <p>${state ?
-                    'Ir a la <a href="http://localhost:5173/">Biblioteca Digital</a>' :
-                    'Solicita la activación de tu cuenta al <a href="centrodeestudiantes@ejemplo.com">centrodeestudiantes@ejemplo.com</a> enviando tu número de DNI.'}</p>
+                    'Ir a la <a href="http://i2azul.mooo.com:5173/">Biblioteca Digital</a>' :
+                    'Envía un mensaje a nuestra <a href="https://www.instagram.com/accounts/login/?next=%2Fcentrou.c.e%2F&source=omni_redirect">cuenta de Instragram del Centro de Estudiantes</a> para solicitar la activación de tu cuenta junto a tu número de DNI.'}</p>
                 
                   </div>
                   
@@ -188,6 +196,7 @@ class AuthService {
           </div>
         `
       });
+
       return result;
     } catch (err){
       throw new Error(err.message);

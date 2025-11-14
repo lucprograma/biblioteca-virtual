@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
+import sequelize from '../config/db/db.js';
 
 const Tag = sequelize.define('Tag', {
   tag_id: { 
@@ -15,5 +15,6 @@ const Tag = sequelize.define('Tag', {
   tableName: 'tags',
   timestamps: false,
 });
+
 
 export default Tag;
