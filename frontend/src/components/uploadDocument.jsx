@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useTags from "../hooks/tags/useTags";
 
 const CreateDocument = () => {
-    const [careers, setcareers] = React.useState([]);
+    const [careers, setCareers] = React.useState([]);
     const [years, setYears] = React.useState([]);
     const modalRef = React.useRef(null);
     const { tags } = useTags();
@@ -53,7 +53,7 @@ const CreateDocument = () => {
           const response = await fetch(`${import.meta.env.VITE_API_URL}/api/careers`);
           const data = await response.json();
 
-          setcareers(data);
+          setCareers(data);
 
         } catch (error) {
           console.error("Error fetching careers:", error);

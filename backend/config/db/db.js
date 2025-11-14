@@ -26,6 +26,5 @@ try {
   console.error('❌ Error de conexión a la BD:', error.message);
 }
 
+
 export default sequelize;
-
-
