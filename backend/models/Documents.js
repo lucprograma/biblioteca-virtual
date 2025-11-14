@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
-import Folder from './folder.js';
+import sequelize from '../config/db/db.js';
+import Folder from './Folder.js';
 
 const Document = sequelize.define('Document', {
     document_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -24,4 +24,6 @@ Folder.hasMany(Document, {
   sourceKey: 'folder_id',
   as: 'documents',
 });
+
+
 export default Document;

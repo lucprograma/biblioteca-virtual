@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
-import Folder from './folder.js';
+import sequelize from '../config/db/db.js';
+import Folder from './Folder.js';
 
 const Course = sequelize.define('Course', {
   id_course: { 

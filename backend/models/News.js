@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/db.js';
+import sequelize from '../config/db/db.js';
 
 const News = sequelize.define('News', {
   news_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

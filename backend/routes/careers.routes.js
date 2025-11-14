@@ -1,7 +1,7 @@
 import express from 'express';
 //import validateSchema from '../middlewares/validateSchema.js';
 import chkToken from '../middlewares/checkToken.js';
-import { getAllCareer,NewCareer,updateCareer} from '../controllers/career.controller.js';
+import { getAllCareer, NewCareer, updateCareer } from '../controllers/career.controller.js';
 import checkAdmin from '../middlewares/checkAdmin.js';
 
 const router = express.Router();

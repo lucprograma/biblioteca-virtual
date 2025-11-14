@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
+import useTags from '../hooks/tags/useTags.js';
 
 const CreateDocument = () => {
     const [courses, setCourses] = React.useState([]);
     const [years, setYears] = React.useState([]);
     const modalRef = React.useRef(null);
+    const { tags } = useTags();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
@@ -13,31 +16,36 @@ const CreateDocument = () => {
                     method: 'POST',
                     body: formData,
                     credentials: "include"
-        }
-    );
-        const data = response;
-        alert('Documento creado exitosamente!!:', data);
+              }
+          );
+              const data = response;
+              alert('Documento creado exitosamente!!:', data);
          }
         catch(error){
             console.error("Error uploading document:", error);
         }
-if (modalRef.current) {
-        const modal = window.bootstrap.Modal.getOrCreateInstance(modalRef.current);
-        modal.hide();
-      }    }
+        if (modalRef.current) {
+          const modal = window.bootstrap.Modal.getOrCreateInstance(modalRef.current);
+          modal.hide();
+        }    
+    }
+
   const fetchYears = async (parent_id) => {
     try {
+      
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/byParent/${parent_id}`);
       const data = await response.json();
+      
       setYears(data);
     } catch (error) {
       console.error("Error fetching years:", error);
     }
   }
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/parentsFolders`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/careers`);
         const data = await response.json();
         setCourses(data);
       } catch (error) {
@@ -46,6 +54,8 @@ if (modalRef.current) {
     }
     fetchCourses();
   }, []);
+
+
   return (
     // Modal
     <div className="modal fade" ref={modalRef} id="uploadDocumentModal" tabIndex="-1" aria-labelledby="uploadDocumentModalLabel" aria-hidden="true">
@@ -73,7 +83,7 @@ if (modalRef.current) {
                   <option value="" disabled selected>Selecciona una carrera</option>
                   {
                     courses.map((course) => (
-                        <option key={course.folder_id} value={course.folder_id}>{course.name}</option>
+                        <option key={course.id_course} value={course.id_course}>{course.name}</option>
                       ))
                   }
                   {/* <option value="1">Analisis de Sistemas</option>*/}
@@ -104,10 +114,18 @@ if (modalRef.current) {
               <div className="mb-3">
                 <label htmlFor="tagSelect" className="form-label">Tags</label>
                 <select multiple className="form-select" id="tagSelect" required>
-                  <option value="apuntes">Apuntes</option>
-                  <option value="parcial">Parcial</option>
-                  <option value="resumen">Resumen</option>
-                  <option value="guia">Guía</option>
+                  {
+                    tags.map((tag) => (
+
+                        <option
+                            key={tag.tag_id}
+                            value={tag.tag_id}
+                            style={{borderBottom: '1px solid gray'}}
+                        >
+                            {tag.name}
+                        </option>
+                    ))
+                }
                 </select>
                 <div className="form-text text-light">Mantén presionado Ctrl (o Cmd en Mac) para seleccionar múltiples tags.</div>
               </div>

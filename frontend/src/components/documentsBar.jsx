@@ -1,11 +1,13 @@
 import React from "react";
 import { useRef, useEffect, useState } from "react";
+
 const DocumentsBar = ({ folderState }) => {
   const baseUlref = useRef(null);
   const [folders, setFolders] = useState([]);
+
   const getFolderStructure = async () => {
     try{
-      const folders = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/`);
+      const folders = await fetch(`${import.meta.env.VITE_API_URL}/api/folders`);
       const data = await folders.json();
       console.table("data collected", data)
       return data;
@@ -14,9 +16,11 @@ const DocumentsBar = ({ folderState }) => {
         console.error("Error fetching folder structure:", error);
       };
   };
+
    useEffect(() => {
     getFolderStructure().then(setFolders);
   }, []);
+  
   const renderBar = (folderList) => {
       if(!folderList || typeof folderList[0].folder_id === 'undefined'){
         return (
