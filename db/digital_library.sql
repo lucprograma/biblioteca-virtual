@@ -42,9 +42,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `document_id`, `user_id`, `content`, `created_at`, `modified_at`) VALUES
-(1, 1, 23, 'Muy buen material, gracias.', current_timestamp, current_timestamp),
-(2, 1, 23, '¿Tienen la versión actualizada?', current_timestamp, current_timestamp),
-(3, 2, 23, 'Esto me ayudó para el examen.', current_timestamp, current_timestamp);
+(1, 1, 2, 'Muy buen material, gracias.', current_timestamp, current_timestamp),
+(2, 1, 2, '¿Tienen la versión actualizada?', current_timestamp, current_timestamp),
+(3, 2, 2, 'Esto me ayudó para el examen.', current_timestamp, current_timestamp);
 
 -- --------------------------------------------------------
 
@@ -95,9 +95,9 @@ CREATE TABLE `documents` (
 --
 
 INSERT INTO `documents` (`document_id`, `title`, `content`, `image`, `uploaded_by`, `folder_id`, `created_at`) VALUES
-(1, 'Manual de Programación', 'Contenido del manual...', NULL, 23, 2, current_timestamp),
-(2, 'Apuntes de SQL', 'Aquí van los apuntes...', NULL, 23, 2, current_timestamp),
-(3, 'Examen Final 2024', 'Preguntas y consignas...', NULL, 23, 3, current_timestamp);
+(1, 'Manual de Programación', 'Contenido del manual...', NULL, 2, 2, current_timestamp),
+(2, 'Apuntes de SQL', 'Aquí van los apuntes...', NULL, 2, 2, current_timestamp),
+(3, 'Examen Final 2024', 'Preguntas y consignas...', NULL, 2, 3, current_timestamp);
 
 -- --------------------------------------------------------
 
@@ -164,9 +164,9 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`news_id`, `title`, `content`, `image_url`, `author_id`, `published_at`) VALUES
-(1, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 23, current_timestamp),
-(2, 'Charla de ciberseguridad', 'Aprende a cómo navegar seguramente en Internet', NULL, 24, current_timestamp),
-(3, 'Fecha de elecciones estudiantiles', 'El día de la fecha se celebrarán las votaciones...', NULL, 24, current_timestamp);
+(1, 'Convocatoria a Taller', 'Inscripciones abiertas al taller de React.', NULL, 2, current_timestamp),
+(2, 'Charla de ciberseguridad', 'Aprende a cómo navegar seguramente en Internet', NULL, 2, current_timestamp),
+(3, 'Fecha de elecciones estudiantiles', 'El día de la fecha se celebrarán las votaciones...', NULL, 2, current_timestamp);
 
 -- --------------------------------------------------------
 
@@ -187,8 +187,8 @@ CREATE TABLE `strikes` (
 --
 
 INSERT INTO `strikes` (`strike_id`, `comment_id`, `valid`, `user_id`, `created_at`) VALUES
-(1, 2, 1, 23, '2025-09-04 21:47:33'),
-(2, 3, 0, 23, '2025-09-04 21:47:33');
+(1, 2, 1, 2, '2025-09-04 21:47:33'),
+(2, 3, 0, 2, '2025-09-04 21:47:33');
 
 -- --------------------------------------------------------
 
