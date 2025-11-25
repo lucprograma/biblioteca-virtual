@@ -116,7 +116,7 @@ const Footer = () => (
               }}
             />
             <p>
-              <i className="fas fa-home mr-3"></i> New York, NY 10012, US
+              <i className="fas fa-home mr-3"></i> Colón 498, Azul
             </p>
 
           </div>
