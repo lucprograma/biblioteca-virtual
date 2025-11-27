@@ -23,7 +23,7 @@ console.log(user)
   if (!user) return <div className="alert alert-warning">No hay usuario</div>;
 
   const normalized = {
-    name: user?.name ?? "Nombre Apellido",
+    name: user?.name ?? "Indefinido",
     studentId: String(
       user?.studentId ?? user?.user_id ?? user?.id ?? "Indefinido"
     ),
