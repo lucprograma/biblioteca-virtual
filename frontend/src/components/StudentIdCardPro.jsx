@@ -6,7 +6,7 @@ import "../styles/idcard.css";
 export default function StudentIdCardPro() {
   const { user, loading, error } = useGetUser();
   const [isBack, setIsBack] = useState(false);
-
+console.log(user)
   const todayStr = useMemo(
     () =>
       new Date().toLocaleDateString("es-AR", {
@@ -25,10 +25,10 @@ export default function StudentIdCardPro() {
   const normalized = {
     name: user?.name ?? "Nombre Apellido",
     studentId: String(
-      user?.studentId ?? user?.user_id ?? user?.id ?? "AZ-0425"
+      user?.studentId ?? user?.user_id ?? user?.id ?? "Indefinido"
     ),
-    grade: user?.course ?? user?.grade ?? "analista de sistemas",
-    dni: user?.dni ?? "33333333",
+    grade: user?.course ?? user?.grade ?? "Indefinido",
+    dni: user?.dni ?? "Indefinido",
     schoolName: "ISFDYT N°2 - Azul",
     expiresAt: user?.expiresAt ?? null,
     address: user?.address ?? "",

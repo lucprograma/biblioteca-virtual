@@ -104,13 +104,13 @@ export const getUsersAdmin = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id", "name"]});
+    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id", "name", "course", "dni"]});
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
     const token = jwt.sign(
-      { user_id: user.user_id, email: user.email, role: user.role, name: user.name },
+      { user_id: user.user_id, email: user.email, role: user.role, name: user.name, course: user.course, dni: user.dni },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );

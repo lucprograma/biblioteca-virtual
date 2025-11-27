@@ -23,10 +23,10 @@ router.post('/logout', logout);//cerras la sesion actual
 
 router.post('/tokenchk', chkToken, (req, res) => {
   if (!req.user) return res.status(401).json({ error: 'No autorizado' });
-
-  const { email, role, name } = req.user;
+  
+  const { user_id, email, role, name, course, dni } = req.user;
   console.log(req.user)
-  res.json({ email, role, name });});
+  res.json({ user_id, email, role, name, course, dni });});
 
 
 
