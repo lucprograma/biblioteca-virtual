@@ -73,14 +73,15 @@ class AuthService {
       }
 
       for (const [key, value] of Object.entries(patchUser)){
-
-            value !== undefined ? (
+          
+            value !== undefined && value !== null ? (
               key === 'password' ?
                 fields.push(`password = ?`) & values.push(value) :
                 fields.push(`${key} = ?`) & values.push(value)
             ) : '';
+            
         }
-
+        
       if (fields.length === 0) {
         throw new Error('No se enviaron campos válidos para actualizar');
       }      

@@ -14,7 +14,7 @@ router.get('/profile', chkToken,checkAdmin,getUsersAdmin)//trae todos usuarios
 //router.get('/crontest', crontest)//trae todos usuario 
 router.get('/unactive', getUnactive);//Obtiene los usuarios inactivos
 
-router.patch('/profile', chkToken, checkAdmin, validateSchema(patchUserSchema), patchProfile); //actualizar usuario
+router.patch('/profile', chkToken, validateSchema(patchUserSchema), patchProfile); //actualizar usuario
 router.patch('/lowuser', chkToken, checkAdmin, validateSchema(activateUserSchema), activateUser); //baja de usuario (activo inactivo)
 router.delete('/delete', chkToken, checkAdmin, deleteProfile); //eliminar usuario por body(rol administrador)
 router.delete('/delete/:id', chkToken,deleteThis); //eliminar propio usuario, llega id por body
