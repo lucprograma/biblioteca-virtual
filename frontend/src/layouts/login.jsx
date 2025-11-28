@@ -128,9 +128,15 @@ const LoginContent = () => {
         credentials: "include",
         body: JSON.stringify({ email, password }),
       });
-
-      if (!res.ok) {
-        alert(`Credenciales inválidas. Por favor, inténtalo de nuevo. ${res}`);
+      
+      if (res.status == 401) {
+        alert(`Contraseña incorrecta.`);
+        return
+      } else if (res.status == 403) {
+        alert('El usuario está desactivado');
+        return
+      } else if (res.status == 404) {
+        alert('No se encontró un usario asociado al email.');
         return
       }
       const data = await res.json();

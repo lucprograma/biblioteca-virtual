@@ -9,6 +9,7 @@ function CareersLayout() {
   const [editando, setEditando] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const getCareers = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/careers/`, {
@@ -20,9 +21,11 @@ function CareersLayout() {
       console.error("Error fetching careers:", error);
     }
   }
+
   useEffect(() => {
     getCareers().then(setCareers(careers));
   }, []);
+
   const fetchCareers = async () => {
     try {
       const targetEndpoint = editando
@@ -46,6 +49,7 @@ function CareersLayout() {
       console.error("Error fetching careers:", error);
       throw new Error("Error fetching careers");
     }}
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -81,7 +85,7 @@ function CareersLayout() {
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Carreras</h2>
+        <h2 style={{color: 'white'}}>Carreras</h2>
         <button
           className="btn btn-primary"
           data-bs-toggle="modal"

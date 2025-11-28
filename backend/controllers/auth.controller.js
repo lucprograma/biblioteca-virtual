@@ -104,8 +104,9 @@ export const getUsersAdmin = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id", "name", "course", "dni"]});
+    const user = await User.findOne({ where: { email }, attributes: ["email", "password", "role", "user_id", "name", "course", "dni", "is_active"]});
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+    if (user.is_active == 0) return res.status(403).json({ message: 'El usuario está desactivado'});
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
