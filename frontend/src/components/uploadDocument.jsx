@@ -33,10 +33,17 @@ const CreateDocument = () => {
   const fetchYears = async (parent_id) => {
     try {
       
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/byParent/${parent_id}`);
-      const data = await response.json();
-      
-      setYears(data);
+      //const response = await fetch(`${import.meta.env.VITE_API_URL}/api/folders/byParent/${parent_id}`);
+      //const data = await response.json();
+      //alert(parent_id);
+      //alert(      courses[parent_id-1].years);
+      const yearsNO = courses[parent_id-1].years;
+      const _years = [];
+      for(let i=0; i<yearsNO; i++){
+        _years.push(i+1);
+      }
+
+        setYears(_years);
     } catch (error) {
       console.error("Error fetching years:", error);
     }
@@ -97,7 +104,7 @@ const CreateDocument = () => {
                   <option value="" disabled selected>Selecciona un año</option>
                   {
                     years.map((year) => (
-                        <option key={year.folder_id} value={year.folder_id}>{year.year_level}</option>
+                        <option key={year.folder_id} value={year}>{year+"°"}</option>
                       ))
                   }
                   {/* <option value="1">1° Año</option>*/}
