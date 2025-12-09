@@ -62,17 +62,17 @@ CREATE TABLE `course` (
 -- Volcado de datos para la tabla `course`
 --
 
-INSERT INTO `course` (`id_course`, `name`, `created_at`) VALUES
-(1, 'Profesorado de Educación Especial', current_timestamp),
-(2, 'Profesorado de Educación Inicial', current_timestamp),
-(3, 'Profesorado de la Educación Secundaria en Ciencias Políticas', current_timestamp),
-(4, 'Profesorado de la Educación Secundaria en Psicología', current_timestamp),
-(5, 'Tecnicatura Superior en Acompañamiento Terapéutico', current_timestamp),
-(6, 'Tecnicatura Superior en Administración de Pymes', current_timestamp),
-(7, 'Tecnicatura Superior en Administración Pública', current_timestamp),
-(8, 'Tecnicatura Superior en Análisis de Sistemas', current_timestamp),
-(9, 'Tecnicatura Superior en Publicidad', current_timestamp),
-(10, 'Tecnicatura Superior en Trabajo Social', current_timestamp);
+INSERT INTO `course` (`id_course`, `name`, `years`, `created_at`) VALUES
+(1, 'Profesorado de Educación Especial', 4, current_timestamp),
+(2, 'Profesorado de Educación Inicial', 4, current_timestamp),
+(3, 'Profesorado de la Educación Secundaria en Ciencias Políticas', 4, current_timestamp),
+(4, 'Profesorado de la Educación Secundaria en Psicología', 4, current_timestamp),
+(5, 'Tecnicatura Superior en Acompañamiento Terapéutico', 3, current_timestamp),
+(6, 'Tecnicatura Superior en Administración de Pymes', 3, current_timestamp),
+(7, 'Tecnicatura Superior en Administración Pública', 3, current_timestamp),
+(8, 'Tecnicatura Superior en Análisis de Sistemas', 3, current_timestamp),
+(9, 'Tecnicatura Superior en Publicidad', 3, current_timestamp),
+(10, 'Tecnicatura Superior en Trabajo Social', 4, current_timestamp);
 
 -- --------------------------------------------------------
 
